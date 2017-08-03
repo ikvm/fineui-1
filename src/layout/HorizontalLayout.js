@@ -2,54 +2,37 @@ import React, {
     Component
 } from 'react'
 import ReactDOM from 'react-dom'
-import each from 'lodash/each'
+import cn from 'classnames'
 import Layout from './Layout'
+import './HorizontalLayout.less'
+
+const CLASS_NAME = 'flex-horizontal-layout'
+const VERTICAL_ALIGN = {
+    TOP: '_top',
+    MIDDLE: '_middle',
+    BOTTOM: '_bottom',
+    STRETCH: '_stretch'
+}
 
 class HorizontalLayout extends Component {
     constructor(props, context) {
         super(props, context);
     }
 
-    componentDidMount() {
-        const tr = ReactDOM.findDOMNode(this.refs.container);
-        each(tr.children, (td) => {
-            each(td.children, (child) => {
-                child.style.position = 'relative';
-                child.style.margin = '0px auto';
-                child.style.top = '0';
-                child.style.left = '0';
-            })
-        })
+    static defaultProps = {
+        scrollx: true,
+        verticalAlign: VERTICAL_ALIGN.TOP
     }
 
     render() {
-        const {children, ...props} = this.props;
-        return <Layout scrollx={true} {...props}>
-            <table cellSpacing={0} cellPadding={0} style={{
-                position: 'relative',
-                whiteSpace: 'nowrap',
-                borderSpacing: 0,
-                border: 'none',
-                borderCollapse: 'separate'
-            }}>
-                <tbody>
-                <tr ref='container'>
-                    {React.Children.map(children, (child) => {
-                        return <td style={{
-                            position: 'relative',
-                            height: '100%',
-                            verticalAlign: 'middle',
-                            border: 'none',
-                            margin: 0,
-                            padding: 0
-                        }}>
-                            {child}
-                        </td>
-                    })}
-                </tr>
-                </tbody>
-            </table>
+        const {children, verticalAlign, className, ...props} = this.props;
+        return <Layout
+            className={cn((props.scrollx || props.scrolly) ? 'clearfix' : cn(CLASS_NAME, verticalAlign), className)} {...props}>
+            {(props.scrollx || props.scrolly) ?
+                <div
+                    className={cn(CLASS_NAME, 'layout-wrapper', verticalAlign)}>{children}</div> : children}
         </Layout>
     }
 }
+HorizontalLayout.VERTICAL_ALIGN = VERTICAL_ALIGN
 export default HorizontalLayout

@@ -1,9 +1,8 @@
-import React, {Component, PropTypes} from 'react'
-import mixin from 'react-mixin'
+import React, {Component, PureComponent, PropTypes} from 'react'
+import {decorate as mixin} from 'react-mixin'
 import {findDOMNode} from 'react-dom'
 
 import {
-    ReactComponentWithPureRenderMixin,
     ReactComponentWithImmutableRenderMixin,
     cn,
     sc,
@@ -31,14 +30,8 @@ import {
     VerticalCenterLayout
 } from 'layout'
 
-import {Colors, Sizes, TemplateFactory, WidgetFactory, DimensionFactory} from 'data'
 
-import {Button, TextButton, IconButton, Table} from 'base'
-
-import {MultiSelectorWidget} from 'widgets'
-
-
-class TableComponent extends Component {
+class TableComponent extends PureComponent {
     constructor(props, context) {
         super(props, context);
     }
@@ -85,9 +78,4 @@ class TableComponent extends Component {
     }
 
 }
-mixin.onClass(TableComponent, ReactComponentWithImmutableRenderMixin);
-
-const styles = {
-
-};
 export default TableComponent

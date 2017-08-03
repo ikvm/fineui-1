@@ -1,0 +1,19 @@
+.clearfix {
+    *zoom: 1;
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+        line-height: 0;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.flex-center-layout, .flex-horizontal-layout, .flex-vertical-layout, .flex-vertical-center-layout, .flex-horizontal-center-layout {
+    > * {
+        position: relative;
+        flex-shrink: 0;
+    }
+}

@@ -1,13 +1,16 @@
 import React, {Component, PropTypes} from 'react'
 import range from 'lodash/range'
-import CenterLayout from '../layout/CenterLayout';
-import HorizontalCenterLayout from '../layout/HorizontalCenterLayout';
-import VerticalCenterLayout from '../layout/VerticalCenterLayout';
-import HorizontalLayout from '../layout/HorizontalLayout';
-import HtapeLayout from '../layout/HtapeLayout';
-import VtapeLayout from '../layout/VtapeLayout';
-import Layout from '../layout/Layout';
-import VerticalLayout from '../layout/VerticalLayout';
+
+import {
+    CenterLayout,
+    HorizontalCenterLayout,
+    VerticalCenterLayout,
+    HorizontalLayout,
+    HtapeLayout,
+    VtapeLayout,
+    Layout,
+    VerticalLayout
+} from '../layout'
 class Item extends Component {
     constructor(props, context) {
         super(props, context);
@@ -49,11 +52,12 @@ class App extends Component {
 
     render() {
         const {...props} = this.props, {...state} = this.state;
-        return <VerticalLayout style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}>
-            {range(1000).map((i) => {
-                return <Item key={i}/>
+        return <HorizontalLayout verticalAlign={HorizontalLayout.VERTICAL_ALIGN.STRETCH}
+                                 style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}>
+            {range(1000).map(() => {
+                return <div>123</div>
             })}
-        </VerticalLayout>
+        </HorizontalLayout>
     }
 }
 export default App

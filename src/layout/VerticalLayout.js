@@ -1,28 +1,36 @@
 import React, {
     Component
 } from 'react'
-import ReactDOM from 'react-dom'
+import cn from 'classnames'
 import Layout from './Layout'
+import './VerticalLayout.less'
 
-import each from 'lodash/each'
+const CLASS_NAME = 'flex-vertical-layout'
+const HORIZONTAL_ALIGN = {
+    STRETCH: '_stretch',
+    LEFT: '_left',
+    CENTER: '_center',
+    RIGHT: '_right'
+}
 
 class VerticalLayout extends Component {
     constructor(props, context) {
         super(props, context);
     }
 
-    componentDidMount() {
-        const parent = ReactDOM.findDOMNode(this.refs.container);
-        each(parent.children, (child) => {
-            child.style.position = 'relative'
-        })
+    static defaultProps = {
+        horizontalAlign: HORIZONTAL_ALIGN.STRETCH
     }
 
     render() {
-        const {children, ...props} = this.props;
-        return <Layout ref='container' scrolly={true} {...props}>
-            {children}
+        const {children, horizontalAlign, className, ...props} = this.props;
+        return <Layout
+            className={cn((props.scrollx || props.scrolly) ? 'clearfix' : cn(CLASS_NAME, horizontalAlign), className)} {...props}>
+            {(props.scrollx || props.scrolly) ?
+                <div
+                    className={cn(CLASS_NAME, 'layout-wrapper', horizontalAlign)}>{children}</div> : children}
         </Layout>
     }
 }
+VerticalLayout.HORIZONTAL_ALIGN = HORIZONTAL_ALIGN
 export default VerticalLayout
