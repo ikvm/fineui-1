@@ -1,0 +1,97 @@
+.bi-button {
+    position: relative;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 28px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #178cdf;
+    background-color: #3f8ce8;
+    &:hover::before {
+        //做 hover 的时候 mask 效果
+        position: absolute;
+        content: '';
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        background-color: fade(#ffffff, 20%)
+    }
+    &-common {
+        color: #ffffff;
+        &-clear {
+            background-color: transparent;
+            border-width: 0;
+            color: #3f8ce8;
+        }
+        &-disabled {
+            background-color: #cccccc;
+            border-color: #cccccc;
+            pointer-events: none;
+        }
+    }
+    &-success {
+        color: #ffffff;
+        background-color: #58cc7d;
+        border-color: #58cc7d;
+        &-clear {
+            background-color: transparent;
+            border-width: 0;
+            color: #58cc7d;
+        }
+        &-disabled {
+            background-color: #cccccc;
+            border-color: #cccccc;
+            pointer-events: none;
+        }
+    }
+    &-warning {
+        color: #ffffff;
+        background-color: #e85050;
+        border-color: #e85050;
+        &-clear {
+            background-color: transparent;
+            border-width: 0;
+            color: #e85050;
+        }
+        &-disabled {
+            background-color: #cccccc;
+            border-color: #cccccc;
+            pointer-events: none;
+        }
+    }
+    &-ignore {
+        color: #1a1a1a;
+        background-color: #ffffff;
+        border-color: #d4dadd;
+        &:hover::before {
+            position: absolute;
+            content: '';
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: fade(#1a1a1a, 20%)
+        }
+        &-clear {
+            background-color: transparent;
+            border-width: 0;
+            color: #1a1a1a;
+            &:hover::before {
+                position: absolute;
+                content: '';
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background-color: fade(#ffffff, 20%)
+            }
+        }
+        &-disabled {
+            pointer-events: none;
+            color: #cccccc;
+            background-color: #ffffff;
+            border-color: #cccccc;
+        }
+    }
+}
