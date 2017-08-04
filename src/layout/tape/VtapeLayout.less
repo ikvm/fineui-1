@@ -1,0 +1,34 @@
+@import "../index";
+
+.flex-vertical-tape-layout {
+    .display-flex();
+
+    .direction-vertical();
+
+    .justify-content(flex-start);
+
+    .align-items(stretch);
+
+    .flex-wrap();
+
+    & > .layout-item {
+        .display-flex();
+        .flex-shrink();
+        > * {
+            .flex-grow();
+        }
+        &.layout-full-item {
+            .flex-grow();
+        }
+    }
+
+    &._left {
+        .align-items(flex-start);
+    }
+    &._center {
+        .align-items(center);
+    }
+    &._right {
+        .align-items(flex-end);
+    }
+}

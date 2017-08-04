@@ -1,13 +1,17 @@
 /*eslint no-console:0 */
 'use strict';
-const express = require('express');
+require('core-js/fn/object/assign');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const config = require('./webpack.config');
 const open = require('open');
-const fs=require("fs");
-const app = express();
-const port = 3000;
 
-app.use(express.static("./"));
-app.listen(port, function() {
-    console.log("server start");
-    open('http://localhost:' + port + '/docs/index.html');
+new WebpackDevServer(webpack(config), config.devServer)
+.listen(config.port, 'localhost', (err) => {
+  if (err) {
+    console.log(err);
+  }
+  console.log('Listening at localhost:' + config.port);
+  console.log('Opening your system browser...');
+  open('http://localhost:' + config.port + '/webpack-dev-server/');
 });

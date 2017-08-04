@@ -1,0 +1,33 @@
+@import "../index";
+
+.flex-horizontal-adapt-layout {
+    .display-flex();
+
+    .direction-horizontal();
+
+    .justify-content(flex-start);
+
+    .align-items(flex-start);
+
+    .flex-wrap();
+
+    & > .layout-item {
+        .display-flex();
+        > * {
+            .flex-grow();
+        }
+        &.layout-full-item {
+            .flex-grow();
+        }
+    }
+
+    &._stretch {
+        .align-items(stretch);
+    }
+    &._middle {
+        .align-items(center);
+    }
+    &._bottom {
+        .align-items(flex-end);
+    }
+}
