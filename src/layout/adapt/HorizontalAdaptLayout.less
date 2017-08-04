@@ -1,6 +1,6 @@
-@import "./index";
+@import "../index";
 
-.flex-horizontal-layout {
+.flex-horizontal-adapt-layout {
     .display-flex();
 
     .direction-horizontal();
@@ -11,8 +11,14 @@
 
     .flex-wrap();
 
-    &.layout-wrapper {
-        min-height: 100%;
+    & > .layout-item {
+        .display-flex();
+        > * {
+            .flex-grow();
+        }
+        &.layout-full-item {
+            .flex-grow();
+        }
     }
 
     &._stretch {

@@ -1,8 +1,9 @@
 import React, {
     Component
 } from 'react'
-import ReactDOM from 'react-dom'
+import cn from 'classnames'
 import Layout from './Layout'
+import './AbsoluteLayout.less'
 
 class AbsoluteLayout extends Component {
     constructor(props, context) {
@@ -10,8 +11,8 @@ class AbsoluteLayout extends Component {
     }
 
     render() {
-        const {children, ...props} = this.props;
-        return <Layout ref='container' {...props}>
+        const {children, className, ...props} = this.props;
+        return <Layout className={cn('bi-absolute-layout', className)} {...props}>
             {children}
         </Layout>
     }
@@ -22,19 +23,18 @@ class Item extends Component {
         super()
     }
 
-    componentDidMount() {
-        const ele = ReactDOM.findDOMNode(this.refs.container);
-        ele.style.position = 'absolute';
-        ele.style.left = this.props.left + 'px';
-        ele.style.right = this.props.right + 'px';
-        ele.style.top = this.props.top + 'px';
-        ele.style.bottom = this.props.bottom + 'px';
-    }
-
     render() {
-        return React.cloneElement(React.Children.only(this.props.children), {
-            ref: 'container'
-        })
+        const {children, style, left, right, top, bottom, ...props} = this.props;
+        return <Layout style={{
+            position: 'absolute',
+            left,
+            right,
+            top,
+            bottom,
+            ...style
+        }} {...props}>
+            {children}
+        </Layout>
     }
 }
 AbsoluteLayout.Item = Item;

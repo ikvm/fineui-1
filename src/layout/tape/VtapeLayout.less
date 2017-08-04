@@ -1,6 +1,6 @@
-@import "./index";
+@import "../index";
 
-.flex-vertical-layout {
+.flex-vertical-tape-layout {
     .display-flex();
 
     .direction-vertical();
@@ -10,6 +10,17 @@
     .align-items(stretch);
 
     .flex-wrap();
+
+    & > .layout-item {
+        .display-flex();
+        .flex-shrink();
+        > * {
+            .flex-grow();
+        }
+        &.layout-full-item {
+            .flex-grow();
+        }
+    }
 
     &._left {
         .align-items(flex-start);
