@@ -1,18 +1,25 @@
-@import "./index";
+@import "../index";
 
-.flex-horizontal-layout {
+.flex-horizontal-tape-layout {
     .display-flex();
 
     .direction-horizontal();
 
     .justify-content(flex-start);
 
-    .align-items(flex-start);
+    .align-items(stretch);
 
     .flex-wrap();
 
-    &.layout-wrapper {
-        min-height: 100%;
+    & > .layout-item {
+        .display-flex();
+        .flex-shrink();
+        > * {
+            .flex-grow();
+        }
+        &.layout-full-item {
+            .flex-grow();
+        }
     }
 
     &._stretch {

@@ -2,7 +2,7 @@ import React, {
     Component
 } from 'react'
 import cn from 'classnames'
-import Layout from './Layout'
+import Layout from '../Layout'
 import './HorizontalCenterLayout.less'
 
 const CLASS_NAME = 'flex-horizontal-center-layout'
