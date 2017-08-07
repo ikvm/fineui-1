@@ -16,8 +16,8 @@ class Layout extends Component {
                             overflowY: !scrollable && scrolly != null && (scrolly === true ? 'auto' : 'hidden')
                         },
                         ...(scrollable != null && {overflow: scrollable ? 'auto' : 'hidden'}),
-                        ...(scrollx ? {overflowY: 'hidden'} : {}),
-                        ...(scrolly ? {overflowX: 'hidden'} : {}),
+                        ...(scrollx && {overflowY: 'hidden'}),
+                        ...(scrolly && {overflowX: 'hidden'}),
                         ...(lgap != null && {marginLeft: lgap}),
                         ...(rgap != null && {marginRight: rgap}),
                         ...(tgap != null && {marginTop: tgap}),
