@@ -28,8 +28,8 @@ class App extends Component {
     render() {
         const { ...props } = this.props, { ...state } = this.state;
         return <AbsoluteLayout style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}>
-            <AbsoluteLayout.Item left={100} top={0}>
-                <LabelDemo></LabelDemo>
+            <AbsoluteLayout.Item left={400} top={200}>
+                <ButtonDemo></ButtonDemo>
             </AbsoluteLayout.Item>
         </AbsoluteLayout>
     }
