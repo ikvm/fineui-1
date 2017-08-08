@@ -11,7 +11,7 @@ class ButtonDemo extends Component {
         return <div style={{ margin: '10px' }}>
             {[
                 <Button className="test" handler={() => console.log("handler")}></Button>,
-                <Button className="test" level="common" >common</Button>,
+                <Button className="test" trigger='dblclick' level="common" >common</Button>,
                 <Button className="test" level="success" >success</Button>,
                 <Button className="test" level="warning" >warning</Button>,
                 <Button className="test" level="ignore" >ignore</Button>,
