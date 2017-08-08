@@ -23,7 +23,7 @@ class Layout extends Component {
                         ...(tgap != null && {marginTop: tgap}),
                         ...(bgap != null && {marginBottom: bgap}),
                         ...(hgap != null && {marginLeft: hgap, marginRight: hgap}),
-                        ...(vgap != null && {marginTop: tgap, marginBottom: tgap}),
+                        ...(vgap != null && {marginTop: vgap, marginBottom: vgap}),
                         width,
                         height,
                         ...style
