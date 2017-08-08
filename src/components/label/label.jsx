@@ -8,10 +8,10 @@ import './style/index.less'
 class Label extends Component {
     constructor(props) {
         super(props)
-        this.state={
-            redMark:false,
-            highLight:false,
-            text:''
+        this.state = {
+            redMark: false,
+            highLight: false,
+            text: ''
         }
     }
 
@@ -24,7 +24,7 @@ class Label extends Component {
     }
 
     _createCenterEl() {
-        const { baseCls, text, width, textWidth, textAlign,textPosition, height, whiteSpace, textHeight, ...props } = this.props
+        const { baseCls, text, width, textWidth, textAlign, textPosition, height, whiteSpace, textHeight, ...props } = this.props
 
         if (this._isValid(textWidth)) {//如果设置了文字宽度
             //设置文字宽度的情况下,如果 textAlign 为 left 或者 right,不仅文字排列要变,内层的 layout
@@ -71,7 +71,7 @@ class Label extends Component {
                     textOverflow: 'ellipsis',
                     lineHeight: height ? `${height}px` : 'normal'
                 }
-                return <Layout className={baseCls} width={width} height={height} style={styleObj} {...props}>{this.props.children}</Layout>
+                return <Layout className={baseCls} width={width} height={height} style={styleObj} {...props}>{this.props.children ? ths.props.children : text}</Layout>
             }
         }
     }
