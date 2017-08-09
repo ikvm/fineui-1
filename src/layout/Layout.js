@@ -8,7 +8,7 @@ class Layout extends Component {
     }
 
     render() {
-        const {children, scrollable, scrollx, scrolly, width, height, style, ...props} = this.props;
+        const {children, scrollable, scrollx, scrolly, width, height, lgap, rgap, tgap, bgap, hgap, vgap, style, ...props} = this.props;
         return <div {...props}
                     style={{
                         ...{
@@ -16,8 +16,14 @@ class Layout extends Component {
                             overflowY: !scrollable && scrolly != null && (scrolly === true ? 'auto' : 'hidden')
                         },
                         ...(scrollable != null && {overflow: scrollable ? 'auto' : 'hidden'}),
-                        ...(scrollx ? {overflowY: 'hidden'} : {}),
-                        ...(scrolly ? {overflowX: 'hidden'} : {}),
+                        ...(scrollx && {overflowY: 'hidden'}),
+                        ...(scrolly && {overflowX: 'hidden'}),
+                        ...(lgap != null && {marginLeft: lgap}),
+                        ...(rgap != null && {marginRight: rgap}),
+                        ...(tgap != null && {marginTop: tgap}),
+                        ...(bgap != null && {marginBottom: bgap}),
+                        ...(hgap != null && {marginLeft: hgap, marginRight: hgap}),
+                        ...(vgap != null && {marginTop: vgap, marginBottom: vgap}),
                         width,
                         height,
                         ...style
