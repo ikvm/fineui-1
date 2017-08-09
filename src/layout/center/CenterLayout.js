@@ -13,7 +13,7 @@ class CenterLayout extends Component {
     }
 
     render() {
-        const {children, className, ...props} = this.props;
+        const { children, className, ...props } = this.props;
         return <Layout
             className={cn((props.scrollx || props.scrolly) ? 'clearfix' : CLASS_NAME, className)} {...props}>
             {(props.scrollx || props.scrolly) ?
