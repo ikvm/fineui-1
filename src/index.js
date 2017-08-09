@@ -5,6 +5,6 @@ import App from './example/App';
 import 'reset.css';
 import './layout'
 
-ReactDOM.render(<App style={{color: 'red'}}/>,
+ReactDOM.render(<App/>,
     document.getElementById('app')
 );
