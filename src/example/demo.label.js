@@ -1,15 +1,37 @@
 import React, { Component } from 'react'
-import { VerticalLayout } from '../layout'
+import { VerticalLayout,CenterLayout } from '../layout'
 import Label from '../components/label'
+import Button from '../components/button'
 
 class LabelDemo extends Component {
     constructor(props) {
         super(props)
+        this.state={
+            isRedMark:false,
+            isHighLight:false
+        }
     }
+
+    redMarkHandler=()=>{
+        this.state.isRedMark?this.label.unRedMark():this.label.doRedMark();
+        this.setState({
+            isRedMark:!this.state.isRedMark
+        })
+    }
+
+    highLightHandler=()=>{
+        this.state.isHighLight?this.label.unHighLight():this.label.doHighLight();
+        this.setState({
+            isHighLight:!this.state.isHighLight
+        })
+    }
+
+
 
     render() {
         return <VerticalLayout width={800}>
-            <Label whiteSpace='normal' textAlign='left' height={100} width={600} textWidth={300} textHeight={30} vgap={20}>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度,textAlign为left</Label>
+            <CenterLayout><Button hgap={20} handler={this.redMarkHandler}>切换标红</Button><Button  handler={this.highLightHandler}>切换高亮</Button></CenterLayout>
+            <Label whiteSpace='normal' ref={(label)=>this.label=label} textAlign='left' height={100} width={600} textWidth={300} textHeight={30} vgap={20}>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度,textAlign为left</Label>
             <Label whiteSpace='normal' height={100} width={600} textWidth={300} textHeight={30} vgap={20}>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度.如果文字太长了的话,那么滚动条是很有必要的.不信你看</Label>
 
             <Label whiteSpace='normal' textAlign='right' height={100} width={600} textWidth={300} vgap={20}>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字宽度,没有文字高度,textAlign为right</Label>
@@ -33,7 +55,7 @@ class LabelDemo extends Component {
             <Label height={60} vgap={20}>whiteSpace为nowrap,默认居中,不设宽度度的效果填满父组件</Label>
             <Label whiteSpace='normal' height={60} textHeight={30} vgap={20}>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了高度,文字高度30,如果文字太长了的话,那么滚动条是很有必要的.不信你看,多加点字效果更明显一点,在多加点.more more more more more more more more moremore more more more more more more more more</Label>
 
-            <Label whiteSpace='normal' height={60} text='也可以通过text属性来设置label文字' textHeight={30} vgap={20}></Label>
+            <Label height={60} text='也可以通过text属性来设置label文字' textHeight={30} vgap={20}></Label>
         </VerticalLayout>
 
     }

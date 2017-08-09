@@ -28,9 +28,6 @@ class App extends Component {
     render() {
         const {...props} = this.props, {...state} = this.state;
         return <HorizontalCenterLayout style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}>
-                <div>123</div>
-
-                <div>123</div>
                 <LabelDemo></LabelDemo>
         </HorizontalCenterLayout>
     }

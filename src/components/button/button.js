@@ -14,7 +14,7 @@ import './style/index.less'
 import classNames from 'classnames'
 import Icon from '../icon'
 import Text from '../text'
-import HorizontalLayout from '/Users/liurongxin/dailer/FineReact/src/layout/AbsoluteLayout.js'
+import {CenterLayout} from '../../layout'
 export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
 export const Trigger = 'lclick' || 'mousedown' || 'dblclick' || 'mouseup'
 
@@ -30,7 +30,6 @@ export default class Button extends React.Component {
         const { disabled, handler } = this.props
         if (!disabled && handler) {
             handler()
-            console.log("点击事件触发")
         } else {
             console.log("点击事件触发,但没有 handler,所以啥也不干")
         }
@@ -38,40 +37,40 @@ export default class Button extends React.Component {
 
 //设置触发方式,未完待续
     bindEvent = (dom) => {
-        const { trigger } = this.props
-        switch (trigger) {
-            case 'click':
-                dom.addEventListener('click', (e) => {
-                    e.stopPropagation()
-                    console.log('click')
-                })
-                break
-            case 'dblclick':
-                dom.addEventListener('dblclick', (e) => {
-                    e.stopPropagation()
-                    console.log('dblclick')
-                })
-                break
-            case 'mousedown':
-                dom.addEventListener('mousedown', (e) => {
-                    e.stopPropagation()
-                    console.log('mousedown')
-                })
-                break
-            case 'mouseup':
-                dom.addEventListener('mouseup', (e) => {
-                    e.stopPropagation()
-                    console.log('mouseup')
-                })
-                break
-            default:
-                break
-        }
+        // const { trigger } = this.props
+        // switch (trigger) {
+        //     case 'click':
+        //         dom.addEventListener('click', (e) => {
+        //             e.stopPropagation()
+        //             console.log('click')
+        //         })
+        //         break
+        //     case 'dblclick':
+        //         dom.addEventListener('dblclick', (e) => {
+        //             e.stopPropagation()
+        //             console.log('dblclick')
+        //         })
+        //         break
+        //     case 'mousedown':
+        //         dom.addEventListener('mousedown', (e) => {
+        //             e.stopPropagation()
+        //             console.log('mousedown')
+        //         })
+        //         break
+        //     case 'mouseup':
+        //         dom.addEventListener('mouseup', (e) => {
+        //             e.stopPropagation()
+        //             console.log('mouseup')
+        //         })
+        //         break
+        //     default:
+        //         break
+        // }
     }
 
     render() {
 
-        const { level = ButonLevel, clear = false, className, baseCls, disabled = false } = this.props
+        const { level = ButonLevel, clear = false, className, baseCls, disabled = false,...props } = this.props
 
         let classes = classNames(className, baseCls, {
             [`${baseCls}-${level}`]: level,
@@ -81,9 +80,9 @@ export default class Button extends React.Component {
 
         let text = <Text>{this.props.children ? this.props.children : '默认'}</Text>
 
-        return <HorizontalLayout className={classes} ref={this.bindEvent} >
-            <div style={{ width: '35px' }}>{this.props.children}</div>
-        </HorizontalLayout>
+        return <CenterLayout className={classes} scrollable={false} width={60} ref={this.bindEvent} onClick={this.handleClick} {...props} >
+            {this.props.children}
+        </CenterLayout>
     }
 }
 

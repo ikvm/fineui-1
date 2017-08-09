@@ -11,7 +11,7 @@ class Label extends Component {
         this.state = {
             redMark: false,
             highLight: false,
-            text: ''
+            text: '345'
         }
     }
 
@@ -32,10 +32,11 @@ class Label extends Component {
                 let styleObj = {
                     whiteSpace: 'normal',
                     textAlign: textAlign,
-                    lineHeight: textHeight ? `${textHeight}px` : 'normal'
+                    lineHeight: textHeight ? `${textHeight}px` : 'normal',
+                    color:this.state.redMark?'red':this.state.highLight?'#3f8ce8':'inherit'
                 }
                 return <CenterLayout className={baseCls} scrolly={true} width={width} height={height} {...props}>
-                    <Layout width={textWidth} style={styleObj}  >{this.props.children}</Layout>
+                    <Layout width={textWidth} style={styleObj}  >{this.props.children ? this.props.children : text}</Layout>
                 </CenterLayout>
             }
             else {//whitespace 如果是 nowrap,我理解的就是不换行,超出了就三个小点,反正都是只有一行了,让文字垂直居中就好了
@@ -47,7 +48,7 @@ class Label extends Component {
                     lineHeight: textHeight ? `${textHeight}px` : 'normal'
                 }
                 return <CenterLayout className={baseCls} width={width} height={height} {...props}>
-                    <Layout width={textWidth} style={styleObj}  >{this.props.children}</Layout>
+                    <Layout width={textWidth} style={styleObj}  >{this.props.children ? this.props.children : text}</Layout>
                 </CenterLayout>
             }
         }
@@ -59,7 +60,7 @@ class Label extends Component {
                     lineHeight: textHeight ? `${textHeight}px` : 'normal'
                 }
                 return <CenterLayout className={baseCls} width={width} height={height} scrolly={true} style={styleObj} {...props}>
-                    {this.props.children}
+                    {this.props.children ? this.props.children : text}
                 </CenterLayout>
             }
             else {//whitespace 如果是 nowrap,那就不换行咯
@@ -69,13 +70,41 @@ class Label extends Component {
                     textAlign: textAlign,
                     overflowX: 'hidden',
                     textOverflow: 'ellipsis',
-                    lineHeight: height ? `${height}px` : 'normal'
+                    lineHeight: height ? `${height}px` : 'normal',
+                    color:this.state.redMark?'red':'inherit'
                 }
                 return <Layout className={baseCls} width={width} height={height} style={styleObj} {...props}>{this.props.children ? this.props.children : text}</Layout>
             }
         }
     }
 
+
+    //其实这些效果实现在单独的 text 组件中更好
+    doRedMark=()=>{
+        console.log("要做 redmark 了")
+        this.setState({
+            redMark:true
+        })
+    }
+    unRedMark=()=>{
+        console.log("取消 redmark")
+        this.setState({
+            redMark:false
+        })
+    }
+
+    doHighLight=()=>{
+        console.log("要做 highlight 了")
+        this.setState({
+            highLight:true
+        })
+    }
+    unHighLight=()=>{
+        console.log("取消 highlight")
+        this.setState({
+            highLight: false
+        })
+    }
 
     render() {
         // const { className, baseCls, textAlign, height, whiteSpace, ...props } = this.props
