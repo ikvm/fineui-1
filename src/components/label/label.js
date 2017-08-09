@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 import { CenterLayout, Layout, HorizontalAdaptLayout, VerticalAdaptLayout, HorizontalCenterLayout, VerticalCenterLayout } from '../../layout'
+import Text from '../text'
 import isNumber from 'lodash/isNumber'
 import every from 'lodash/every'
 import './style/index.less'
@@ -8,11 +9,6 @@ import './style/index.less'
 class Label extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            redMark: false,
-            highLight: false,
-            text: '345'
-        }
     }
 
     _isValid(num) {
@@ -33,10 +29,10 @@ class Label extends Component {
                     whiteSpace: 'normal',
                     textAlign: textAlign,
                     lineHeight: textHeight ? `${textHeight}px` : 'normal',
-                    color:this.state.redMark?'red':this.state.highLight?'#3f8ce8':'inherit'
+                    border:'1px dotted #cccccc'
                 }
                 return <CenterLayout className={baseCls} scrolly={true} width={width} height={height} {...props}>
-                    <Layout width={textWidth} style={styleObj}  >{this.props.children ? this.props.children : text}</Layout>
+                    <Text ref={(text)=>this.text=text} width={textWidth} style={styleObj}  >{this.props.children ? this.props.children : text}</Text>
                 </CenterLayout>
             }
             else {//whitespace 如果是 nowrap,我理解的就是不换行,超出了就三个小点,反正都是只有一行了,让文字垂直居中就好了
@@ -45,10 +41,11 @@ class Label extends Component {
                     textAlign: textAlign,
                     overflowX: 'hidden',
                     textOverflow: 'ellipsis',
-                    lineHeight: textHeight ? `${textHeight}px` : 'normal'
+                    lineHeight: textHeight ? `${textHeight}px` : 'normal',
+                    border:'1px dotted #cccccc'
                 }
                 return <CenterLayout className={baseCls} width={width} height={height} {...props}>
-                    <Layout width={textWidth} style={styleObj}  >{this.props.children ? this.props.children : text}</Layout>
+                    <Text ref={(text)=>this.text=text} width={textWidth} style={styleObj}  >{this.props.children ? this.props.children : text}</Text>
                 </CenterLayout>
             }
         }
@@ -59,8 +56,9 @@ class Label extends Component {
                     textAlign: textAlign,
                     lineHeight: textHeight ? `${textHeight}px` : 'normal'
                 }
-                return <CenterLayout className={baseCls} width={width} height={height} scrolly={true} style={styleObj} {...props}>
-                    {this.props.children ? this.props.children : text}
+                return <CenterLayout className={baseCls} width={width} height={height} scrolly={true} {...props}>
+                    {/*这里有一个需要注意,因为有不设置宽度,但是又设置了高度的情况,那么肯定需要滚动,但是不知道宽度怎么滚动啊,所以这里width 设为 '100%'*/}
+                    <Text ref={(text)=>this.text=text} width={'100%'} style={styleObj}>{this.props.children ? this.props.children : text}</Text>
                 </CenterLayout>
             }
             else {//whitespace 如果是 nowrap,那就不换行咯
@@ -71,39 +69,28 @@ class Label extends Component {
                     overflowX: 'hidden',
                     textOverflow: 'ellipsis',
                     lineHeight: height ? `${height}px` : 'normal',
-                    color:this.state.redMark?'red':'inherit'
+                    maxWidth:'100%'
                 }
-                return <Layout className={baseCls} width={width} height={height} style={styleObj} {...props}>{this.props.children ? this.props.children : text}</Layout>
+                return <Text ref={(text)=>this.text=text} className={baseCls} width={width} height={height} style={styleObj} {...props}>{this.props.children ? this.props.children : text}</Text>
             }
         }
     }
 
 
-    //其实这些效果实现在单独的 text 组件中更好
+    //todo: 把标红和高亮的逻辑实现到<Text/>中,便于复用
+    //already done
     doRedMark=()=>{
-        console.log("要做 redmark 了")
-        this.setState({
-            redMark:true
-        })
+        this.text.doRedMark()
     }
     unRedMark=()=>{
-        console.log("取消 redmark")
-        this.setState({
-            redMark:false
-        })
+        this.text.unRedMark()
     }
 
     doHighLight=()=>{
-        console.log("要做 highlight 了")
-        this.setState({
-            highLight:true
-        })
+        this.text.doHighLight()
     }
     unHighLight=()=>{
-        console.log("取消 highlight")
-        this.setState({
-            highLight: false
-        })
+      this.text.unHighLight()
     }
 
     render() {
