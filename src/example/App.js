@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import LabelDemo from './demo.label'
 import range from 'lodash/range'
 
 import {
@@ -30,6 +31,7 @@ class App extends Component {
                 <div>123</div>
 
                 <div>123</div>
+                <LabelDemo></LabelDemo>
         </HorizontalCenterLayout>
     }
 }

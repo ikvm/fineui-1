@@ -71,7 +71,7 @@ class Label extends Component {
                     textOverflow: 'ellipsis',
                     lineHeight: height ? `${height}px` : 'normal'
                 }
-                return <Layout className={baseCls} width={width} height={height} style={styleObj} {...props}>{this.props.children ? ths.props.children : text}</Layout>
+                return <Layout className={baseCls} width={width} height={height} style={styleObj} {...props}>{this.props.children ? this.props.children : text}</Layout>
             }
         }
     }
