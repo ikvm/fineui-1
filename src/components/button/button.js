@@ -10,14 +10,15 @@ clear | 清楚背景和边框 | boolbean | false
  */
 
 import React from 'react'
-import './style/index.less'
 import classNames from 'classnames'
 import Icon from '../icon'
 import Text from '../text'
-import {CenterLayout} from '../../layout'
+import { CenterLayout } from '../../layout'
 export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
 export const Trigger = 'lclick' || 'mousedown' || 'dblclick' || 'mouseup'
 
+
+const CLASS_NAME = 'bi-button'
 
 export default class Button extends React.Component {
     constructor(props) {
@@ -25,9 +26,13 @@ export default class Button extends React.Component {
         this.state = {}
     }
 
+    static defaultProps = {
+        trigger: "click"
+    }
+
     handleClick = (e) => {
         e.stopPropagation();
-        const { disabled, handler } = this.props
+        const {disabled, handler} = this.props
         if (!disabled && handler) {
             handler()
         } else {
@@ -35,7 +40,7 @@ export default class Button extends React.Component {
         }
     }
 
-//设置触发方式,未完待续
+    //设置触发方式,未完待续
     bindEvent = (dom) => {
         // const { trigger } = this.props
         // switch (trigger) {
@@ -70,23 +75,19 @@ export default class Button extends React.Component {
 
     render() {
 
-        const { level = ButonLevel, clear = false, className, baseCls, disabled = false,...props } = this.props
+        const {level = ButonLevel, handler, trigger, clear = false, className, disabled = false, ...props} = this.props
 
-        let classes = classNames(className, baseCls, {
+        let classes = classNames(className, CLASS_NAME, {
             [`${baseCls}-${level}`]: level,
             [`${baseCls}-${level}-clear`]: clear,
             [`${baseCls}-${level}-disabled`]: disabled
         })
 
-        let text = <Text>{this.props.children ? this.props.children : '默认'}</Text>
+        let text = <Text>
+                     { this.props.children ? this.props.children : '默认' } </Text>
 
-        return <CenterLayout className={classes} scrollable={false} width={60} ref={this.bindEvent} onClick={this.handleClick} {...props} >
-            {this.props.children}
-        </CenterLayout>
+        return <CenterLayout className={ classes } scrollable={ false } width={ 60 } ref={ this.bindEvent } onClick={ this.handleClick } { ...props
+                 }>
+                 { this.props.children } </CenterLayout>
     }
-}
-
-Button.defaultProps = {
-    baseCls: 'bi-button',
-    trigger: "click"
 }
