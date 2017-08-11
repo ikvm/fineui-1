@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
 import { Layout } from '../../layout'
+import cn from 'classnames'
 
-//先用这个假装一个图标
 class Text extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            redMark: false,
-            highLight: false
+            redMark: false
         }
     }
 
     static defaultProps = {
         text: '',
         py: '',
-        keyword: ''
+        keyword: '',
+        highLight: false
     }
 
     render() {
-        const {text, py, keyword, ...props} = this.props
+        const {className, text, py, keyword, highLight, ...props} = this.props
         let temp = null
         if (keyword !== '') {
             let a = this.props.children.split(keyword)
@@ -32,7 +32,9 @@ class Text extends Component {
                      { [...result] }
                    </Layout>
         } else {
-            temp = <Layout { ...props }>
+            temp = <Layout className={ cn(className, {
+                        highLight: highLight
+                    }) } { ...props }>
                      { this.props.children }
                    </Layout>
         }

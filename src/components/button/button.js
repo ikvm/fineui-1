@@ -78,9 +78,9 @@ export default class Button extends React.Component {
         const {level = ButonLevel, handler, trigger, clear = false, className, disabled = false, ...props} = this.props
 
         let classes = classNames(className, CLASS_NAME, {
-            [`${baseCls}-${level}`]: level,
-            [`${baseCls}-${level}-clear`]: clear,
-            [`${baseCls}-${level}-disabled`]: disabled
+            [`${CLASS_NAME}-${level}`]: level,
+            [`${CLASS_NAME}-${level}-clear`]: clear,
+            [`${CLASS_NAME}-${level}-disabled`]: disabled
         })
 
         let text = <Text>

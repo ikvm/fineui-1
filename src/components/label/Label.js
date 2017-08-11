@@ -39,7 +39,7 @@ class Label extends Component {
     }
 
     _createCenterEl() {
-        const {className, text, textWidth, textAlign, forceCenter, py, keyword, whiteSpace, textHeight, ...props} = this.props
+        const {className, text, textWidth, textAlign, forceCenter, py, keyword, highLight, whiteSpace, textHeight, ...props} = this.props
 
         if (this._isValid(textWidth)) { //如果设置了文字宽度
             //设置文字宽度的情况下,如果 textAlign 为 left 或者 right,不仅文字排列要变,内层的 layout
