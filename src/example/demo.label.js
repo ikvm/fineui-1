@@ -8,21 +8,18 @@ class LabelDemo extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isRedMark: false,
+            keyword: '',
             isHighLight: false
         }
     }
 
     redMarkHandler = () => {
-        this.state.isRedMark ? this.label.unRedMark() : this.label.doRedMark('label');
-        this.state.isRedMark ? this.noTextWidthLabel.unRedMark() : this.noTextWidthLabel.doRedMark();
         this.setState({
-            isRedMark: !this.state.isRedMark
+            keyword: '高度'
         })
     }
 
     highLightHandler = () => {
-        this.state.isHighLight ? this.label.unHighLight() : this.label.doHighLight();
         this.setState({
             isHighLight: !this.state.isHighLight
         })
@@ -38,7 +35,7 @@ class LabelDemo extends Component {
                    <Button handler={ this.highLightHandler }>切换高亮</Button>
                  </CenterLayout>
                  关键点就是几个重要因素, 是否有宽高, 是否设定了文字区域宽, whiteSpace 是什么,为了看着方便,暂时先给文本区域加个小边框
-                 <Label whiteSpace='normal' ref={ (label) => this.label = label } keyword='label' textAlign='left' height={ 100 } width={ 600 } textWidth={ 300 }
+                 <Label whiteSpace='normal' keyword={ this.state.keyword } highLight={ this.state.isHighLight } textAlign='left' height={ 100 } width={ 600 } textWidth={ 300 }
                    textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度,textAlign为left</Label>
                  <Label whiteSpace='normal' width={ 100 } textWidth={ 50 } vgap={ 20 }>label</Label>
                  <Label whiteSpace='normal' height={ 100 } width={ 600 } textWidth={ 300 } textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度.如果文字太长了的话,那么滚动条是很有必要的.不信你看</Label>
@@ -54,10 +51,12 @@ class LabelDemo extends Component {
                  <Label whiteSpace='normal' width={ 600 } textHeight={ 30 } vgap={ 20 }>没设高度,也没有文字宽度,所以就是被撑开嘛,文字有多少就撑多高,whiteSpace为normal,textHeight=30 自然不会出现滚动的效果,多加点字效果更明显一点,在多加点.more more more more more more more more more</Label>
                  <Label whiteSpace='normal' width={ 600 } height={ 60 } textHeight={ 30 } vgap={ 20 }>有高度,没有文字宽度,那么就撑满容器,whiteSpace为normal,textHeight=30 可以滚动的效果,多加点字效果更明显一点,在多加点.more more more more more more more more more</Label>
                  <Label whiteSpace='normal' textHeight={ 30 } vgap={ 20 }>没设高度,也没有文字宽度,要是不给宽度的话,最大宽度就是容器宽度,所以就是被撑开嘛,文字有多少就撑多高,whiteSpace为normal,textHeight=30 自然不会出现滚动的效果,多加点字效果更明显一点,在多加点.more more more more more more more more more</Label>
+                 <Label whiteSpace='normal' height={ 60 } vgap={ 20 }>设置高度,要是不给宽度的话,最大宽度就是容器宽度,所以就是被撑开嘛,但有高度所以不会无限扩张,超过高度了会出滚动条,不信你看,多加点字效果更明显一点,在多加点.more more more more more more more more moremore more more more more more more
+                   more more moremore more more</Label>
                  <Label width={ 600 } height={ 60 } vgap={ 20 }>whiteSpace为nowrap,默认居中,设置了宽度高度,textHeight=30 的效果,多写几个字就出现三个点了</Label>
                  <Label width={ 600 } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设高度的效果</Label>
-                 <Label height={ 60 } width={ 250 } ref={ (label) => this.noTextWidthLabel = label } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设宽度度的效果填满父组件,设置宽度的话如果文字太长就出现3个点了</Label>
-                 <Label height={ 60 } ref={ (label) => this.noTextWidthLabel = label } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设宽度度的效果填满父组件,设置宽度的话如果文字太长就出现3个点了,多添加点文字,more more more</Label>
+                 <Label height={ 60 } width={ 250 } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设宽度度的效果填满父组件,设置宽度的话如果文字太长就出现3个点了</Label>
+                 <Label height={ 60 } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设宽度度的效果填满父组件,设置宽度的话如果文字太长就出现3个点了,多添加点文字,more more more</Label>
                  <Label whiteSpace='normal' height={ 60 } textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了高度,但没有宽度,文字高度30,如果文字太长了的话,那么滚动条是很有必要的.不信你看,多加点字效果更明显一点,在多加点.more more more more more more more more moremore more more
                    more more more more more more</Label>
                  <Label height={ 60 } text='也可以通过text属性来设置label文字' textHeight={ 30 } vgap={ 20 }></Label>

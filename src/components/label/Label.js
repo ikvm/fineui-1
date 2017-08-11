@@ -27,7 +27,8 @@ class Label extends Component {
         bgap: 0,
         text: "",
         py: "",
-        keyword: ""
+        keyword: "",
+        highLight: false
     };
 
     _isValid(num) {
@@ -51,7 +52,7 @@ class Label extends Component {
                     border: '1px dotted #cccccc'
                 }
                 return <CenterLayout className={ cn(CLASS_NAME, className) } scrolly={ true } {...props}>
-                         <Text ref={ (text) => this.text = text } width={ textWidth } keyword={ keyword } py={ py } style={ styleObj }>
+                         <Text width={ textWidth } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
                            { this.props.children ? this.props.children : text }
                          </Text>
                        </CenterLayout>
@@ -65,7 +66,7 @@ class Label extends Component {
                     border: '1px dotted #cccccc'
                 }
                 return <CenterLayout className={ cn(CLASS_NAME, className) } {...props}>
-                         <Text ref={ (text) => this.text = text } width={ textWidth } keyword={ keyword } py={ py } style={ styleObj }>
+                         <Text width={ textWidth } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
                            { this.props.children ? this.props.children : text }
                          </Text>
                        </CenterLayout>
@@ -79,7 +80,7 @@ class Label extends Component {
                 }
                 return <CenterLayout className={ cn(CLASS_NAME, className) } scrolly={ true } {...props}>
                          { /*这里有一个需要注意,因为有不设置宽度,但是又设置了高度的情况,那么肯定需要滚动,但是不知道宽度怎么滚动啊,所以这里width 设为 '100%'*/ }
-                         <Text ref={ (text) => this.text = text } width={ '100%' } keyword={ keyword } py={ py } style={ styleObj }>
+                         <Text width={ '100%' } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
                            { this.props.children ? this.props.children : text }
                          </Text>
                        </CenterLayout>
@@ -93,9 +94,15 @@ class Label extends Component {
                     lineHeight: this.props.height ? `${this.props.height}px` : 'normal',
                     maxWidth: '100%'
                 }
-                return <Text ref={ (text) => this.text = text } className={ cn(CLASS_NAME, className) } keyword={ keyword } py={ py } style={ styleObj } {...props}>
+                return <Text className={ cn(CLASS_NAME, className) } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj } {...props}>
                          { this.props.children ? this.props.children : text }
                        </Text>
+                // <CenterLayout className={ cn(CLASS_NAME, className) } style={ { maxWidth: '100%' } } {...props}>
+                //      <Text keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
+                //        { this.props.children ? this.props.children : text }
+                //      </Text>
+                //    </CenterLayout>
+
             }
         }
     }

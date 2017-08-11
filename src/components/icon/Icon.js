@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Layout } from '../../layout'
+import cn from 'classnames'
 
+const CLASS_NAME = 'bi-icon'
 
 
 class Icon extends Component {
@@ -9,13 +11,13 @@ class Icon extends Component {
     }
 
     static defaultProps = {
-
+        type: ''
     }
 
     render() {
-        return (
-            <Layout></Layout>
-        )
+        const {type, ...props} = this.props
+
+        return <i className={ cn(CLASS_NAME, type) }></i>
     }
 }
 
