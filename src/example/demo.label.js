@@ -13,10 +13,14 @@ class LabelDemo extends Component {
         }
     }
 
+    mockData =['', '高度', 'hbs', 'kd']
+
     redMarkHandler = () => {
+        let temp = this.mockData.pop()
         this.setState({
-            keyword: '高度'
+            keyword: temp
         })
+        this.mockData.unshift(temp)
     }
 
     highLightHandler = () => {
@@ -36,7 +40,7 @@ class LabelDemo extends Component {
                  </CenterLayout>
                  关键点就是几个重要因素, 是否有宽高, 是否设定了文字区域宽, whiteSpace 是什么,为了看着方便,暂时先给文本区域加个小边框
                  <Label whiteSpace='normal' keyword={ this.state.keyword } highLight={ this.state.isHighLight } textAlign='left' height={ 100 } width={ 600 } textWidth={ 300 }
-                   textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度,textAlign为left</Label>
+                   textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中河北省,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度,textAlign为left</Label>
                  <Label whiteSpace='normal' width={ 100 } textWidth={ 50 } vgap={ 20 }>label</Label>
                  <Label whiteSpace='normal' height={ 100 } width={ 600 } textWidth={ 300 } textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度.如果文字太长了的话,那么滚动条是很有必要的.不信你看</Label>
                  <Label whiteSpace='normal' textAlign='right' height={ 100 } width={ 600 } textWidth={ 300 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字宽度,没有文字高度,textAlign为right</Label>

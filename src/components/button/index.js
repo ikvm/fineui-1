@@ -1,3 +1,3 @@
 import Button from './button.js'
-import './index.less'
+import './Button.less'
 export default Button

@@ -1,4 +1,4 @@
 import Icon from './Icon.js'
-import './index.less'
+import './Icon.less'
 
 export default Icon

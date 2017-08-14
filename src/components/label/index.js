@@ -1,4 +1,4 @@
 import Label from './label.js'
-import './index.less'
+import './Label.less'
 
 export default Label

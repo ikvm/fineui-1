@@ -20,11 +20,14 @@ class Text extends Component {
         highLight: false
     }
 
+
+    //need todo:多音字问题
+    //done
     render() {
         const {className, text, py, keyword, highLight, ...props} = this.props
         let temp = null
         let makeTag = (res) => {
-            return <span style={ { color: 'red' } }>{ res }</span>
+            return <span className='keyword-red-mark'>{ res }</span>
         }
         if (keyword !== '') {
             let text = this.props.children + '' || text
@@ -32,20 +35,20 @@ class Text extends Component {
             let result = []
             if (a.length > 1) {
                 //匹配到文字
-                let red = <span style={ { color: 'red' } }>{ keyword }</span>
+                let red = <span className='keyword-red-mark'>{ keyword }</span>
                 a.forEach((e) => {
-                    result.push(e, red)
+                    result.push(e, makeTag(keyword))
                 })
                 result.pop()
             } else {
                 //改用拼音方式
                 let py = makeFirstPy(text)
+                py = py.slice(0, text.length)
+                console.log(py)
                 let keywordLength = keyword.length
                 let fromIndex = 0
                 while (true) {
                     let tindex = py.indexOf(keyword, fromIndex) //先找到第一个匹配的 index
-                    //debugger
-                    console.log('位置', fromIndex, tindex)
                     if (tindex < 0) { //如果找不到了就跳出,别忘了把剩余的部分放到结果数组里
                         result.push(text.substr(fromIndex))
                         break

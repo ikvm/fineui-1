@@ -15,7 +15,7 @@ import Icon from '../icon'
 import Text from '../text'
 import { CenterLayout } from '../../layout'
 export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
-export const Trigger = 'lclick' || 'mousedown' || 'dblclick' || 'mouseup'
+export const Trigger = 'click' || 'mousedown' || 'dbclick' || 'mouseup'
 
 
 const CLASS_NAME = 'bi-button'
@@ -30,6 +30,32 @@ export default class Button extends React.Component {
         trigger: "click"
     }
 
+    //设置触发方式
+    _bindEvent = (trigger) => {
+        let bindEvent = {}
+        let triggerArr = (trigger || '').split(',')
+        triggerArr.forEach((t, index) => {
+            switch (t) {
+                case 'click':
+                    bindEvent.onClick = this.handleClick
+                    break
+                case 'dbclick':
+                    bindEvent.onDoubleClick = this.handleDoubleClick
+                    break
+                case 'mousedown':
+                    bindEvent.onMouseDown = this.handleMouseDown
+                    break
+                case 'mouseup':
+                    bindEvent.onMouseUp = this.handleMouseUp
+                    break
+                default:
+                    bindEvent.onClick = this.handleClick
+            }
+        })
+        return bindEvent
+    }
+
+
     handleClick = (e) => {
         e.stopPropagation();
         const {disabled, handler} = this.props
@@ -39,55 +65,36 @@ export default class Button extends React.Component {
             console.log("点击事件触发,但没有 handler,所以啥也不干")
         }
     }
-
-    //设置触发方式,未完待续
-    bindEvent = (dom) => {
-        // const { trigger } = this.props
-        // switch (trigger) {
-        //     case 'click':
-        //         dom.addEventListener('click', (e) => {
-        //             e.stopPropagation()
-        //             console.log('click')
-        //         })
-        //         break
-        //     case 'dblclick':
-        //         dom.addEventListener('dblclick', (e) => {
-        //             e.stopPropagation()
-        //             console.log('dblclick')
-        //         })
-        //         break
-        //     case 'mousedown':
-        //         dom.addEventListener('mousedown', (e) => {
-        //             e.stopPropagation()
-        //             console.log('mousedown')
-        //         })
-        //         break
-        //     case 'mouseup':
-        //         dom.addEventListener('mouseup', (e) => {
-        //             e.stopPropagation()
-        //             console.log('mouseup')
-        //         })
-        //         break
-        //     default:
-        //         break
-        // }
+    handleDoubleClick = (e) => {
+        console.log('dbclick')
     }
+    handleMouseDown = (e) => {
+        console.log('mousedown')
+    }
+    handleMouseUp = (e) => {
+        console.log('mouseup')
+    }
+
 
     render() {
 
-        const {level = ButonLevel, handler, trigger, clear = false, className, disabled = false, ...props} = this.props
-
+        const {level = ButonLevel, handler, iconCls, trigger, clear = false, className, disabled = false, ...props} = this.props
+        //控制样式
         let classes = classNames(className, CLASS_NAME, {
             [`${CLASS_NAME}-${level}`]: level,
             [`${CLASS_NAME}-${level}-clear`]: clear,
             [`${CLASS_NAME}-${level}-disabled`]: disabled
         })
 
-        let text = <Text>
-                     { this.props.children ? this.props.children : '默认' } </Text>
-
-        return <CenterLayout className={ classes } scrollable={ false } width={ 60 } ref={ this.bindEvent } onClick={ this.handleClick } { ...props
-                 }>
-                 { this.props.children } </CenterLayout>
+        let icon = null
+        if (iconCls) {
+            icon = <CenterLayout width={ 30 } height={ 30 }>
+                     <Icon></Icon>
+                   </CenterLayout>
+        }
+        return <CenterLayout className={ classes } scrollable={ false } {...this._bindEvent(trigger)} { ...props }>
+                 { icon }
+                 { this.props.children }
+               </CenterLayout>
     }
 }
