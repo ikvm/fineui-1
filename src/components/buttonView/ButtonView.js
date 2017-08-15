@@ -14,7 +14,7 @@ export const Trigger = 'click' || 'mousedown' || 'dbclick' || 'mouseup'
 
 const CLASS_NAME = 'bi-basic-button'
 
-export default class Button extends React.Component {
+export default class ButtonView extends React.Component {
     constructor(props, context) {
         super(props, context)
         this.state = {}
@@ -22,7 +22,6 @@ export default class Button extends React.Component {
 
     static defaultProps = {
         trigger: "click",
-        once: false,
         handler: () => {
         }
     }
@@ -80,7 +79,7 @@ export default class Button extends React.Component {
 
         const {handler, trigger, className, ...props} = this.props
 
-        return <CenterLayout className={ cn(CLASS_NAME, className) } scrollable={ false } {...this._bindEvent(trigger)} { ...props }>
+        return <CenterLayout className={ cn(CLASS_NAME, className) } whiteSpace='nowrap' {...this._bindEvent(trigger)} { ...props }>
                  { this.props.children }
                </CenterLayout>
     }

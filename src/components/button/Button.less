@@ -1,6 +1,7 @@
 .bi-button {
     position: relative;
     cursor: pointer;
+    padding: 0 10px;
     font-size: 14px;
     min-width: 35px;
     line-height: 28px;
@@ -9,6 +10,14 @@
     border: 1px solid #178cdf;
     border-radius: 2px;
     background-color: #3f8ce8;
+    white-space: nowrap;
+
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+
+
     &:hover::before {
         //做 hover 的时候 mask 效果
         position: absolute;

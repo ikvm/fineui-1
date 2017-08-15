@@ -11,7 +11,9 @@ clear | 清楚背景和边框 | boolbean | false
 
 import React from 'react'
 import classNames from 'classnames'
-import BasicButton from '../basicbutton'
+import ButtonView from '../buttonView'
+import Label from '../label'
+import Text from '../text'
 import Icon from '../icon'
 import { CenterLayout } from '../../layout'
 export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
@@ -46,9 +48,11 @@ export default class Button extends React.Component {
                      <Icon></Icon>
                    </CenterLayout>
         }
-        return <BasicButton className={ classes } { ...props }>
+        return <ButtonView className={ classes } { ...props }>
                  { icon }
-                 { this.props.children }
-               </BasicButton>
+                 <Label>
+                   { this.props.children }
+                 </Label>
+               </ButtonView>
     }
 }
