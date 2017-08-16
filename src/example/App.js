@@ -3,6 +3,7 @@ import Button from '../components/button'
 import TreeDemo from './demo.tree'
 import ButtonDemo from './demo.button'
 import LabelDemo from './demo.label'
+import GridDemo from './demo.gird'
 //eslint warning 太多了,先注释了
 //import TableDemo from './demo.table' es
 import range from 'lodash/range'
@@ -34,11 +35,13 @@ class App extends Component {
                    <Button hgap={ 10 } handler={ () => this.changeCard('1') }>ButtonDemo</Button>
                    <Button hgap={ 10 } handler={ () => this.changeCard('2') }>LabelDemo</Button>
                    <Button hgap={ 10 } handler={ () => this.changeCard('3') }>TreeDemo</Button>
+                   <Button hgap={ 10 } handler={ () => this.changeCard('4') }>GridDemo</Button>
                  </CenterLayout>
                  <CardLayout defaultShowKey={ state.defaultShowKey }>
                    <ButtonDemo key='1'></ButtonDemo>
                    <LabelDemo key='2'></LabelDemo>
                    <TreeDemo key='3'></TreeDemo>
+                   <GridDemo key='4'></GridDemo>
                  </CardLayout>
                </VerticalLayout>
     }
