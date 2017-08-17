@@ -11,8 +11,10 @@ clear | 清楚背景和边框 | boolbean | false
 
 import React from 'react'
 import classNames from 'classnames'
-import Icon from '../icon'
+import ButtonView from '../buttonView'
+import Label from '../label'
 import Text from '../text'
+import Icon from '../icon'
 import { CenterLayout } from '../../layout'
 export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
 export const Trigger = 'click' || 'mousedown' || 'dbclick' || 'mouseup'
@@ -27,58 +29,12 @@ export default class Button extends React.Component {
     }
 
     static defaultProps = {
-        trigger: "click"
+        level: 'common'
     }
-
-    //设置触发方式
-    _bindEvent = (trigger) => {
-        let bindEvent = {}
-        let triggerArr = (trigger || '').split(',')
-        triggerArr.forEach((t, index) => {
-            switch (t) {
-                case 'click':
-                    bindEvent.onClick = this.handleClick
-                    break
-                case 'dbclick':
-                    bindEvent.onDoubleClick = this.handleDoubleClick
-                    break
-                case 'mousedown':
-                    bindEvent.onMouseDown = this.handleMouseDown
-                    break
-                case 'mouseup':
-                    bindEvent.onMouseUp = this.handleMouseUp
-                    break
-                default:
-                    bindEvent.onClick = this.handleClick
-            }
-        })
-        return bindEvent
-    }
-
-
-    handleClick = (e) => {
-        e.stopPropagation();
-        const {disabled, handler} = this.props
-        if (!disabled && handler) {
-            handler()
-        } else {
-            console.log("点击事件触发,但没有 handler,所以啥也不干")
-        }
-    }
-    handleDoubleClick = (e) => {
-        console.log('dbclick')
-    }
-    handleMouseDown = (e) => {
-        console.log('mousedown')
-    }
-    handleMouseUp = (e) => {
-        console.log('mouseup')
-    }
-
 
     render() {
 
-        const {level = ButonLevel, handler, iconCls, trigger, clear = false, className, disabled = false, ...props} = this.props
+        const {level, iconCls, clear = false, className, disabled = false, ...props} = this.props
         //控制样式
         let classes = classNames(className, CLASS_NAME, {
             [`${CLASS_NAME}-${level}`]: level,
@@ -92,9 +48,11 @@ export default class Button extends React.Component {
                      <Icon></Icon>
                    </CenterLayout>
         }
-        return <CenterLayout className={ classes } scrollable={ false } {...this._bindEvent(trigger)} { ...props }>
+        return <ButtonView className={ classes } { ...props }>
                  { icon }
-                 { this.props.children }
-               </CenterLayout>
+                 <Label>
+                   { this.props.children }
+                 </Label>
+               </ButtonView>
     }
 }

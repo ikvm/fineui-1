@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Button from '../button'
+import ButtonView from '../buttonView'
 import Icon from '../icon'
 import cn from 'classnames'
 import { HorizontalAdaptLayout, CenterLayout } from '../../layout'
@@ -16,15 +16,12 @@ export default class IconButton extends Component {
         type: ''
     }
 
-    handleClick = (e) => {
-
-    }
 
     render() {
         const {className, iconCls, ...props} = this.props
 
-        return <CenterLayout className={ cn(CLASS_NAME, className) } width={ 30 } height={ 30 } onClick={ this.handleClick }>
+        return <ButtonView className={ cn(CLASS_NAME, className) } width={ 30 } height={ 30 } {...props}>
                  <Icon type={ iconCls }></Icon>
-               </CenterLayout>
+               </ButtonView>
     }
 }
