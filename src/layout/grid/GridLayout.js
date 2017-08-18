@@ -4,6 +4,7 @@ import cn from 'classnames'
 import Layout from '../Layout'
 import Row from './Row'
 import Col from './Col'
+import find from 'lodash/find'
 import './GridLayout.less'
 
 const CLASS_NAME = 'flex-grid-layout'
@@ -22,27 +23,33 @@ class GridLayout extends Component {
     static defaultProps = {
         // scrolly: true,
         verticalAlign: VERTICAL_ALIGN.TOP,
-        columns: null,
-        rows: null,
-        items: { }
+        columns: 2,
+        rows: 3,
+        items: []
     }
 
     render() {
-        const {children, verticalAlign, className, columns, rows, items, ...props} = this.props
+        const { children, verticalAlign, className, columns, rows, items, ...props } = this.props
 
-        let temp = items.rows.map((value, index) => {
-            return <Row key={ index }>
-                     { value.cols.map((value, index) => {
-                           return <Col key={ index }>
-                                  { value }
-                                  </Col>
-                       }) }
-                   </Row>
-        })
+        let grid = [];
+        for (let i = 0; i < rows; i++) {
+            let oneRow = []
+            for (let j = 0; j < columns; j++) {
+                let cell;
+                let t = find(items, (v) => { return v.column === j && v.row === i })
+                cell = <Col key={`r${i}c${j}`} >
+                    {t ? t.el : ''}
+                </Col>
+                oneRow.push(cell)
+            }
+            let r = <Row key={`r${i}`}>{oneRow}</Row>
+            grid.push(r)
+            oneRow = []
+        }
 
-        return <Layout className={ cn(CLASS_NAME, verticalAlign, className) } {...props}>
-                 { temp }
-               </Layout>
+        return <Layout className={cn(CLASS_NAME, verticalAlign, className)} {...props}>
+            {grid}
+        </Layout>
     }
 }
 export default GridLayout

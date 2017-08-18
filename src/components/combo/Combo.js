@@ -2,7 +2,7 @@
  * Created by Urthur on 2017/8/10.
  */
 
-import React, {Component, PropTypes} from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDom from 'react-dom'
 import cn from 'classnames'
 import emptyFunction from 'fbjs/lib/emptyFunction'
@@ -11,7 +11,7 @@ import {
     VerticalLayout
 } from '../../layout'
 
-import './combo.less'
+//import './combo.less'
 
 const CLASS_NAME = 'bi-combo';
 
@@ -31,14 +31,14 @@ class Combo extends Component {
     };
 
     componentDidMount() {
-        const {popupGetter, ...props} = this.props;
+        const { popupGetter, ...props } = this.props;
         if (popupGetter && !this.state.popupShow) {
-             this._assertPopup();
+            this._assertPopup();
         }
     }
 
     _assertPopup() {
-        const self = this, {popupGetter, ...props} = this.props;
+        const self = this, { popupGetter, ...props } = this.props;
         this.popup = document.createElement("div");
         document.body.appendChild(this.popup);
 
@@ -54,7 +54,7 @@ class Combo extends Component {
     }
 
     _getPosition() {
-        const {direction} = this.props;
+        const { direction } = this.props;
         let triggerX = ReactDom.findDOMNode(this.refs.trigger).getBoundingClientRect().left,
             triggerY = ReactDom.findDOMNode(this.refs.trigger).getBoundingClientRect().top,
             triggerH = ReactDom.findDOMNode(this.refs.trigger).offsetHeight,
@@ -79,7 +79,7 @@ class Combo extends Component {
     }
 
     componentDidUpdate() {
-        const {popupGetter, ...props} = this.props;
+        const { popupGetter, ...props } = this.props;
         ReactDom.render(popupGetter, this.popup);
     }
 
@@ -97,15 +97,15 @@ class Combo extends Component {
         const self = this;
         e.nativeEvent.stopImmediatePropagation();
 
-        self.setState({popupShow: !self.state.popupShow});
+        self.setState({ popupShow: !self.state.popupShow });
 
         if (this.state.popupShow) {
             this._assertPopup();
-            document.onclick =  function (e) {
+            document.onclick = function (e) {
                 e.stopPropagation();
                 if (self._render) {
                     self._unmountPopup();
-                    self.setState({popupShow: true});
+                    self.setState({ popupShow: true });
                 }
             };
         } else {
@@ -121,8 +121,8 @@ class Combo extends Component {
         this._unmountPopup();
     };
 
-    render (){
-        const self = this, {trigger, children, ...props} = this.props;
+    render() {
+        const self = this, { trigger, children, ...props } = this.props;
 
         let evs = trigger.split(","), eventArr = {};
         evs.map(function (ev) {

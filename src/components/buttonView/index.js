@@ -1,3 +1,3 @@
-import BasicButton from './ButtonView'
+import ButtonView from './ButtonView'
 
-export default BasicButton
+export default ButtonView

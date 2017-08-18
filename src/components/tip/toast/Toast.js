@@ -1,21 +1,21 @@
 import React from 'react'
-import Notification from './Notification'
+import Notification from '../notification/Notification'
 
 let newNotification
 
-const notice = (text, duration = 3000) => {
+const notice = (content, duration = 3000) => {
 
     if (!newNotification) {
         newNotification = Notification.reWrite();
     }
     let notificationInstance = newNotification
 
-    notificationInstance.notice({ text: text, duration: duration })
+    notificationInstance.notice({ content: content, duration: duration })
 }
 
 export default {
-    show(text, duration) {
-        return notice(text, duration)
+    show(content, duration) {
+        return notice(content, duration)
     },
     hide() {
         if (newNotification) {
