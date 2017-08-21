@@ -1,6 +1,7 @@
 @scroll-bar-color: #EEEEEE;
 @scroll-core-color: darken(@scroll-bar-color, 20%);
 @border-color: #E0E0E0;
+@resizer-color: #2196F3;
 
 .table-frame {
     position: absolute;
@@ -9,6 +10,21 @@
 
 .table {
     position: absolute;
+}
+
+.test {
+    width: 100px;
+    height: 100px;
+    background-color: @resizer-color;
+    position: absolute;
+    top: 528px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.table-left-head {
+    overflow: hidden;
 }
 
 .table-right-head {
@@ -51,16 +67,12 @@
 }
 
 .scroll-bar-bottom-core {
-    height: 1px;
-    width: 18px;
+    height: 3px;
+    
     left: 20px;
     position: absolute;
     background-color: @scroll-core-color;
-    border-radius: 5px;
-    border-style: solid;
-    border-color: @scroll-core-color;
-    border-width: 1px;
-    &:hover {
+    &:active {
         background-color: darken(@scroll-core-color, 20%);
     }
 }
@@ -77,15 +89,11 @@
 }
 
 .scroll-bar-right-core {
-    height: 18px;
-    width: 1px;
+    height: 20px;
+    width: 3px;
     position: absolute;
     background-color: @scroll-core-color;
-    border-radius: 5px;
-    border-style: solid;
-    border-color: @scroll-core-color;
-    border-width: 1px;
-    &:hover {
+    &:active {
         background-color: darken(@scroll-core-color, 20%);
     }
 }
@@ -93,6 +101,13 @@
 .scroll-cover {
     width: 100%;
     height: 100%;
+}
+
+.text-container {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 ::-webkit-scrollbar {
@@ -111,25 +126,63 @@
     background-color: @border-color;
 }
 
-.cell-complete {
-    position: absolute;
-    width: 98px;
-    height: 38px;
+.cell {
     border-style: solid;
     border-color: @border-color;
     border-width: 1px;
-    text-align: center;
+}
+
+.cell-complete {
+    .cell;
+    width: 98px;
+    height: 38px;
 }
 
 .cell-lack-left {
-    position: absolute;
-    left: 0;
+    .cell;
     width: 99px;
     height: 38px;
-    border-style: solid;
-    border-color: @border-color;
-    border-width: 1px;
     border-left: 0;
-    text-align: center;
 }
 
+.cell-lack-top {
+    .cell;
+    width: 98px;
+    height: 39px;
+    border-top: 0;
+}
+
+.cell-lack-left-top {
+    .cell;
+    width: 99px;
+    height: 39px;
+    border-top: 0;
+    border-left: 0;
+}
+
+.table-cell-resizer {
+    position: absolute;
+    z-index: 999;
+    width: 1px;
+    &:hover {
+        cursor: e-resize;
+        background-color: @resizer-color;
+        width: 3px;
+    }
+}
+
+.table-resizer {
+    .table-cell-resizer;
+    &:active {
+        cursor: e-resize;
+        background-color: @resizer-color;
+        width: 3px;
+    }    
+}
+
+.resizer-bar {
+    position: fixed;
+    display: none;
+    width: 3px;
+    background-color: @resizer-color;
+}

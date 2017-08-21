@@ -1,24 +1,42 @@
 import React, {Component} from 'react';
 import {VerticalLayout} from '../../../layout'
 
+let oldY = 72;
+
 class ScrollBarRight extends Component {
 
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            down: false,
-        };
+    constructor() {
+        super();
     }
 
     _handleMouseClick = (e) => {
         e.preventDefault();
-        let y = e.pageY;
-        this.props.onScrollChange(y - 72);
+        const {onScrollChange} = this.props;
+        let newY = e.pageY;
+        let dy = newY - oldY;
+        oldY = newY;
+        onScrollChange(dy);
     }
 
     _handleMouseDown = (e) => {
         e.preventDefault();
-        this.props.myMouseDown();
+        const {onScrollChange} = this.props;
+        oldY = e.pageY;
+        
+        let func = (e) => {
+            let newY = e.pageY;
+            let dy = newY - oldY;
+            oldY = newY;
+            onScrollChange(dy);
+        };
+        
+        let func2 = (e) => {
+            document.body.removeEventListener("mousemove", func);
+            document.body.removeEventListener("mouseup", func2);
+        };
+        
+        document.body.addEventListener("mousemove", func);
+        document.body.addEventListener("mouseup", func2);
     }
 
     render() {
