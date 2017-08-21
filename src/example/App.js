@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Button from '../components/button'
 import TreeDemo from './demo.tree'
+import ComboDemo from './demo.combo'
 import ButtonDemo from './demo.button'
 import LabelDemo from './demo.label'
 import GridDemo from './demo.gird'
@@ -34,9 +35,10 @@ class App extends Component {
         return <VerticalLayout>
             <CenterLayout vgap={20}>
                 <Button hgap={10} handler={() => this.changeCard('1')}>ButtonDemo</Button>
-                <Button hgap={10} handler={() => this.changeCard('2')}>LabelDemo</Button>
-                <Button hgap={10} handler={() => this.changeCard('3')}>TreeDemo</Button>
-                <Button hgap={10} handler={() => this.changeCard('4')}>GridDemo</Button>
+                 <Button hgap={10} handler={() => this.changeCard('2')}>LabelDemo</Button>
+                 <Button hgap={10} handler={() => this.changeCard('3')}>TreeDemo</Button>
+                 <Button hgap={10} handler={() => this.changeCard('4')}>GridDemo</Button>
+                 <Button hgap={10} handler={() => this.changeCard('5')}>ComboDemo</Button>
                 <Button hgap={10} handler={() => Toast.show('这是一个 toast,持续3秒')}>Toast</Button>
                 <Button hgap={10} handler={() => Toast.hide()}>Hide Toast</Button>
             </CenterLayout>
@@ -45,6 +47,7 @@ class App extends Component {
                 <LabelDemo key='2'></LabelDemo>
                 <TreeDemo key='3'></TreeDemo>
                 <GridDemo key='4'></GridDemo>
+                <ComboDemo key="5"></ComboDemo>
             </CardLayout>
         </VerticalLayout>
     }
