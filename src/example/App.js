@@ -6,8 +6,9 @@ import ButtonDemo from './demo.button'
 import LabelDemo from './demo.label'
 import GridDemo from './demo.gird'
 import Toast from '../components/tip/toast/Toast'
+import EditorDemo from './demo.editor'
 //eslint warning 太多了,先注释了
-//import TableDemo from './demo.table' es
+import TableDemo from './demo.table'
 import range from 'lodash/range'
 import './example.less'
 
@@ -33,21 +34,27 @@ class App extends Component {
         const { ...props } = this.props,
             { ...state } = this.state;
         return <VerticalLayout>
-            <CenterLayout vgap={20}>
-                <Button hgap={10} handler={() => this.changeCard('1')}>ButtonDemo</Button>
-                 <Button hgap={10} handler={() => this.changeCard('2')}>LabelDemo</Button>
-                 <Button hgap={10} handler={() => this.changeCard('3')}>TreeDemo</Button>
-                 <Button hgap={10} handler={() => this.changeCard('4')}>GridDemo</Button>
-                 <Button hgap={10} handler={() => this.changeCard('5')}>ComboDemo</Button>
-                <Button hgap={10} handler={() => Toast.show('这是一个 toast,持续3秒')}>Toast</Button>
-                <Button hgap={10} handler={() => Toast.hide()}>Hide Toast</Button>
+
+            <CenterLayout className='header' height={60} bgap={10}>
+                <Button hgap={5} handler={() => this.changeCard('1')}>ButtonDemo</Button>
+                <Button hgap={5} handler={() => this.changeCard('2')}>LabelDemo</Button>
+                <Button hgap={5} handler={() => this.changeCard('3')}>TreeDemo</Button>
+                <Button hgap={5} handler={() => this.changeCard('4')}>GridDemo</Button>
+                <Button hgap={5} handler={() => Toast.show('这是一个 toast,持续3秒')}>Toast</Button>
+                <Button hgap={5} handler={() => this.changeCard('5')}>Input and Editor</Button>
+                <Button hgap={5} handler={() => this.changeCard('6')}>ComboDemo</Button>
+                <Button hgap={5} handler={() => this.changeCard('7')}>TableDemo</Button>
+
             </CenterLayout>
-            <CardLayout defaultShowKey={state.defaultShowKey}>
+            <CardLayout className='content' defaultShowKey={state.defaultShowKey}>
                 <ButtonDemo key='1'></ButtonDemo>
                 <LabelDemo key='2'></LabelDemo>
                 <TreeDemo key='3'></TreeDemo>
                 <GridDemo key='4'></GridDemo>
-                <ComboDemo key="5"></ComboDemo>
+
+                <EditorDemo key='5'></EditorDemo>
+                <ComboDemo key='6'></ComboDemo>
+                <TableDemo key='7'></TableDemo>
             </CardLayout>
         </VerticalLayout>
     }

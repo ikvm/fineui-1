@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Layout } from '../../layout'
 import cn from 'classnames'
 import { isNotEmptyString } from '../../utils'
-//import indexOf from 'lodash/indexOf'
 import makeFirstPy from './chinesePY'
 
 class Text extends Component {

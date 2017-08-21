@@ -6,6 +6,11 @@ import { UUID } from '../../../utils'
 import { HorizontalCenterLayout } from '../../../layout'
 import './Toast.less'
 
+
+
+
+let div = document.createElement('div');
+
 class Notification extends Component {
     constructor(props, context) {
         super(props, context)
@@ -48,11 +53,10 @@ class Notification extends Component {
                     notice.onClose()
                 }
             }
-            result.push(<Notice key={notice.key} text={notice.text} duration={notice.duration} onClose={closeCallback} />)
+            result.push(<Notice key={notice.key} text={notice.text} duration={notice.duration} onClose={closeCallback}> {notice.content}</Notice>)
         })
         return result
     }
-
 
     render() {
 
@@ -65,9 +69,9 @@ class Notification extends Component {
     }
 }
 
-Notification.reWrite = (text) => {
-    let div;
 
+
+Notification.reWrite = (text) => {
     div = document.createElement('div')
     document.body.appendChild(div)
     const notification = ReactDOM.render(<Notification />, div)
@@ -79,7 +83,8 @@ Notification.reWrite = (text) => {
         destroy() {
             ReactDOM.unmountComponentAtNode(div);
             document.body.removeChild(div);
-        }
+        },
+        component: notification
     }
 }
 

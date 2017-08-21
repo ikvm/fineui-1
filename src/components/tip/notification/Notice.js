@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import cn from 'classnames'
 import Label from '../../label'
+import { Layout } from '../../../layout'
+
+
+const CLASS_NAME = 'bi-notice'
 
 export default class Notice extends Component {
     constructor(props, context) {
@@ -34,11 +38,11 @@ export default class Notice extends Component {
     }
 
     render() {
-
+        const props = this.props
         return (
-            <Label vgap={10} style={{ backgroundColor: 'red' }}>
-                {this.props.text}
-            </Label>
+            <Layout className={cn(CLASS_NAME)} vgap={10} style={{ backgroundColor: 'red' }}>
+                {this.props.children}
+            </Layout>
         )
     }
 
