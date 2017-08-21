@@ -7,8 +7,9 @@ import LabelDemo from './demo.label'
 import GridDemo from './demo.gird'
 import Toast from '../components/tip/toast/Toast'
 import EditorDemo from './demo.editor'
-//eslint warning 太多了,先注释了
-import TableDemo from './demo.table'
+import PagerDemo from './demo.pager'
+//eslint warning 和react warning太多了,先注释了
+//import TableDemo from './demo.table'
 import range from 'lodash/range'
 import './example.less'
 
@@ -43,7 +44,7 @@ class App extends Component {
                 <Button hgap={5} handler={() => Toast.show('这是一个 toast,持续3秒')}>Toast</Button>
                 <Button hgap={5} handler={() => this.changeCard('5')}>Input and Editor</Button>
                 <Button hgap={5} handler={() => this.changeCard('6')}>ComboDemo</Button>
-                <Button hgap={5} handler={() => this.changeCard('7')}>TableDemo</Button>
+                <Button hgap={5} handler={() => this.changeCard('7')}>PagerDemo</Button>
 
             </CenterLayout>
             <CardLayout className='content' defaultShowKey={state.defaultShowKey}>
@@ -54,7 +55,7 @@ class App extends Component {
 
                 <EditorDemo key='5'></EditorDemo>
                 <ComboDemo key='6'></ComboDemo>
-                <TableDemo key='7'></TableDemo>
+                <PagerDemo key='7'></PagerDemo>
             </CardLayout>
         </VerticalLayout>
     }
