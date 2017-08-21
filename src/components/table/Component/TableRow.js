@@ -1,28 +1,69 @@
 import React, {Component} from 'react';
-import {Cell} from '../Component';
+import {HeadCell, Cell} from '../Component';
 import {HorizontalLayout} from '../../../layout';
 
 class TableRow extends Component {
 
+    constructor(props, context) {
+        super(props, context);
+    }
+
+    static defaultProps = {
+        cellWidth: 100,
+        cellHeight: 40,
+    }
+
     render() {
 
-        const {array, rowIndex, colNum, colIndex, head, left, top, scrollable} = this.props;
+        const {array, rowIndex, colNum, scrollable, colIndex, width, height, layoutPosition, 
+               cellHeight, cellWidth, startIndexCol, colWidth, ...props} = this.props;
+
+        let myProps = props;
 
         return(
             <HorizontalLayout className="table-row" scrollx={true} scrolly={false} scrollable={scrollable}
-                              verticalAlign="_middle">
+                              verticalAlign="_middle" width={width} height={cellHeight}>
                 {
-                    array.map((i) => {
-                        if (i === colIndex) {
-                            return(
-                                <Cell className="cell-complete" row={rowIndex} col={i} startIndex={colIndex}
-                                              key={i + rowIndex * colNum} left={left} head={head} top={top}/>
-                            );
-                        } else {
-                            return(
-                                <Cell className="cell-lack-left" row={rowIndex} col={i} startIndex={colIndex}
-                                              key={i + rowIndex * colNum} left={left} head={head} top={top}/>
-                            );
+                    array.map((i, index) => {
+
+                        switch(layoutPosition) {
+                            case "leftHead":
+                                if (index === colIndex) {
+                                    
+                                    return <HeadCell className="cell-complete" row={rowIndex} col={index + colIndex + startIndexCol}
+                                                 key={i} width={colWidth[startIndexCol + index] - 2} height={cellHeight - 2} head={true} 
+                                                 startIndex={colIndex} position="absolute" colWidth={colWidth} {...props}/>;
+                                } else {
+                                    return <Cell className="cell-lack-left" row={rowIndex} col={index + colIndex + startIndexCol}
+                                                 key={i} width={colWidth[startIndexCol + index] - 1} height={cellHeight - 2} head={true}
+                                                 startIndex={colIndex} position="absolute" colWidth={colWidth} {...props}/>;
+                                }
+                                break;
+                            case "rightHead":
+                                return <HeadCell className="cell-lack-left" row={rowIndex} col={index + colIndex + startIndexCol}
+                                             key={i} width={colWidth[startIndexCol + index] - 1} height={cellHeight - 2} head={true}
+                                             startIndex={colIndex} position="absolute" colWidth={colWidth} {...props}/>;
+                                break;
+                            case "leftBody":
+                                
+                                if (index === colIndex) {
+                                    return <Cell className="cell-lack-top" row={rowIndex} col={index + colIndex + startIndexCol}
+                                                 key={i} width={colWidth[startIndexCol + index] - 2} height={cellHeight - 1} 
+                                                 startIndex={colIndex} colWidth={colWidth}
+                                                 position="absolute" {...props}/>;
+                                } else {
+                                    return <Cell className="cell-lack-left-top" row={rowIndex} col={index + colIndex + startIndexCol}
+                                                 key={i} width={colWidth[startIndexCol + index] - 1} height={cellHeight - 1}
+                                                 startIndex={colIndex} colWidth={colWidth}
+                                                 position="absolute" {...props}/>;
+                                }
+                                
+                                break;
+                            default:
+                                return <Cell className="cell-lack-left-top" row={rowIndex} col={index + colIndex + startIndexCol}
+                                             key={i} width={colWidth[startIndexCol + index] - 1} height={cellHeight - 1} startIndex={colIndex} 
+                                             position="absolute" colWidth={colWidth} {...props}/>;
+                                break;
                         }
                     })
                 }
