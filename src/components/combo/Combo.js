@@ -8,12 +8,11 @@ import cn from 'classnames'
 import emptyFunction from 'fbjs/lib/emptyFunction'
 import {
     Layout,
+    CenterLayout,
     VerticalLayout
 } from '../../layout'
 
-//import './combo.less'
-
-const CLASS_NAME = 'bi-combo';
+const CLASS_NAME = 'bi-react-combo';
 
 class Combo extends Component {
     constructor(props, context) {
@@ -31,14 +30,15 @@ class Combo extends Component {
     };
 
     componentDidMount() {
-        const { popupGetter, ...props } = this.props;
+        const {popupGetter} = this.props;
         if (popupGetter && !this.state.popupShow) {
             this._assertPopup();
         }
     }
 
     _assertPopup() {
-        const self = this, { popupGetter, ...props } = this.props;
+        const self = this, {popupGetter} = this.props;
+
         this.popup = document.createElement("div");
         document.body.appendChild(this.popup);
 
@@ -79,8 +79,10 @@ class Combo extends Component {
     }
 
     componentDidUpdate() {
-        const { popupGetter, ...props } = this.props;
-        ReactDom.render(popupGetter, this.popup);
+        const {popupGetter} = this.props;
+        if (this._render){
+            ReactDom.render(popupGetter, this.popup);
+        }
     }
 
     componentWillUnmount() {
@@ -121,8 +123,10 @@ class Combo extends Component {
         this._unmountPopup();
     };
 
+
+
     render() {
-        const self = this, { trigger, children, ...props } = this.props;
+        const self = this, { trigger, children, popupGetter, ...props } = this.props;
 
         let evs = trigger.split(","), eventArr = {};
         evs.map(function (ev) {
@@ -139,8 +143,8 @@ class Combo extends Component {
             }
         });
 
-        return <VerticalLayout className={cn(CLASS_NAME)} >
-            <Layout className={cn("bi-trigger")} {...eventArr} ref="trigger">
+        return <VerticalLayout className={cn(CLASS_NAME)} {...props}>
+            <Layout className={cn("bi-react-trigger")} {...eventArr} ref="trigger">
                 {children}
             </Layout>
         </VerticalLayout>

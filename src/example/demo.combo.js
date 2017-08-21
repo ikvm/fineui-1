@@ -6,6 +6,7 @@ import Combo from '../components/combo'
 import Label from '../components/label'
 import {
     Layout,
+    CenterLayout,
     VerticalLayout
 } from '../layout'
 
@@ -15,22 +16,28 @@ class ComboDemo extends Component {
     }
 
     _popupGetter() {
-    return <Layout>
-        <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-        </ul>
-    </Layout>
-}
+        return <VerticalLayout>
+            <Label>选项1</Label>
+            <Label>选项2</Label>
+            <Label>选项3</Label>
+            <Label>选项4</Label>
+        </VerticalLayout>
+    }
 
     render() {
-        return <div style={{ marginTop: 100 + "px"}}>
-            <Combo popupGetter={this._popupGetter()} trigger="click">
-                <Label>trigger</Label>
+        return <CenterLayout tgap={100}>
+            <Combo popupGetter={this._popupGetter()} hgap={30} trigger="click">
+                <Label>click,bottom</Label>
             </Combo>
-        </div>
+
+            <Combo popupGetter={this._popupGetter()} hgap={30} trigger="click" direction="top">
+                <Label>click,top</Label>
+            </Combo>
+
+            <Combo popupGetter={this._popupGetter()} hgap={30} trigger="hover">
+                <Label>hover,bottom</Label>
+            </Combo>
+        </CenterLayout>
     }
 }
 
