@@ -19,7 +19,7 @@ let headerRowSize = defaultHeight;
 let rowSize = defaultHeight;
 let leftCellsHeight = [];
 
-class App extends Component{
+class TableDemo extends Component{
 
     constructor(props, context) {
         super(props, context);
@@ -35,10 +35,10 @@ class App extends Component{
                 columnSize[i] = defaultWidth;
                 if (i < LEFT_COLUMN) {
                     leftBodyArray[j][i] = i + j * (LEFT_COLUMN + RIGHT_COLUMN);
-                    
+
                 } else {
                     rightBodyArray[j][i - LEFT_COLUMN] = i + j * (LEFT_COLUMN + RIGHT_COLUMN);
-                    
+
                 }
             }
         }
@@ -59,8 +59,8 @@ class App extends Component{
         );
     }
 
-    
+
 }
 
-export {App};
+export default TableDemo;
 

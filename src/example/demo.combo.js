@@ -3,6 +3,7 @@
  */
 import React, { Component, PropTypes } from 'react'
 import Combo from '../components/combo'
+import PopupView from '../components/combo/PopupView'
 import Label from '../components/label'
 import {
     Layout,
@@ -24,6 +25,15 @@ class ComboDemo extends Component {
         </VerticalLayout>
     }
 
+    _popupGetter2() {
+        return <PopupView>
+            <Label>选项1</Label>
+            <Label>选项2</Label>
+            <Label>选项3</Label>
+            <Label>选项4</Label>
+        </PopupView>
+    }
+
     render() {
         return <CenterLayout tgap={100}>
             <Combo popupGetter={this._popupGetter()} hgap={30} trigger="click">
@@ -34,7 +44,7 @@ class ComboDemo extends Component {
                 <Label>click,top</Label>
             </Combo>
 
-            <Combo popupGetter={this._popupGetter()} hgap={30} trigger="hover">
+            <Combo popupGetter={this._popupGetter2()} hgap={30} trigger="hover">
                 <Label>hover,bottom</Label>
             </Combo>
         </CenterLayout>
