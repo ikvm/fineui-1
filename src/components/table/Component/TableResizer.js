@@ -13,7 +13,7 @@ class TableResizer extends Component {
     }
 
     _handleMouseMove(dx, tableWidth, context) {
-        let newLeft = initLeft + dx;
+        let newLeft = context.state.left + dx;
         context.setState({
             left: (newLeft < 19) ? 19 : (((tableWidth - newLeft) < 23) ? tableWidth - 23 : newLeft),
         });
@@ -22,15 +22,19 @@ class TableResizer extends Component {
     _handleMouseDown = (e) => {
         e.preventDefault();
         const {onTableResize, tableWidth} = this.props;
-        let dx;
+        let oldX = e.pageX, initX = e.pageX;
+
         let mouseMove = this._handleMouseMove;
         let context = this;
         let func = (e) => {
-            let x = e.pageX;
-            dx = x - 232;
+            let newX = e.pageX;
+            let dx = newX - oldX;
+            oldX = newX;
             mouseMove(dx, tableWidth, context);
         };
         let func2 = (e) => {
+            let newX = e.pageX;
+            let dx = newX - initX;
             if (typeof(dx) != "undefined")
                 onTableResize(dx);
             document.body.removeEventListener("mousemove", func);
@@ -57,6 +61,12 @@ class TableResizer extends Component {
                  onMouseDown={this._handleMouseDown}
             />
         );
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            left: nextProps.left,
+        });
     }
 }
 
