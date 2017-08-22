@@ -19,7 +19,7 @@ let headerRowSize = defaultHeight;
 let rowSize = defaultHeight;
 let leftCellsHeight = [];
 
-class App extends Component{
+class TableDemo extends Component{
 
     constructor(props, context) {
         super(props, context);
@@ -62,5 +62,5 @@ class App extends Component{
     
 }
 
-export {App};
+export default TableDemo;
 

@@ -13,14 +13,14 @@ export default class IconButton extends Component {
     }
 
     static defaultProps = {
-        type: ''
+        iconCls: ''
     }
 
 
     render() {
         const {className, iconCls, ...props} = this.props
 
-        return <ButtonView className={ cn(CLASS_NAME, className) } width={ 30 } height={ 30 } {...props}>
+        return <ButtonView className={ cn(CLASS_NAME, className) }  {...props}>
                  <Icon type={ iconCls }></Icon>
                </ButtonView>
     }

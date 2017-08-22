@@ -55,7 +55,7 @@ export default class TreeDemo extends Component {
     }
 
     render() {
-        return <HorizontalCenterLayout width={ 200 }>
+        return <HorizontalCenterLayout hgap={300}>
                  <Tree handler={this.handler} nodes={this.mockData()}></Tree>
                </HorizontalCenterLayout>
     }

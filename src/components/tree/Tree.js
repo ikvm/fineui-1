@@ -26,22 +26,22 @@ export default class Tree extends Component {
         this.props.handler(target)
     }
 
-    initTree = (pid, depth) => {
+    initTree = (id, depth) => {
         const nodes = this.props.nodes
         let childrenNode = []
         let current = null
         forEach(nodes, (value) => {
-            if (value.id === pid) {
+            if (value.id === id) {
                 current = value
             }
-            if (value.pid === pid) {//找到属于 pid 的子孙,递归向下生成
+            if (value.pid === id) {//找到属于 id 的子孙,递归向下生成
                 this.counter++
                 childrenNode.push(this.initTree(value.id, depth + 1))
             }
         })
 
         let itemClicked = () => {
-            this.handler(pid)
+            this.handler(id)
         }
 
         let content = ''
@@ -70,10 +70,10 @@ export default class Tree extends Component {
             return value.pid
         })))
 
-        return <VerticalLayout>
+        return <Layout>
             {root.map((value) => {
                 return this.initTree(value, 0)
             })}
-        </VerticalLayout>
+        </Layout>
     }
 }

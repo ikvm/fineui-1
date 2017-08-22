@@ -39,11 +39,11 @@ export default class TreeView extends Component {
         const label = <Label>{nodeLabel}</Label>
         const blank = <Label width={10}></Label>
         return (
-            <VerticalLayout lgap={depth * 15} className={cn(CLASS_NAME, className)} {...props}>
+            <VerticalLayout lgap={(depth) * 10} className={cn(CLASS_NAME, className)} {...props}>
                 {
                     depth !== 0
                         ? <ButtonView handler={this.handleClick}>
-                            <HorizontalLayout className={cn('tree-view-item')} vgap={5}>
+                            <HorizontalLayout className={cn('tree-view-item')} height={'100%'} width={'100%'} vgap={5}>
                                 {this.props.children ? arrow : null}
                                 {label}
                             </HorizontalLayout>

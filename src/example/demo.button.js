@@ -25,8 +25,8 @@ class ButtonDemo extends Component {
                  <Button width={ '100%' }  disabled={ true }>success disabled</Button>
                  <Button width={ '100%' }  disabled={ true }>warning disabled</Button>
                  <Button width={ '100%' }  level="ignore" disabled={ true }>ignore disabled</Button>
-                 <Button width={ '100%' } trigger='mouseup,click,mousedown,dbclick' iconCls='abc'>带图标的 button,trigger 同时为mouseup,click,mousedown,dbclick</Button>
-                 <IconButton width={ 100 } height={ 50 }></IconButton>
+                 <Button width={ '100%' } trigger='mouseup,click,mousedown,dbclick' iconCls='test-icon'>带图标的 button,trigger 同时为mouseup,click,mousedown,dbclick</Button>
+                 <IconButton width={ 100 } height={ 50 } iconCls='test-icon'></IconButton>
                  <TextButton width={ '100%' }>文字按钮</TextButton>
                </HorizontalCenterLayout>
     }
