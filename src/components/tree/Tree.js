@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
-import { Layout } from '../../layout'
+import { Layout, VerticalLayout } from '../../layout'
 import Label from '../label'
+import TreeView from './TreeView'
+import filter from 'lodash/filter'
+import forEach from 'lodash/forEach'
+import some from 'lodash/some'
+import uniq from 'lodash/uniq'
+import find from 'lodash/find'
+import { UUID } from '../../utils'
 
 export default class Tree extends Component {
 
@@ -9,86 +16,64 @@ export default class Tree extends Component {
     }
 
     static defaultProps = {
-        nodes: [
-            {
-                id: 1,
-                pid: 0,
-                text: "顶级节点"
-            },
-            {
-                id: 2,
-                pid: 1,
-                text: "一级节点1"
-            },
-            {
-                id: 4,
-                pid: 2,
-                text: "1节点下的1"
-            },
-            {
-                id: 5,
-                pid: 2,
-                text: "1节点下的2"
-            },
-            {
-                id: 6,
-                pid: 3,
-                text: "2级节点1"
-            },
-            {
-                id: 3,
-                pid: 1,
-                text: "一级节点2"
-            }
-        ]
+        nodes: []
     }
 
-    //递归生成树
-    loadTree = (pid, level) => {
-        let children = []
-        let hasChldren = false
-        let nodes = this.props.nodes
-        let index = -1
-        for (let i = 0; i < nodes.length; i++) {
-            if (nodes[i].id === pid) {
-                index = i
+    handler = (pid) => {
+        let target = find(this.props.nodes, (value) => {
+            return value.id === pid
+        })
+        this.props.handler(target)
+    }
+
+    initTree = (pid, depth) => {
+        const nodes = this.props.nodes
+        let childrenNode = []
+        let current = null
+        forEach(nodes, (value) => {
+            if (value.id === pid) {
+                current = value
             }
-            if (nodes[i].pid === pid) {
-                children.push(this.loadTree(nodes[i].id, level + 1))
+            if (value.pid === pid) {//找到属于 pid 的子孙,递归向下生成
+                this.counter++
+                childrenNode.push(this.initTree(value.id, depth + 1))
             }
-        }
-        let levelBlank = ""
-        for (level--; level >= 0; level--) {
-            levelBlank += '--'
-        }
-        let thisContent = ""
-        if (index >= 0) {
-            thisContent = nodes[index].text
-        }
-        hasChldren = children.length > 0 ? true : false
-        if (hasChldren) {
-            let _self = <Layout id={ "parent" + pid }>
-                          <Label textAlign='left'>
-                            { levelBlank }
-                            { thisContent }
-                          </Label>
-                          { children }
-                        </Layout>
-            return _self
-        } else {
-            let _self = <Label textAlign='left' id={ "parent" + pid }>
-                          { levelBlank }
-                          { thisContent }
-                          { children.length > 0 ? children : "" }
-                        </Label>;
-            return _self
+        })
+
+        let itemClicked = () => {
+            this.handler(pid)
         }
 
+        let content = ''
+        if (current) {
+            content = current.text
+        }
+        return <TreeView key={UUID()} nodeLabel={content} depth={depth} handler={itemClicked} open={(current && current.open === false) ? false : true} >
+            {childrenNode.length > 0 ? childrenNode : null}
+        </TreeView>
     }
 
     render() {
-        return <Layout>
-                 { this.loadTree(1, 0) }
-               </Layout>
+
+        const data = this.props.nodes
+        //找到所有根节点,没 pid 的(设为-1)或者有 pid 但找不到 id===pid的节点,其实最好是强制根节点必须设 pid=-1,这样很方便
+        forEach(data, (value) => {
+            if (!value.pid) {
+                value.pid = -1
+            }
+        })
+        let rootArry = filter(data, (value) => {
+            return !some(data, (item) => item.id === value.pid)
+        })
+        //提取公共 pid并去重
+        let root = uniq(rootArry.map(((value) => {
+            return value.pid
+        })))
+
+        return <VerticalLayout>
+            {root.map((value) => {
+                return this.initTree(value, 0)
+            })}
+        </VerticalLayout>
     }
 }
