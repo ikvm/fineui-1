@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {TableRow, Cell} from '../Component';
-import {VerticalLayout} from '../../../layout';
+import {VerticalLayout} from '../../../layout'
 
 class TableBody extends Component {
 

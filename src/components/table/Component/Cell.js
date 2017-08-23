@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import {isCellColVisible, isCellRowVisible} from '../../../utils/utils/isCellVisible';
 import {HorizontalLayout, VerticalLayout} from '../../../layout'
 
 class Cell extends Component {
