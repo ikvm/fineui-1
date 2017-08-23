@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Table} from '../components/table';
 import {AbsoluteLayout} from '../layout';
 
-class App extends Component{
+class TableDemo extends Component{
 
     constructor(props, context) {
         super(props, context);
@@ -56,5 +56,5 @@ class App extends Component{
     
 }
 
-export {App};
+export default TableDemo;
 

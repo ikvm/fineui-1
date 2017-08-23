@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './table.less';
+import './Table.less';
 import {ScrollBarBottom, ScrollBarRight, TableHead, TableBody, TableResizer, ResizerBar} from './Component';
 import {AbsoluteLayout} from '../../layout';
 

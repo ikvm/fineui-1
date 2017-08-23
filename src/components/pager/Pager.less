@@ -1,0 +1,21 @@
+@import '../../layout/index.less';
+.bi-pager {
+    .display-flex();
+    .justify-content(space-between);
+    .direction-horizontal();
+    .pager-item {
+        &.active {
+            background-color: #3f8ce8;
+            color: #ffffff;
+            &:hover{
+                background-color: #3f8ce8;
+                color: #ffffff;
+            }
+        }
+        color:#666666;
+        &:hover {
+            background-color: rgba(26, 26, 26, 0.05);
+            color: #1a1a1a;
+        }
+    }
+}

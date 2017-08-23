@@ -40,7 +40,7 @@ class Label extends Component {
     }
 
     _createCenterEl() {
-        const {className, text, textWidth, textAlign, forceCenter, py, keyword, highLight, whiteSpace, textHeight, ...props} = this.props
+        const { className, text, textWidth, textAlign, forceCenter, py, keyword, highLight, whiteSpace, textHeight, ...props } = this.props
 
         if (this._isValid(textWidth)) { //如果设置了文字宽度
             //设置文字宽度的情况下,如果 textAlign 为 left 或者 right,不仅文字排列要变,内层的 layout
@@ -51,11 +51,11 @@ class Label extends Component {
                     lineHeight: textHeight ? `${textHeight}px` : 'normal',
                     border: '1px dotted #cccccc'
                 }
-                return <CenterLayout className={ cn(CLASS_NAME, className) } scrolly={ true } {...props}>
-                         <Text width={ textWidth } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
-                           { this.props.children ? this.props.children : text }
-                         </Text>
-                       </CenterLayout>
+                return <CenterLayout className={cn(CLASS_NAME, className)} scrolly={true} {...props}>
+                    <Text width={textWidth} keyword={keyword} py={py} highLight={highLight} style={styleObj}>
+                        {this.props.children !== undefined ? this.props.children : text}
+                    </Text>
+                </CenterLayout>
             } else { //whitespace 如果是 nowrap,我理解的就是不换行,超出了就三个小点,反正都是只有一行了,让文字垂直居中就好了
                 let styleObj = {
                     whiteSpace: 'nowrap',
@@ -65,11 +65,11 @@ class Label extends Component {
                     lineHeight: textHeight ? `${textHeight}px` : 'normal',
                     border: '1px dotted #cccccc'
                 }
-                return <CenterLayout className={ cn(CLASS_NAME, className) } {...props}>
-                         <Text width={ textWidth } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
-                           { this.props.children ? this.props.children : text }
-                         </Text>
-                       </CenterLayout>
+                return <CenterLayout className={cn(CLASS_NAME, className)} {...props}>
+                    <Text width={textWidth} keyword={keyword} py={py} highLight={highLight} style={styleObj}>
+                        {this.props.children !== undefined ? this.props.children : text}
+                    </Text>
+                </CenterLayout>
             }
         } else { //如果没文字宽度的话,那撑满父容器就好了
             if (whiteSpace === 'normal') {
@@ -78,12 +78,12 @@ class Label extends Component {
                     textAlign: textAlign,
                     lineHeight: textHeight ? `${textHeight}px` : 'normal'
                 }
-                return <CenterLayout className={ cn(CLASS_NAME, className) } scrolly={ true } {...props}>
-                         { /*这里有一个需要注意,因为有不设置宽度,但是又设置了高度的情况,那么肯定需要滚动,但是不知道宽度怎么滚动啊,所以这里width 设为 '100%'*/ }
-                         <Text width={ '100%' } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
-                           { this.props.children ? this.props.children : text }
-                         </Text>
-                       </CenterLayout>
+                return <CenterLayout className={cn(CLASS_NAME, className)} scrolly={true} {...props}>
+                    { /*这里有一个需要注意,因为有不设置宽度,但是又设置了高度的情况,那么肯定需要滚动,但是不知道宽度怎么滚动啊,所以这里width 设为 '100%'*/}
+                    <Text width={'100%'} keyword={keyword} py={py} highLight={highLight} style={styleObj}>
+                        {this.props.children !== undefined ? this.props.children : text}
+                    </Text>
+                </CenterLayout>
             } else { //whitespace 如果是 nowrap,那就不换行咯
                 //既然用少嵌套了一层 dom,那么要文字垂直居中就只能用 lineheight=height 实现了,用 centerlayout 会出现textoverflow 样式失效的问题
                 let styleObj = {
@@ -94,15 +94,9 @@ class Label extends Component {
                     lineHeight: this.props.height ? `${this.props.height}px` : 'normal',
                     maxWidth: '100%'
                 }
-                return <Text className={ cn(CLASS_NAME, className) } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj } {...props}>
-                         { this.props.children ? this.props.children : text }
-                       </Text>
-                // <CenterLayout className={ cn(CLASS_NAME, className) } style={ { maxWidth: '100%' } } {...props}>
-                //      <Text keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
-                //        { this.props.children ? this.props.children : text }
-                //      </Text>
-                //    </CenterLayout>
-
+                return <Text className={cn(CLASS_NAME, className)} keyword={keyword} py={py} highLight={highLight} style={styleObj} {...props}>
+                    {this.props.children !== undefined ? this.props.children : text}
+                </Text>
             }
         }
     }

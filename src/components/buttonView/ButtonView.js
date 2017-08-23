@@ -12,7 +12,7 @@ export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
 export const Trigger = 'click' || 'mousedown' || 'dbclick' || 'mouseup'
 
 
-const CLASS_NAME = 'bi-basic-button'
+const CLASS_NAME = 'bi-button-view'
 
 export default class ButtonView extends React.Component {
     constructor(props, context) {
