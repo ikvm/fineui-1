@@ -53,7 +53,7 @@ class TableCellResizer extends Component {
 
         return(
                 <div className="table-resizer" style={{height: height, 
-                                                            left: this.state.left,
+                                                       left: this.state.left,
                                                      }} 
                      onMouseDown={this._handleMouseDown}
                 />  
