@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {HorizontalLayout} from '../../../layout';
+import {HorizontalLayout} from '../../../layout'
 import {getElementLeft} from '../../../utils/utils/getElementPosition';
 import cn from 'classnames';
 

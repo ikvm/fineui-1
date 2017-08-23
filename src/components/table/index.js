@@ -1,1 +1,1 @@
-export MyTable from './table.js'
+export Table from './table.js'

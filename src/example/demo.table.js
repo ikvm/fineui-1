@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {MyTable} from '../components/table';
+import {Table} from '../components/table';
+import {AbsoluteLayout} from '../layout';
 
 class App extends Component{
 
@@ -47,6 +48,7 @@ class App extends Component{
                      tableHeight={480}
                      tableWidth={800}/>
                 
+            
         );
         
     }
