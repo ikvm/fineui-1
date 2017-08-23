@@ -35,7 +35,7 @@ export default class TreeView extends Component {
         const { className, open, nodeLabel, depth, handler, ...props } = this.props
         const collapsed = this.state.collapsed
 
-        const arrow = <IconButton className={cn('tree-view-arrow')}>+</IconButton>
+        const arrow = <IconButton className={cn('tree-view-arrow',{'tree-view-arrow-collapsed':collapsed})}></IconButton>
         const label = <Label>{nodeLabel}</Label>
         const blank = <Label width={10}></Label>
         return (
