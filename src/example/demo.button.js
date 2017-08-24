@@ -5,6 +5,7 @@ import TextButton from '../components/textbutton'
 import { HorizontalCenterLayout } from '../layout'
 import Radio from '../components/input/radio/Radio'
 import RadioGroup from '../components/input/radiogroup/RadioGroup'
+import Checkbox from '../components/input/checkbox/Checkbox'
 
 class ButtonDemo extends Component {
     constructor(props) {
@@ -28,12 +29,6 @@ class ButtonDemo extends Component {
             <Button width={'100%'} trigger='mouseup,click,mousedown,dbclick' iconCls='test-icon'>带图标的 button,trigger 同时为mouseup,click,mousedown,dbclick</Button>
             <IconButton width={100} height={50} iconCls='test-icon'></IconButton>
             <TextButton width={'100%'}>文字按钮</TextButton>
-            <Radio>Radio</Radio>
-            <RadioGroup width={200} checkedValue='2'>
-                <Radio value='1'>1</Radio>
-                <Radio value='2'>2</Radio>
-                <Radio value='3'>3</Radio>
-            </RadioGroup>
         </HorizontalCenterLayout>
     }
 }

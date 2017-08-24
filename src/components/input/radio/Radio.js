@@ -13,22 +13,23 @@ export default class Radio extends Component {
 
     static defaultProps = {
         selected: false,
+        disabled:false,
         handler: () => { }
     }
 
     handleChange = () => {
-        this.context.radioGroup.onChange && this.context.radioGroup.onChange(23)
         this.props.handler()
     }
 
     render() {
-        const { selected, handler, value, checked, ...props } = this.props
+        const { selected, handler, value, checked, disabled, ...props } = this.props
         const { radioGroup } = this.context
         const opts = {}
         if (radioGroup) {
             opts.onChange = radioGroup.onChange.bind(null, value)
             opts.checked = radioGroup.checkedValue === value
         }
+        opts.disabled=disabled
         return (
             <HorizontalLayout>
                 <input type='radio' {...opts} ></input>

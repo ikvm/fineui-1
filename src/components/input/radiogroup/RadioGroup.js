@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import IconButton from '../../iconbutton'
 import { HorizontalAdaptLayout, HorizontalLayout } from '../../../layout'
 import Radio from '../radio/Radio'
 import isEqual from 'lodash/isEqual'

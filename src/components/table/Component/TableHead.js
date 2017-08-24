@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {HeadCell, Cell} from '../Component';
-import {HorizontalLayout} from '../../../layout';
+import {HorizontalLayout} from '../../../layout'
 
 class TableHead extends Component {
 

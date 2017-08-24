@@ -61,6 +61,11 @@ const demos=[
         pid: 2,
         text: "各种提示",
         value:'TipsDemo'
+    },{
+        id:24,
+        pid:2,
+        text:'各种 input',
+        value:'InputDemo'
     }
 ]
 

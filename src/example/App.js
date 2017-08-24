@@ -14,6 +14,7 @@ import VerticalCenterLayoutDemo from './layout/demo.verticalCenterLayout'
 import HorizontalAdaptLayoutDemo from './layout/demo.horizontalAdaptLayout'
 import VerticalAdaptLayoutDemo from './layout/demo.verticalAdaptLayout'
 import TipsDemo from './demo.tips.js'
+import InputDemo from './demo.input'
 //eslint warning 和react warning太多了,先注释了
 //import TableDemo from './demo.table'
 import range from 'lodash/range'
@@ -68,6 +69,7 @@ class App extends Component {
                     <HorizontalAdaptLayoutDemo key='HorizontalAdaptLayoutDemo'></HorizontalAdaptLayoutDemo>
                     <VerticalAdaptLayoutDemo key='VerticalAdaptLayoutDemo'></VerticalAdaptLayoutDemo>
                     <TipsDemo key='TipsDemo'></TipsDemo>
+                    <InputDemo key='InputDemo'></InputDemo>
                 </CardLayout>
             </HorizontalAdaptLayout.Item>
         </HorizontalAdaptLayout>

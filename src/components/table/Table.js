@@ -7,9 +7,27 @@ const scrollBarCoreLength = 20;
 let scrollBarRightLength;
 let freezeColLength;
 let resizeMark = false;
-let tempLeft;
+let resizeLeft = false;
+let preLeft;
+let preScrollBarLengthRight;
+let preScrollBarLengthLeft;
+let topLeftItems;
+let topRightItems;
+let bottomLeftItems;
+let bottomRightItems;
+let rightColLength;
+let leftColLength;
+let mapIndexRight;
+let mapIndexBottomInit = -20.0;
+let mapIndexBottom = mapIndexBottomInit;
+let mapIndexBottomLeft = -0.1;
+let rightBarInfo;
+let leftBarInfo;
+let realLeft;
+let leftBodyRealLeft;
+let mark;
 
-class MyTable extends Component {
+class Table extends Component {
 
     constructor(props, context) {
         super(props, context);
@@ -22,7 +40,7 @@ class MyTable extends Component {
             columnSize: [],
         };
     }
-    
+
     static defaultProps = {
         headerRowSize: 40,
         rowSize: 40,
@@ -70,17 +88,41 @@ class MyTable extends Component {
     _handleTableResize = (dx) => {
         const {tableWidth} = this.props;
         let columnSize = this.state.columnSize;
-        
+        let newLeft = this.state.left;
+
         let newLeftWidth = this.state.leftLayoutWidth + dx;
         newLeftWidth = (newLeftWidth < 21) ? 21 : ((tableWidth - newLeftWidth < 21) ? (tableWidth - 21) : newLeftWidth);
         let newRightWidth = tableWidth - newLeftWidth;
-        columnSize[freezeColLength - 1] = newLeftWidth - columnSize.slice(0, freezeColLength - 1).reduce((x, y) => {return x + y;});
+        columnSize[freezeColLength - 1] = newLeftWidth - columnSize.slice(0, freezeColLength - 1).reduce((x, y) => {
+            return x + y;
+        });
+        let preBarLength = rightBarInfo["scrollBarBottomLength"];
+
+        if (dx < 0)
+            resizeLeft = true;
+        rightBarInfo = this._calcScrollBarSize(tableWidth, newLeftWidth, rightColLength, newRightWidth, mapIndexBottom);
+
         resizeMark = true;
-        
+
+        if (dx < 0) {
+            if (newLeft >= preBarLength) {
+                newLeft = rightBarInfo["scrollBarBottomLength"];
+            } else {
+                newLeft = realLeft / rightBarInfo["mapIndexBottom"];    
+                
+                if (newLeft + rightBarInfo["coreLength"] >= newRightWidth) {
+                    newLeft = rightBarInfo["scrollBarBottomLength"];
+                }
+            }
+        } else {
+            newLeft = realLeft / rightBarInfo["mapIndexBottom"];    
+        }
+
         this.setState((preState) => ({
             leftLayoutWidth: newLeftWidth,
             rightLayoutWidth: newRightWidth,
             columnSize: columnSize,
+            left: newLeft,
         }));
     }
 
@@ -90,34 +132,49 @@ class MyTable extends Component {
         let newColumnSize = this.state.columnSize;
         newColumnSize[index] = newCellWidth;
 
+        let leftColLength = this.state.columnSize.slice(0, freezeColLength).reduce((x, y) => {
+            return x + y;
+        });
+
+        if (index < freezeColLength - 1 && leftColLength < this.state.leftLayoutWidth) {
+            let newFreezWidth = this.state.columnSize[freezeColLength - 1] - dx;
+            newColumnSize[freezeColLength - 1] = newFreezWidth;
+        }
+
         this.setState({
             columnSize: newColumnSize,
         });
     }
 
     _renderLeftHead(leftHeadState, leftHeadArray, startCol, realLeft, leftLayoutWidth, leftLayoutHeight) {
-        
-        return <TableHead className="table-left-head" left={realLeft} top={0} array={leftHeadArray} layoutPosition="leftHead"
-                          width={leftLayoutWidth} height={leftLayoutHeight} onTableCellResize={this._handleTableCellResize}
+
+        return <TableHead className="table-left-head" left={realLeft} top={0} array={leftHeadArray}
+                          layoutPosition="leftHead"
+                          width={leftLayoutWidth} height={leftLayoutHeight}
+                          onTableCellResize={this._handleTableCellResize} endCol={freezeColLength - 1}
                           cellState={leftHeadState} startCol={startCol} layoutLeft={0}/>;
     }
 
     _renderRightHead(rightHeadState, rightHeadArray, startCol, realLeft, rightLayoutWidth, leftLayoutWidth, rightLayoutHeight, freezeColLength) {
-        
-        return <TableHead className="table-right-head" left={realLeft} top={0} array={rightHeadArray} layoutPosition="rightHead" 
-                          width={rightLayoutWidth} height={rightLayoutHeight} onTableCellResize={this._handleTableCellResize}
-                          cellState={rightHeadState} startCol={startCol} endCol={freezeColLength} layoutLeft={leftLayoutWidth}/>;
+
+        return <TableHead className="table-right-head" left={realLeft} top={0} array={rightHeadArray}
+                          layoutPosition="rightHead"
+                          width={rightLayoutWidth} height={rightLayoutHeight}
+                          onTableCellResize={this._handleTableCellResize}
+                          cellState={rightHeadState} startCol={startCol} 
+                          layoutLeft={leftLayoutWidth}/>;
     }
 
     _renderLeftBody(leftBodyState, leftBodyArray, startCol, realLeft, realTop, onWheelY, leftLayoutWidth, leftLayoutHeight) {
-        
-        return <TableBody className="table-left-body-frame" left={realLeft} top={realTop} array={leftBodyArray} 
-                          onWheelY={onWheelY} layoutPosition="leftBody" width={leftLayoutWidth} height={leftLayoutHeight}
+
+        return <TableBody className="table-left-body-frame" left={realLeft} top={realTop} array={leftBodyArray}
+                          onWheelY={onWheelY} layoutPosition="leftBody" width={leftLayoutWidth}
+                          height={leftLayoutHeight}
                           cellState={leftBodyState} startCol={startCol} layoutLeft={0}/>;
     }
 
     _renderRightBody(rightBodyState, rightBodyArray, startCol, realLeft, realTop, onWheelY, rightLayoutWidth, leftLayoutWidth, rightLayoutHeight) {
-        
+
         return <TableBody className="table-right-body-frame" left={realLeft} top={realTop} layoutPosition="rightBody"
                           array={rightBodyArray} onWheelY={onWheelY} cellState={rightBodyState} width={rightLayoutWidth}
                           height={rightLayoutHeight} layoutLeft={leftLayoutWidth} startCol={startCol}/>;
@@ -126,10 +183,10 @@ class MyTable extends Component {
     _renderScrollBarBottom(left, leftLayoutWidth, length, coreLength, onScrollChangeX, visibility, flag) {
 
         if (visibility) {
-            return <ScrollBarBottom onScrollChange={onScrollChangeX} left={left} layoutLeft={leftLayoutWidth + 16} 
+            return <ScrollBarBottom onScrollChange={onScrollChangeX} left={left} layoutLeft={leftLayoutWidth + 16}
                                     height={3} width={length} coreLength={coreLength} flag={flag}/>;
         }
-            
+
     }
 
     _renderScrollBarRight(top) {
@@ -142,7 +199,8 @@ class MyTable extends Component {
         let onTableResize = this._handleTableResize;
         let left = leftLayoutWidth - 2;
 
-        return <TableResizer height={tableHeight} left={left} onTableResize={onTableResize} tableWidth={this.props.tableWidth}/>;
+        return <TableResizer height={tableHeight} left={left} onTableResize={onTableResize}
+                             tableWidth={this.props.tableWidth}/>;
     }
 
     _getFreezeColLength(isNeedFreeze, freezeCol) {
@@ -153,21 +211,25 @@ class MyTable extends Component {
         let visibility = true;
         if (rightColLength <= rightLayoutWidth)
             visibility = false;
-        let coreLength = (tableWidth - leftLayoutWidth - 2) + ((rightColLength - rightLayoutWidth) / mapIndexBottom);
-        // -2 => 减去scroll bar边框
 
-        let scrollBarBottomLength = tableWidth - leftLayoutWidth - coreLength;
-    
-        if (coreLength < 20) {
+        let coreLength, scrollBarBottomLength;
+
+        coreLength = (tableWidth - leftLayoutWidth - 2) + ((rightColLength - rightLayoutWidth) / mapIndexBottom);
+        scrollBarBottomLength = tableWidth - leftLayoutWidth - coreLength - 2;
+        if (coreLength <= 20 || (resizeLeft && mapIndexBottom < mapIndexBottomInit)) {
             coreLength = 20;
             scrollBarBottomLength = tableWidth - leftLayoutWidth - coreLength - 2;
             mapIndexBottom = -(rightColLength - rightLayoutWidth) / scrollBarBottomLength;
+            if (resizeLeft)
+                resizeLeft = !resizeLeft;
         }
 
-        return {scrollBarBottomLength: scrollBarBottomLength, 
-                coreLength: coreLength, 
-                mapIndexBottom: mapIndexBottom,
-                visibility: visibility};
+        return {
+            scrollBarBottomLength: scrollBarBottomLength,
+            coreLength: coreLength,
+            mapIndexBottom: mapIndexBottom,
+            visibility: visibility
+        };
     }
 
     _serialize = (items, startCol, endCol, rowHeight, columnSize, mergeCols, mergeRows, mergeRule) => {
@@ -209,10 +271,10 @@ class MyTable extends Component {
                 y: +r * rowHeight,
                 item: map[r][c]
             });
-        };  
+        };
 
         let array = [];
-        
+
         items.map((cols, i) => {
             for (let j = startCol; j < endCol; j++) {
                 if (!cache[i]) {
@@ -276,84 +338,97 @@ class MyTable extends Component {
         });
     }
 
-    
+
     componentWillMount() {
-        const {headerRowSize, columnSize, freezeCols, isNeedFreeze, tableWidth, tableHeight} = this.props;        
+        const {header, items, headerRowSize, rowSize, columnSize, freezeCols, isNeedFreeze, tableWidth, tableHeight, mergeCols, mergeRule} = this.props;
         freezeColLength = this._getFreezeColLength(isNeedFreeze, freezeCols);
+        let leftLayoutWidth = columnSize[0] * freezeColLength;
+        let rightLayoutWidth = tableWidth - columnSize[0] * freezeColLength;
         scrollBarRightLength = tableHeight - headerRowSize;
+
+        topLeftItems = this._serialize(header, 0, freezeColLength, headerRowSize, columnSize, mergeCols, false, mergeRule);
+        topRightItems = this._serialize(header, freezeColLength, columnSize.length, headerRowSize, columnSize, true, false, mergeRule);
+        bottomLeftItems = this._serialize(items, 0, freezeColLength, rowSize, columnSize, mergeCols, false, mergeRule);
+        bottomRightItems = this._serialize(items, freezeColLength, columnSize.length, rowSize, columnSize, mergeCols, false, mergeRule);
+
+        rightColLength = columnSize.slice(freezeColLength).reduce((x, y) => {
+            return x + y;
+        });
+        leftColLength = columnSize.slice(0, freezeColLength).reduce((x, y) => {
+            return x + y;
+        });
+
+        mapIndexRight = -(items.length * headerRowSize - (tableHeight - headerRowSize)) / (scrollBarRightLength - scrollBarCoreLength);
+
+        mark = (tableWidth - 2) - (20 - ((rightColLength - rightLayoutWidth) / mapIndexBottom));
+
+        rightBarInfo = this._calcScrollBarSize(tableWidth, leftLayoutWidth, rightColLength, rightLayoutWidth, mapIndexBottom);
+        leftBarInfo = this._calcScrollBarSize(leftLayoutWidth, 0, leftColLength, leftLayoutWidth, mapIndexBottomLeft);
+        mapIndexBottom = rightBarInfo["mapIndexBottom"];
+        mapIndexBottomLeft = leftBarInfo["mapIndexBottom"];
+
         this.setState({
-            leftLayoutWidth: columnSize[0] * freezeColLength,
-            rightLayoutWidth: tableWidth - columnSize[0] * freezeColLength,
+            leftLayoutWidth: leftLayoutWidth,
+            rightLayoutWidth: rightLayoutWidth,
             columnSize: columnSize,
         });
     }
-    
+
 
     render() {
 
-        const {header, items, headerRowSize, rowSize, mergeCols, mergeRows, mergeRule, freezeCols, isNeedFreeze, 
-               tableWidth, tableHeight} = this.props;
+        const {header, items, headerRowSize, tableWidth, tableHeight} = this.props;
 
-        let leftBodyLeft = this.state.leftBodyLeft;
-        let left = this.state.left;
-        let top = this.state.top;
-        let leftLayoutWidth = this.state.leftLayoutWidth;
-        let rightLayoutWidth = this.state.rightLayoutWidth;
-        let columnSize = this.state.columnSize;
+        realLeft = rightBarInfo["mapIndexBottom"] * this.state.left;
+        leftBodyRealLeft = leftBarInfo["mapIndexBottom"] * this.state.leftBodyLeft;
+        let realTop = mapIndexRight * this.state.top;
 
-        let topLeftItems = this._serialize(header, 0, freezeColLength, headerRowSize, this.state.columnSize, mergeCols, false, mergeRule);
-        let topRightItems = this._serialize(header, freezeColLength, this.state.columnSize.length, headerRowSize, this.state.columnSize, true, false, mergeRule);
-        let bottomLeftItems = this._serialize(items, 0, freezeColLength, rowSize, this.state.columnSize, mergeCols, false, mergeRule);
-        let bottomRightItems = this._serialize(items, freezeColLength, this.state.columnSize.length, rowSize, this.state.columnSize, mergeCols, false, mergeRule);
+        let scrollBarBottomTotalLength = rightBarInfo["scrollBarBottomLength"] + rightBarInfo["coreLength"];
+        let scrollBarBottomLeftTotalLength = leftBarInfo["scrollBarBottomLength"] + leftBarInfo["coreLength"]
 
-        let rightColLength = columnSize.slice(freezeColLength).reduce((x, y) => {return x + y;});
-        let leftColLength = columnSize.slice(0, freezeColLength).reduce((x, y) => {return x + y;});
+        return (
+            <AbsoluteLayout style={{position: "absolute", left: 0, right: 0, top: 0, bottom: 0, backgroundColor: "white"}} width={tableWidth + 32} height={tableHeight + 32}
+                            lgap={16} tgap={16}>
+                <AbsoluteLayout.Item left={16} top={16}>
+                    {this._renderLeftHead(topLeftItems, header, 0, leftBodyRealLeft, this.state.leftLayoutWidth, headerRowSize)}
+                    {this._renderRightHead(topRightItems, header, freezeColLength, realLeft, this.state.rightLayoutWidth, this.state.leftLayoutWidth, headerRowSize)}
+                    {this._renderLeftBody(bottomLeftItems, items, 0, leftBodyRealLeft, realTop, this._handleWheelY, this.state.leftLayoutWidth, tableHeight - headerRowSize)}
+                    {this._renderRightBody(bottomRightItems, items, freezeColLength, realLeft, realTop, this._handleWheelY, this.state.rightLayoutWidth, this.state.leftLayoutWidth, tableHeight - headerRowSize)}
+                    {this._renderTableResizer(tableHeight, this.state.leftLayoutWidth)}
+                </AbsoluteLayout.Item>
+                {this._renderScrollBarBottom(this.state.left, this.state.leftLayoutWidth, scrollBarBottomTotalLength, rightBarInfo["coreLength"], this._handleScrollChangeX, rightBarInfo["visibility"], "right")}
+                {this._renderScrollBarBottom(this.state.leftBodyLeft, 0, scrollBarBottomLeftTotalLength, leftBarInfo["coreLength"], this._handleLeftBodyScrollChangeX, leftBarInfo["visibility"], "left")}
+                {this._renderScrollBarRight(this.state.top)}
+            </AbsoluteLayout>
+        );
+    }
 
-        let mapIndexRight = -(items.length * headerRowSize - (tableHeight - headerRowSize)) / (scrollBarRightLength - scrollBarCoreLength);
-        
-        let mapIndexBottom = -12.0;
-        
-        let rightBarInfo = this._calcScrollBarSize(tableWidth, leftLayoutWidth, rightColLength, rightLayoutWidth, mapIndexBottom);
-        let leftBarInfo = this._calcScrollBarSize(leftLayoutWidth, 0, leftColLength, leftLayoutWidth, mapIndexBottom);
+    componentWillUpdate(nextProps, nextState) {
+        const {header, items, headerRowSize, rowSize, mergeCols, mergeRule, tableWidth} = nextProps;
 
-        let scrollBarBottomLengthRight = rightBarInfo["scrollBarBottomLength"];
-        let coreLengthRight = rightBarInfo["coreLength"];
-        let mapIndexBottomRight = rightBarInfo["mapIndexBottom"];
-        let rightBarVisibility = rightBarInfo["visibility"];
+        topLeftItems = this._serialize(header, 0, freezeColLength, headerRowSize, nextState.columnSize, mergeCols, false, mergeRule);
+        topRightItems = this._serialize(header, freezeColLength, nextState.columnSize.length, headerRowSize, nextState.columnSize, true, false, mergeRule);
+        bottomLeftItems = this._serialize(items, 0, freezeColLength, rowSize, nextState.columnSize, mergeCols, false, mergeRule);
+        bottomRightItems = this._serialize(items, freezeColLength, nextState.columnSize.length, rowSize, nextState.columnSize, mergeCols, false, mergeRule);
 
-        let scrollBarBottomLengthLeft = leftBarInfo["scrollBarBottomLength"]
-        let coreLengthLeft = leftBarInfo["coreLength"];
-        let mapIndexBottomLeft = leftBarInfo["mapIndexBottom"];
-        let leftBarVisibility = leftBarInfo["visibility"];
+        rightColLength = this.state.columnSize.slice(freezeColLength).reduce((x, y) => {
+            return x + y;
+        });
+        leftColLength = this.state.columnSize.slice(0, freezeColLength).reduce((x, y) => {
+            return x + y;
+        });
 
-        if (resizeMark) {
-            left = tempLeft / mapIndexBottomRight;
-            //window.console.log(rightColLength + " " + rightLayoutWidth + " " + mapIndexBottom);
+        if (!resizeMark) {
+            rightBarInfo = this._calcScrollBarSize(tableWidth, nextState.leftLayoutWidth, rightColLength, nextState.rightLayoutWidth, mapIndexBottom);
             resizeMark = !resizeMark;
         }
-        
-        let realLeft = mapIndexBottomRight * left;
-        tempLeft = realLeft;
-        let leftBodyRealLeft = mapIndexBottomLeft * leftBodyLeft;
-        let realTop = mapIndexRight * top;
 
-        return(
-            <AbsoluteLayout className="table-frame" width={tableWidth + 32} height={tableHeight + 32} 
-                            lgap={16} tgap={16}>
-                <AbsoluteLayout className="table" width={tableWidth} height={tableHeight} lgap={16} tgap={16}>
-            
-                    {this._renderLeftHead(topLeftItems, header, 0, leftBodyRealLeft, leftLayoutWidth, headerRowSize)}
-                    {this._renderRightHead(topRightItems, header, freezeColLength, realLeft, rightLayoutWidth, leftLayoutWidth, headerRowSize)}
-                    {this._renderLeftBody(bottomLeftItems, items, 0, leftBodyRealLeft, realTop, this._handleWheelY, leftLayoutWidth, tableHeight - headerRowSize)}
-                    {this._renderRightBody(bottomRightItems, items, freezeColLength, realLeft, realTop, this._handleWheelY, rightLayoutWidth, leftLayoutWidth, tableHeight - headerRowSize)}
-                    {this._renderTableResizer(tableHeight, leftLayoutWidth)}
-                </AbsoluteLayout>
-                {this._renderScrollBarBottom(left, leftLayoutWidth, scrollBarBottomLengthRight + coreLengthRight, coreLengthRight, this._handleScrollChangeX, rightBarVisibility, "right")}
-                {this._renderScrollBarBottom(leftBodyLeft, 0, scrollBarBottomLengthLeft + coreLengthLeft, coreLengthLeft, this._handleLeftBodyScrollChangeX, leftBarVisibility, "left")}
-                {this._renderScrollBarRight(top)}
-            </AbsoluteLayout>
-            );
+        leftBarInfo = this._calcScrollBarSize(nextState.leftLayoutWidth, 0, leftColLength, nextState.leftLayoutWidth, mapIndexBottomLeft);
+
+        mapIndexBottom = rightBarInfo["mapIndexBottom"];
+        mapIndexBottomLeft = leftBarInfo["mapIndexBottom"];
+
     }
 }
 
-export default MyTable
+export default Table
