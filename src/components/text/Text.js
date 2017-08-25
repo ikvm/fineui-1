@@ -4,6 +4,9 @@ import cn from 'classnames'
 import { isNotEmptyString } from '../../utils'
 import makeFirstPy from './chinesePY'
 
+
+const CLASS_NAME='bi-text'
+
 class Text extends Component {
     constructor(props) {
         super(props)
@@ -62,7 +65,7 @@ class Text extends Component {
                      { [...result] }
                    </Layout>
         } else {
-            temp = <Layout className={ cn(className, {
+            temp = <Layout className={ cn(CLASS_NAME,className, {
                         'high-light': highLight
                     }) } { ...props }>
                      { this.props.children }

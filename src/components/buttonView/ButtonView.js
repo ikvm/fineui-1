@@ -90,7 +90,7 @@ export default class ButtonView extends React.Component {
 
     render() {
 
-        const { handler, trigger, className, ...props } = this.props
+        const { handler, trigger, className,stopPropagation, ...props } = this.props
 
         return <CenterLayout className={cn(CLASS_NAME, className)} {...this._bindEvent(trigger) } { ...props }>
             {this.props.children}

@@ -20,6 +20,9 @@ import InputDemo from './demo.input'
 import range from 'lodash/range'
 import './example.less'
 
+
+import DownListDemo from './demo.downlist'
+
 import demos from './config/config'
 
 import { AbsoluteLayout, CenterLayout, HorizontalCenterLayout, VerticalCenterLayout, HorizontalLayout, HtapeLayout, VtapeLayout, Layout, CardLayout, VerticalLayout, HorizontalAdaptLayout, VerticalAdaptLayout } from '../layout'
@@ -28,7 +31,7 @@ class App extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
-            defaultShowKey: 'ButtonDemo',
+            defaultShowKey: 'DownListDemo',
             demos: demos
         }
     }
@@ -70,6 +73,7 @@ class App extends Component {
                     <VerticalAdaptLayoutDemo key='VerticalAdaptLayoutDemo'></VerticalAdaptLayoutDemo>
                     <TipsDemo key='TipsDemo'></TipsDemo>
                     <InputDemo key='InputDemo'></InputDemo>
+                    <DownListDemo key='DownListDemo'></DownListDemo>
                 </CardLayout>
             </HorizontalAdaptLayout.Item>
         </HorizontalAdaptLayout>

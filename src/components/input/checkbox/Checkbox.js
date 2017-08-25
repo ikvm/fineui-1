@@ -32,7 +32,7 @@ export default class Checkbox extends Component {
         opts.disabled = disabled
         return (
                 <HorizontalLayout className={cn(CLASS_NAME, className,{'disabled':disabled})} onClick={this.handleChange}>
-                    <input type='checkbox' {...opts} />
+                    <input type='checkbox' readOnly={true} {...opts} />
                     {this.props.children}
                 </HorizontalLayout>
         )

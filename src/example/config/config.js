@@ -64,8 +64,22 @@ const demos=[
     },{
         id:24,
         pid:2,
+        text:'combo',
+        value:'ComboDemo'
+    },{
+        id:25,
+        pid:2,
         text:'各种 input',
         value:'InputDemo'
+    },{
+        id: 3,
+        pid: -1,
+        text: "详细控件"
+    },{
+        id: 31,
+        pid: 3,
+        text: "downlist",
+        value:'DownListDemo'
     }
 ]
 
