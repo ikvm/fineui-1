@@ -1,21 +1,56 @@
 import React, {Component} from 'react';
-import {TableRow} from '../Component';
-import {HorizontalLayout} from '../../../layout';
+import {HeadCell, Cell} from '../Component';
+import {HorizontalLayout} from '../../../layout'
 
 class TableHead extends Component {
 
     render() {
 
-        const {className, array, width, height, startIndexCol, colWidth, ...props} = this.props;
-
-
+        const {className, array, cellState, width, height, layoutPosition, top, left, startCol, layoutLeft, endCol, ...props} = this.props;
+        
         return(
-                <HorizontalLayout className={className} scrollx={false} scrolly={false} verticalAlign="_middle"
-                                  width={width} height={height}>
+                <HorizontalLayout className={className}  scrollx={false} scrolly={false} scrollable={false}  verticalAlign="_middle"
+                                  width={width} height={height} left={layoutLeft}>
                     {
-                        <TableRow rowIndex={0} array={array.slice(startIndexCol, startIndexCol + width / 100 + 2)} 
-                                  width={width} startIndexCol={startIndexCol} colWidth={colWidth} 
-                                  {...props}/>
+                        cellState.map((item, index) => {
+                            let r = item.row;
+                            let c = item.col;
+                            let text = array[r][c];
+                            let newLeft = item.x + left;
+                            let newTop = item.y + top;
+                            switch(layoutPosition) {
+                                case "leftHead":
+                                    if (c === startCol) {
+                                        return <HeadCell className="cell-complete" col={item.col} key={text} 
+                                                         width={item.width - 2} height={item.height - 2} text={text}
+                                                         position="absolute" left={newLeft} top={0} {...props}/>;
+                                    }
+                                    else if (c != endCol) {
+                                        return <HeadCell className="cell-lack-left" col={item.col} key={text} 
+                                                         width={item.width - 1} height={item.height - 2} text={text}
+                                                         position="absolute" left={newLeft} top={0} {...props}/>;
+                                    } else {
+                                        return <Cell className="cell-lack-left" key={text} width={item.width - 1} 
+                                                     height={item.height - 2} position="absolute" text={text} 
+                                                     left={newLeft} top={0} {...props}/>;
+                                    }
+                                    break;
+                                case "rightHead":
+                                    if (newLeft < width && newLeft > -item.width) {
+                                        if (c === startCol) {
+                                            return <HeadCell className="cell-complete" col={item.col} key={text} 
+                                                             width={item.width - 2} height={item.height - 2} text={text}
+                                                             position="absolute" left={newLeft} top={0} {...props}/>;
+                                        } else {
+                                            return <HeadCell className="cell-lack-left" col={item.col} key={text} 
+                                                             width={item.width - 1} height={item.height - 2} 
+                                                             position="absolute" text={text} left={newLeft} top={0} 
+                                                             {...props}/>;
+                                        }
+                                    }
+
+                            }
+                        })
                     }
                 </HorizontalLayout>
             );

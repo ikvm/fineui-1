@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import '../components/table/Table.less';
-import {MyTable} from '../components/table';
+import {Table} from '../components/table';
 import {AbsoluteLayout} from '../layout';
+
 
 const LEFT_COLUMN = 2;
 const RIGHT_COLUMN = 48;
@@ -19,11 +19,13 @@ let headerRowSize = defaultHeight;
 let rowSize = defaultHeight;
 let leftCellsHeight = [];
 
+
 class TableDemo extends Component{
 
     constructor(props, context) {
         super(props, context);
     }
+
 
     componentWillMount() {
         for (let j = 0; j < BODY_ROW; j++) {
@@ -42,25 +44,56 @@ class TableDemo extends Component{
                 }
             }
         }
-
     }
 
     render() {
 
+
+        let items = [], header = [], columnSize = [];
+
+        let rowCount = 100, columnCount = 100;
+
+        for (let i = 0; i < 1; i++) {
+            header[i] = [];
+            for (let j = 0; j < columnCount; j++) {
+                header[i][j] = "表头" + i + "-" + j;
+                columnSize[j] = 100;
+            }
+        }
+        for (let i = 0; i < rowCount; i++) {
+            items[i] = [];
+            for (let j = 0; j < columnCount; j++) {
+                items[i][j] = (i < 3 ? 0 : i) + "-" + j;
+            }
+        }
+
+        let mergeRows = [];
+        let mergeCols = [0, 1];
+        let freezeCols = [0, 1];
+        let isNeedFreeze = true;
+        let mergeRule = (col1, col2) => {
+            return col1 === col2;
+        }
+
         return (
-            <AbsoluteLayout className="App" >
-                <div className="App" >
-                <MyTable leftHeadArray={headArray.slice(0, LEFT_COLUMN)} rightHeadArray={headArray.slice(LEFT_COLUMN)}
-                         leftBodyArray={leftBodyArray} rightBodyArray={rightBodyArray}
-                         columnSize={columnSize} headerRowSize={headerRowSize} rowSize={rowSize}
-                         leftCellsHeight={leftCellsHeight}/>
-                </div>
-            </AbsoluteLayout>
+            <MyTable header={header}
+                     items={items}
+                     columnSize={columnSize}
+                     mergeCols={mergeCols}
+                     mergeRows={mergeRows}
+                     freezeCols={freezeCols}
+                     isNeedFreeze={isNeedFreeze}
+                     mergeRule={mergeRule}
+                     tableHeight={480}
+                     tableWidth={800}/>
+
+
         );
+
     }
 
 
 }
 
-export default TableDemo;
+export default TableDemo
 

@@ -1,28 +1,17 @@
 import React, {Component} from 'react';
+import {isCellColVisible, isCellRowVisible} from '../../../utils/utils/isCellVisible';
 import {HorizontalLayout, VerticalLayout} from '../../../layout'
 
 class Cell extends Component {
 
     render() {
 
-        const {className, head, col, row, left, top, startIndex, colWidth, ...props} = this.props;
-
-        let newLeft = 0;
-
-        for (let i = 0; i < col - startIndex; i++) {
-            newLeft += colWidth[i];
-        }
-
-        newLeft += left;
-
-        let newTop = row * 40 + top;
-
-        let text = head ? ("表头0-" + col) : (row + "-" + col);
+        const {className, left, top, text, ...props} = this.props;
 
         let children = <span>{text}</span>;
 
         return(
-                <HorizontalLayout className={className} left={newLeft} top={newTop} scrollx={false}
+                <HorizontalLayout className={className} left={left} top={top} scrollx={false}
                                   scrolly={false} verticalAlign="_middle" {...props}>
                     <VerticalLayout className="text-container" horizontalAlign="_center" scrollx={false} 
                                     scrolly={false} children={children} top={0} left={0}>

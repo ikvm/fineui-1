@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {HeadCell, Cell} from '../Component';
-import {HorizontalLayout} from '../../../layout';
+import {HorizontalLayout} from '../../../layout'
 
 class TableRow extends Component {
 
@@ -15,7 +15,7 @@ class TableRow extends Component {
 
     render() {
 
-        const {array, rowIndex, colNum, scrollable, colIndex, width, height, layoutPosition, 
+        const {array, rowIndex, scrollable, colIndex, width, height, layoutPosition, 
                cellHeight, cellWidth, startIndexCol, colWidth, ...props} = this.props;
 
         let myProps = props;
@@ -60,6 +60,17 @@ class TableRow extends Component {
                                 
                                 break;
                             default:
+                            /* 
+                                if (startIndexCol <= index && index <= startIndexCol + (width / cellWidth)) {
+                                    
+                                    return <Cell className="cell-lack-left-top" row={rowIndex} col={index + colIndex + startIndexCol}
+                                                 key={i} width={cellWidth - 1} height={cellHeight - 1} startIndex={colIndex + startIndexCol} 
+                                                 position="absolute" {...props}/>;
+                                } else {
+                                    return null;
+                                }
+                                */
+                               // window.console.log(index + " " + startIndexCol + " " + colIndex);
                                 return <Cell className="cell-lack-left-top" row={rowIndex} col={index + colIndex + startIndexCol}
                                              key={i} width={colWidth[startIndexCol + index] - 1} height={cellHeight - 1} startIndex={colIndex} 
                                              position="absolute" colWidth={colWidth} {...props}/>;

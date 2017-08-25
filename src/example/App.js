@@ -4,13 +4,26 @@ import TreeDemo from './demo.tree'
 import ComboDemo from './demo.combo'
 import ButtonDemo from './demo.button'
 import LabelDemo from './demo.label'
-import GridDemo from './demo.gird'
-import Toast from '../components/tip/toast/Toast'
+import GridDemo from './Layout/demo.gird'
 import EditorDemo from './demo.editor'
-//eslint warning 太多了,先注释了
-import TableDemo from './demo.table'
+import PagerDemo from './demo.pager'
+import Tree from '../components/tree'
+import CenterLayoutDemo from './Layout/demo.centerLayout'
+import HorizontalCenterLayoutDemo from './layout/demo.horizontalCenterLayout'
+import VerticalCenterLayoutDemo from './layout/demo.verticalCenterLayout'
+import HorizontalAdaptLayoutDemo from './layout/demo.horizontalAdaptLayout'
+import VerticalAdaptLayoutDemo from './layout/demo.verticalAdaptLayout'
+import TipsDemo from './demo.tips.js'
+import InputDemo from './demo.input'
+//eslint warning 和react warning太多了,先注释了
+//import TableDemo from './demo.table'
 import range from 'lodash/range'
 import './example.less'
+
+
+import DownListDemo from './demo.downlist'
+
+import demos from './config/config'
 
 import { AbsoluteLayout, CenterLayout, HorizontalCenterLayout, VerticalCenterLayout, HorizontalLayout, HtapeLayout, VtapeLayout, Layout, CardLayout, VerticalLayout, HorizontalAdaptLayout, VerticalAdaptLayout } from '../layout'
 
@@ -18,7 +31,8 @@ class App extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
-            defaultShowKey: '1'
+            defaultShowKey: 'DownListDemo',
+            demos: demos
         }
     }
 
@@ -30,33 +44,39 @@ class App extends Component {
         })
     }
 
+    handleTreeEvent = (args) => {
+        if (args.value) {
+            this.changeCard(args.value)
+        }
+    }
+
     render() {
         const { ...props } = this.props,
             { ...state } = this.state;
-        return <VerticalLayout>
-
-            <CenterLayout className='header' height={60} bgap={10}>
-                <Button hgap={5} handler={() => this.changeCard('1')}>ButtonDemo</Button>
-                <Button hgap={5} handler={() => this.changeCard('2')}>LabelDemo</Button>
-                <Button hgap={5} handler={() => this.changeCard('3')}>TreeDemo</Button>
-                <Button hgap={5} handler={() => this.changeCard('4')}>GridDemo</Button>
-                <Button hgap={5} handler={() => Toast.show('这是一个 toast,持续3秒')}>Toast</Button>
-                <Button hgap={5} handler={() => this.changeCard('5')}>Input and Editor</Button>
-                <Button hgap={5} handler={() => this.changeCard('6')}>ComboDemo</Button>
-                <Button hgap={5} handler={() => this.changeCard('7')}>TableDemo</Button>
-
-            </CenterLayout>
-            <CardLayout className='content' defaultShowKey={state.defaultShowKey}>
-                <ButtonDemo key='1'></ButtonDemo>
-                <LabelDemo key='2'></LabelDemo>
-                <TreeDemo key='3'></TreeDemo>
-                <GridDemo key='4'></GridDemo>
-
-                <EditorDemo key='5'></EditorDemo>
-                <ComboDemo key='6'></ComboDemo>
-                <TableDemo key='7'></TableDemo>
-            </CardLayout>
-        </VerticalLayout>
+        return <HorizontalAdaptLayout style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }}>
+            <HorizontalAdaptLayout.Item width={200} height={'100%'} scrollx={false} style={{ backgroundColor: '#eff1f4' }}>
+                <Tree handler={this.handleTreeEvent} nodes={state.demos}></Tree>
+            </HorizontalAdaptLayout.Item>
+            <HorizontalAdaptLayout.Item scrolly={true} height={'100%'}>
+                <CardLayout  defaultShowKey={state.defaultShowKey}>
+                    <ButtonDemo key='ButtonDemo'></ButtonDemo>
+                    <LabelDemo key='LabelDemo'></LabelDemo>
+                    <TreeDemo key='TreeDemo'></TreeDemo>
+                    <GridDemo key='GridLayoutDemo'></GridDemo>
+                    <EditorDemo key='EditorDemo'></EditorDemo>
+                    <ComboDemo key='ComboDemo'></ComboDemo>
+                    <PagerDemo key='PagerDemo'></PagerDemo>
+                    <CenterLayoutDemo key='CenterLayoutDemo'></CenterLayoutDemo>
+                    <HorizontalCenterLayoutDemo key='HorizontalCenterLayoutDemo'></HorizontalCenterLayoutDemo>
+                    <VerticalCenterLayoutDemo key='VerticalCenterLayoutDemo'></VerticalCenterLayoutDemo>
+                    <HorizontalAdaptLayoutDemo key='HorizontalAdaptLayoutDemo'></HorizontalAdaptLayoutDemo>
+                    <VerticalAdaptLayoutDemo key='VerticalAdaptLayoutDemo'></VerticalAdaptLayoutDemo>
+                    <TipsDemo key='TipsDemo'></TipsDemo>
+                    <InputDemo key='InputDemo'></InputDemo>
+                    <DownListDemo key='DownListDemo'></DownListDemo>
+                </CardLayout>
+            </HorizontalAdaptLayout.Item>
+        </HorizontalAdaptLayout>
     }
 }
 export default App

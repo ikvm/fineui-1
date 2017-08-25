@@ -12,7 +12,7 @@ export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
 export const Trigger = 'click' || 'mousedown' || 'dbclick' || 'mouseup'
 
 
-const CLASS_NAME = 'bi-basic-button'
+const CLASS_NAME = 'bi-button-view'
 
 export default class ButtonView extends React.Component {
     constructor(props, context) {
@@ -21,6 +21,7 @@ export default class ButtonView extends React.Component {
     }
 
     static defaultProps = {
+        stopPropagation: false,
         trigger: "click",
         handler: () => {
         }
@@ -53,8 +54,11 @@ export default class ButtonView extends React.Component {
 
 
     handleClick = (e) => {
+        if (this.props.stopPropagation) {
+            e.stopPropagation()
+        }
         console.log('click')
-        const {disabled, handler} = this.props
+        const { disabled, handler } = this.props
         if (!disabled && handler) {
             handler()
         } else {
@@ -62,14 +66,23 @@ export default class ButtonView extends React.Component {
         }
     }
     handleDoubleClick = (e) => {
+        if (this.props.stopPropagation) {
+            e.stopPropagation()
+        }
         this.props.handler()
         console.log('dbclick')
     }
     handleMouseDown = (e) => {
+        if (this.props.stopPropagation) {
+            e.stopPropagation()
+        }
         this.props.handler()
         console.log('mousedown')
     }
     handleMouseUp = (e) => {
+        if (this.props.stopPropagation) {
+            e.stopPropagation()
+        }
         this.props.handler()
         console.log('mouseup')
     }
@@ -77,10 +90,10 @@ export default class ButtonView extends React.Component {
 
     render() {
 
-        const {handler, trigger, className, ...props} = this.props
+        const { handler, trigger, className,stopPropagation, ...props } = this.props
 
-        return <CenterLayout className={ cn(CLASS_NAME, className) } {...this._bindEvent(trigger)} { ...props }>
-                 { this.props.children }
-               </CenterLayout>
+        return <CenterLayout className={cn(CLASS_NAME, className)} {...this._bindEvent(trigger) } { ...props }>
+            {this.props.children}
+        </CenterLayout>
     }
 }
