@@ -94,6 +94,7 @@
     "react-immutable-render-mixin": "^0.9.7",
     "react-mixin": "^3.0.5",
     "react-motion": "^0.4.7",
+    "react-overlays": "^0.8.0",
     "react-redux": "^4.4.6",
     "react-timer-mixin": "^0.13.3",
     "rebound": "0.0.13",

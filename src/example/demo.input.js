@@ -30,7 +30,15 @@ export default class InputDemo extends Component {
             <HorizontalAdaptLayout  vgap={10}><Checkbox>正常的</Checkbox><Checkbox checked={true}>默认选中的</Checkbox><Checkbox disabled={true}>disabled</Checkbox></HorizontalAdaptLayout>
 
             <VerticalLayout>
-            <Checkbox>正常的</Checkbox>
+            <Checkbox>
+                <Label>'Checkbox'标签内放啥都行,显示在右边</Label>
+            </Checkbox>
+            <Checkbox>
+                <Radio>放个 radio</Radio>
+            </Checkbox>
+            <Checkbox>
+                <Button>放个 button</Button>
+            </Checkbox>
             </VerticalLayout>
         </HorizontalCenterLayout>
     }

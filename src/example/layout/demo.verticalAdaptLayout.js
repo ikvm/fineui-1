@@ -6,11 +6,11 @@ export default class VerticalAdaptLayoutDemo extends Component {
     render() {
         return (
                 <VerticalAdaptLayout>
-                    <VerticalAdaptLayout.Item height={50}><Label className='layout-bg1' width={150} >自适应垂直居中 1</Label></VerticalAdaptLayout.Item>
-                    <VerticalAdaptLayout.Item height={50}><Label className='layout-bg2' width={150} >自适应垂直居中 2</Label></VerticalAdaptLayout.Item>
-                    <VerticalAdaptLayout.Item height={50}><Label className='layout-bg3' width={150} >自适应垂直居中 3</Label></VerticalAdaptLayout.Item>
-                    <VerticalAdaptLayout.Item height={50}><Label className='layout-bg4' width={150} >自适应垂直居中 4</Label></VerticalAdaptLayout.Item>
-                    <VerticalAdaptLayout.Item height={50}><Label className='layout-bg5' width={150} >自适应垂直居中 5</Label></VerticalAdaptLayout.Item>
+                    <VerticalAdaptLayout.Item ><Label className='layout-bg1' height={30} width={150} >自适应垂直 1</Label></VerticalAdaptLayout.Item>
+                    <VerticalAdaptLayout.Item ><Label className='layout-bg2' height={30} width={150} >自适应垂直 2</Label></VerticalAdaptLayout.Item>
+                    <VerticalAdaptLayout.Item ><Label className='layout-bg3' height={30} width={150} >自适应垂直 3</Label></VerticalAdaptLayout.Item>
+                    <VerticalAdaptLayout.Item ><Label className='layout-bg4' height={30} width={150} >自适应垂直 4</Label></VerticalAdaptLayout.Item>
+                    <VerticalAdaptLayout.Item ><Label className='layout-bg5' height={30} width={150} >自适应垂直 5</Label></VerticalAdaptLayout.Item>
                 </VerticalAdaptLayout>
         );
     }

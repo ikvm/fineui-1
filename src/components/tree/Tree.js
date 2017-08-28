@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Layout, VerticalLayout } from '../../layout'
+import { Layout, CenterLayout,HorizontalLayout, VerticalLayout,VerticalCenterLayout } from '../../layout'
 import Label from '../label'
 import TreeView from './TreeView'
+import Checkbox from '../input/checkbox'
+
 import filter from 'lodash/filter'
 import forEach from 'lodash/forEach'
 import some from 'lodash/some'
@@ -45,10 +47,15 @@ export default class Tree extends Component {
         }
 
         let content = ''
+        let item=null
         if (current) {
             content = current.text
+            //树的 item部分,愿意写什么写什么,加上 checkbox 就变成 muliti 的了,窝不关心
+            item= <CenterLayout><Label>{content}</Label></CenterLayout>
         }
-        return <TreeView key={UUID()} nodeLabel={content} depth={depth} handler={itemClicked} open={(current && current.open === false) ? false : true} >
+        
+        
+        return <TreeView key={UUID()}  item={item} depth={depth} handler={itemClicked} open={(current && current.open === false) ? false : true} >
             {childrenNode.length > 0 ? childrenNode : null}
         </TreeView>
     }

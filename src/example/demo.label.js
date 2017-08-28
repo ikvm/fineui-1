@@ -32,7 +32,7 @@ class LabelDemo extends Component {
 
 
     render() {
-        return <HorizontalCenterLayout ref={ (wraper) => this.wraper = wraper } width={ 800 } style={ { backgroundColor: 'gray' } }>
+        return <HorizontalCenterLayout ref={ (wraper) => this.wraper = wraper } width={ 800 } style={{color:'#ffffff'}}>
                  <Text>文本组件</Text>
                  <CenterLayout>
                    <Button hgap={ 20 } handler={ this.redMarkHandler }>切换标红</Button>
@@ -64,6 +64,7 @@ class LabelDemo extends Component {
                  <Label className='label-bg' whiteSpace='normal' height={ 60 } textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了高度,但没有宽度,文字高度30,如果文字太长了的话,那么滚动条是很有必要的.不信你看,多加点字效果更明显一点,在多加点.more more more more more more more more moremore more more
                    more more more more more more</Label>
                  <Label className='label-bg' height={ 60 } text='也可以通过text属性来设置label文字' textHeight={ 30 } vgap={ 20 }></Label>
+                 <Label className='label-bg' textHeight={ 30 } vgap={ 20 }>也可以通过text属性来设置label文字</Label>
                </HorizontalCenterLayout>
 
     }

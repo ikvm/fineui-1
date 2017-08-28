@@ -13,6 +13,10 @@ import HorizontalCenterLayoutDemo from './layout/demo.horizontalCenterLayout'
 import VerticalCenterLayoutDemo from './layout/demo.verticalCenterLayout'
 import HorizontalAdaptLayoutDemo from './layout/demo.horizontalAdaptLayout'
 import VerticalAdaptLayoutDemo from './layout/demo.verticalAdaptLayout'
+import VtapeLayoutDemo from './layout/demo.vtapelayout'
+import HtapeLayoutDemo from './layout/demo.htapelayout'
+import LeftLayoutDemo from './layout/demo.leftLayout'
+import RightLayoutDemo from './layout/demo.rightLayout'
 import TipsDemo from './demo.tips.js'
 import InputDemo from './demo.input'
 //eslint warning 和react warning太多了,先注释了
@@ -31,7 +35,7 @@ class App extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
-            defaultShowKey: 'DownListDemo',
+            defaultShowKey: 'RightLayoutDemo',
             demos: demos
         }
     }
@@ -54,7 +58,7 @@ class App extends Component {
         const { ...props } = this.props,
             { ...state } = this.state;
         return <HorizontalAdaptLayout style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }}>
-            <HorizontalAdaptLayout.Item width={200} height={'100%'} scrollx={false} style={{ backgroundColor: '#eff1f4' }}>
+            <HorizontalAdaptLayout.Item width={200} height={'100%'} scrollx={false} style={{ borderRight: ' 1px solid #eff1f4' }}>
                 <Tree handler={this.handleTreeEvent} nodes={state.demos}></Tree>
             </HorizontalAdaptLayout.Item>
             <HorizontalAdaptLayout.Item scrolly={true} height={'100%'}>
@@ -71,6 +75,10 @@ class App extends Component {
                     <VerticalCenterLayoutDemo key='VerticalCenterLayoutDemo'></VerticalCenterLayoutDemo>
                     <HorizontalAdaptLayoutDemo key='HorizontalAdaptLayoutDemo'></HorizontalAdaptLayoutDemo>
                     <VerticalAdaptLayoutDemo key='VerticalAdaptLayoutDemo'></VerticalAdaptLayoutDemo>
+                    <VtapeLayoutDemo key="VtapeLayoutDemo"></VtapeLayoutDemo>
+                    <HtapeLayoutDemo key="HtapeLayoutDemo"></HtapeLayoutDemo>
+                    <LeftLayoutDemo key="LeftLayoutDemo"></LeftLayoutDemo>
+                    <RightLayoutDemo key="RightLayoutDemo"></RightLayoutDemo>
                     <TipsDemo key='TipsDemo'></TipsDemo>
                     <InputDemo key='InputDemo'></InputDemo>
                     <DownListDemo key='DownListDemo'></DownListDemo>

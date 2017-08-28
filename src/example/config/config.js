@@ -1,5 +1,4 @@
-const demos=[
-    {
+const demos = [{
         id: 1,
         pid: -1,
         text: "核心控件"
@@ -35,9 +34,28 @@ const demos=[
         pid: 11,
         text: "VerticalAdaptLayout",
         value: 'VerticalAdaptLayoutDemo'
-    },
-    {
+    }, {
         id: 117,
+        pid: 11,
+        text: 'HtapeLayout',
+        value: 'HtapeLayoutDemo'
+    }, {
+        id: 118,
+        pid: 11,
+        text: 'VtapeLayout',
+        value: 'VtapeLayoutDemo'
+    }, {
+        id: 119,
+        pid: 11,
+        text: 'LeftLayout',
+        value: 'LeftLayoutDemo'
+    }, {
+        id: 120,
+        pid: 11,
+        text: 'RightLayout',
+        value: 'RightLayoutDemo'
+    }, {
+        id: 121,
         pid: 11,
         text: "GridLayout",
         value: 'GridLayoutDemo'
@@ -60,26 +78,31 @@ const demos=[
         id: 23,
         pid: 2,
         text: "各种提示",
-        value:'TipsDemo'
-    },{
-        id:24,
-        pid:2,
-        text:'combo',
-        value:'ComboDemo'
-    },{
-        id:25,
-        pid:2,
-        text:'各种 input',
-        value:'InputDemo'
-    },{
+        value: 'TipsDemo'
+    }, {
+        id: 24,
+        pid: 2,
+        text: 'combo',
+        value: 'ComboDemo'
+    }, {
+        id: 25,
+        pid: 2,
+        text: '各种 input',
+        value: 'InputDemo'
+    }, {
+        id: 26,
+        pid: 2,
+        text: 'tree',
+        value: 'TreeDemo'
+    }, {
         id: 3,
         pid: -1,
         text: "详细控件"
-    },{
+    }, {
         id: 31,
         pid: 3,
         text: "downlist",
-        value:'DownListDemo'
+        value: 'DownListDemo'
     }
 ]
 

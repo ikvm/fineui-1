@@ -11,13 +11,22 @@ class Icon extends Component {
     }
 
     static defaultProps = {
-        type: ''
+        iconCls: '',
+        width: 25,
+        height: 25
     }
 
     render() {
-        const {type, ...props} = this.props
+        const { iconCls, width, height, ...props } = this.props
 
-        return <i className={ cn(CLASS_NAME, type) }></i>
+        const styleObj = {
+            display: 'block',
+            width: width+'px',
+            height: height+'px'
+        }
+
+
+        return <i className={cn(CLASS_NAME, iconCls)} style={styleObj} ></i>
     }
 }
 

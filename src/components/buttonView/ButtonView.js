@@ -60,7 +60,7 @@ export default class ButtonView extends React.Component {
         console.log('click')
         const { disabled, handler } = this.props
         if (!disabled && handler) {
-            handler()
+            handler(e)
         } else {
             console.log("点击事件触发,但没有 handler,所以啥也不干")
         }

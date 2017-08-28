@@ -48,8 +48,7 @@ class Label extends Component {
                 let styleObj = {
                     whiteSpace: 'normal',
                     textAlign: textAlign,
-                    lineHeight: textHeight ? `${textHeight}px` : 'normal',
-                    border: '1px dotted #cccccc'
+                    lineHeight: textHeight ? `${textHeight}px` : 'normal'
                 }
                 return <CenterLayout className={cn(CLASS_NAME, className)} scrolly={true} {...props}>
                     <Text width={textWidth} keyword={keyword} py={py} highLight={highLight} style={styleObj}>
@@ -62,8 +61,7 @@ class Label extends Component {
                     textAlign: textAlign,
                     overflowX: 'hidden',
                     textOverflow: 'ellipsis',
-                    lineHeight: textHeight ? `${textHeight}px` : 'normal',
-                    border: '1px dotted #cccccc'
+                    lineHeight: textHeight ? `${textHeight}px` : 'normal'
                 }
                 return <CenterLayout className={cn(CLASS_NAME, className)} {...props}>
                     <Text width={textWidth} keyword={keyword} py={py} highLight={highLight} style={styleObj}>

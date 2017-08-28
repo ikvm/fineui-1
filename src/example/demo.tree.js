@@ -3,14 +3,13 @@ import Tree from '../components/tree'
 import Button from '../components/button'
 import IconButton from '../components/iconbutton'
 import TextButton from '../components/textbutton'
-import { HorizontalCenterLayout } from '../layout'
+import { HorizontalLayout } from '../layout'
 
 export default class TreeDemo extends Component {
 
 
 
     handler=(args)=>{
-        console.log(args)
     }
 
     mockData=()=>{
@@ -55,8 +54,8 @@ export default class TreeDemo extends Component {
     }
 
     render() {
-        return <HorizontalCenterLayout hgap={300}>
+        return <HorizontalLayout hgap={300} style={{backgroundColor:'rgb(239, 241, 244)'}}>
                  <Tree handler={this.handler} nodes={this.mockData()}></Tree>
-               </HorizontalCenterLayout>
+               </HorizontalLayout>
     }
 }
