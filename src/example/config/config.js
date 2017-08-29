@@ -1,8 +1,8 @@
 const demos = [{
-        id: 1,
-        pid: -1,
-        text: "核心控件"
-    },
+    id: 1,
+    pid: -1,
+    text: "核心控件"
+},
     {
         id: 11,
         pid: 1,
@@ -103,6 +103,11 @@ const demos = [{
         pid: 3,
         text: "downlist",
         value: 'DownListDemo'
+    }, {
+        id: 32,
+        pid: 3,
+        text: "tabs",
+        value: 'TabsDemo'
     }
 ]
 

@@ -44,7 +44,7 @@ export default class TreeView extends Component {
 
     render() {
 
-        const { className, open, item, depth, handler, ...props } = this.props
+        const { className,active, open, item, depth, handler, ...props } = this.props
         const collapsed = this.state.collapsed
 
         const arrow = <IconButton width={25} height={25} iconCls={collapsed ? 'tree-collapse-icon-type2' : 'tree-expand-icon-type2'}></IconButton>
@@ -54,7 +54,7 @@ export default class TreeView extends Component {
                 {
                     depth !== 0
                         ? <ButtonView handler={this.handleClick}>
-                            <VerticalCenterLayout className={cn('tree-view-item')} height={'100%'} width={'100%'}>
+                            <VerticalCenterLayout className={cn('tree-view-item',{'tree-view-item-active':active})} height={'100%'} width={'100%'}>
                                 {this.createIcon(depth)}
                                 {this.props.children ? arrow : null}
                                 {item}

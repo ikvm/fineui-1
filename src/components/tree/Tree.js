@@ -21,11 +21,12 @@ export default class Tree extends Component {
         nodes: []
     }
 
-    handler = (pid) => {
+    handler = (id) => {
         let target = find(this.props.nodes, (value) => {
-            return value.id === pid
+            return value.id === id
         })
         this.props.handler(target)
+        this.activeNode=id
     }
 
     initTree = (id, depth) => {
@@ -55,7 +56,7 @@ export default class Tree extends Component {
         }
         
         
-        return <TreeView key={UUID()}  item={item} depth={depth} handler={itemClicked} open={(current && current.open === false) ? false : true} >
+        return <TreeView key={UUID()} active={id===this.activeNode} item={item} depth={depth} handler={itemClicked} open={(current && current.open === false) ? false : true} >
             {childrenNode.length > 0 ? childrenNode : null}
         </TreeView>
     }

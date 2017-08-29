@@ -19,6 +19,7 @@ import LeftLayoutDemo from './layout/demo.leftLayout'
 import RightLayoutDemo from './layout/demo.rightLayout'
 import TipsDemo from './demo.tips.js'
 import InputDemo from './demo.input'
+import TabsDemo from './demo.tabs'
 //eslint warning 和react warning太多了,先注释了
 //import TableDemo from './demo.table'
 import range from 'lodash/range'
@@ -35,7 +36,7 @@ class App extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
-            defaultShowKey: 'RightLayoutDemo',
+            defaultShowKey: 'ButtonDemo',
             demos: demos
         }
     }
@@ -55,36 +56,37 @@ class App extends Component {
     }
 
     render() {
-        const { ...props } = this.props,
-            { ...state } = this.state;
-        return <HorizontalAdaptLayout style={{ position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 }}>
-            <HorizontalAdaptLayout.Item width={200} height={'100%'} scrollx={false} style={{ borderRight: ' 1px solid #eff1f4' }}>
-                <Tree handler={this.handleTreeEvent} nodes={state.demos}></Tree>
-            </HorizontalAdaptLayout.Item>
-            <HorizontalAdaptLayout.Item scrolly={true} height={'100%'}>
-                <CardLayout  defaultShowKey={state.defaultShowKey}>
-                    <ButtonDemo key='ButtonDemo'></ButtonDemo>
-                    <LabelDemo key='LabelDemo'></LabelDemo>
-                    <TreeDemo key='TreeDemo'></TreeDemo>
-                    <GridDemo key='GridLayoutDemo'></GridDemo>
-                    <EditorDemo key='EditorDemo'></EditorDemo>
-                    <ComboDemo key='ComboDemo'></ComboDemo>
-                    <PagerDemo key='PagerDemo'></PagerDemo>
-                    <CenterLayoutDemo key='CenterLayoutDemo'></CenterLayoutDemo>
-                    <HorizontalCenterLayoutDemo key='HorizontalCenterLayoutDemo'></HorizontalCenterLayoutDemo>
-                    <VerticalCenterLayoutDemo key='VerticalCenterLayoutDemo'></VerticalCenterLayoutDemo>
-                    <HorizontalAdaptLayoutDemo key='HorizontalAdaptLayoutDemo'></HorizontalAdaptLayoutDemo>
-                    <VerticalAdaptLayoutDemo key='VerticalAdaptLayoutDemo'></VerticalAdaptLayoutDemo>
-                    <VtapeLayoutDemo key="VtapeLayoutDemo"></VtapeLayoutDemo>
-                    <HtapeLayoutDemo key="HtapeLayoutDemo"></HtapeLayoutDemo>
-                    <LeftLayoutDemo key="LeftLayoutDemo"></LeftLayoutDemo>
-                    <RightLayoutDemo key="RightLayoutDemo"></RightLayoutDemo>
-                    <TipsDemo key='TipsDemo'></TipsDemo>
-                    <InputDemo key='InputDemo'></InputDemo>
-                    <DownListDemo key='DownListDemo'></DownListDemo>
-                </CardLayout>
-            </HorizontalAdaptLayout.Item>
-        </HorizontalAdaptLayout>
+        const {...props} = this.props,
+            {...state} = this.state;
+        return <HorizontalAdaptLayout style={ { position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 } }>
+                 <HorizontalAdaptLayout.Item width={ 200 } height={ '100%' } scrollx={ false } style={ { borderRight: ' 1px solid #eff1f4' } }>
+                   <Tree handler={ this.handleTreeEvent } nodes={ state.demos }></Tree>
+                 </HorizontalAdaptLayout.Item>
+                 <HorizontalAdaptLayout.Item scrolly={ true } height={ '100%' }>
+                   <CardLayout defaultShowKey={ state.defaultShowKey }>
+                     <ButtonDemo key='ButtonDemo'></ButtonDemo>
+                     <LabelDemo key='LabelDemo'></LabelDemo>
+                     <TreeDemo key='TreeDemo'></TreeDemo>
+                     <GridDemo key='GridLayoutDemo'></GridDemo>
+                     <EditorDemo key='EditorDemo'></EditorDemo>
+                     <ComboDemo key='ComboDemo'></ComboDemo>
+                     <PagerDemo key='PagerDemo'></PagerDemo>
+                     <CenterLayoutDemo key='CenterLayoutDemo'></CenterLayoutDemo>
+                     <HorizontalCenterLayoutDemo key='HorizontalCenterLayoutDemo'></HorizontalCenterLayoutDemo>
+                     <VerticalCenterLayoutDemo key='VerticalCenterLayoutDemo'></VerticalCenterLayoutDemo>
+                     <HorizontalAdaptLayoutDemo key='HorizontalAdaptLayoutDemo'></HorizontalAdaptLayoutDemo>
+                     <VerticalAdaptLayoutDemo key='VerticalAdaptLayoutDemo'></VerticalAdaptLayoutDemo>
+                     <VtapeLayoutDemo key="VtapeLayoutDemo"></VtapeLayoutDemo>
+                     <HtapeLayoutDemo key="HtapeLayoutDemo"></HtapeLayoutDemo>
+                     <LeftLayoutDemo key="LeftLayoutDemo"></LeftLayoutDemo>
+                     <RightLayoutDemo key="RightLayoutDemo"></RightLayoutDemo>
+                     <TipsDemo key='TipsDemo'></TipsDemo>
+                     <InputDemo key='InputDemo'></InputDemo>
+                     <DownListDemo key='DownListDemo'></DownListDemo>
+                     <TabsDemo key='TabsDemo'></TabsDemo>
+                   </CardLayout>
+                 </HorizontalAdaptLayout.Item>
+               </HorizontalAdaptLayout>
     }
 }
 export default App
