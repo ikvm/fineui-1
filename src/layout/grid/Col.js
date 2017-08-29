@@ -17,7 +17,7 @@ export default class Col extends Component {
 
     render () {
 
-        const {className,grow,...props}=this.props
+        const {className,grow,col,...props}=this.props
 
         return <Layout className={cn(className,CLASS_NAME)} style={{flexGrow:grow}} {...props}>{this.props.children}</Layout>
     }

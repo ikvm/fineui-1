@@ -20,21 +20,15 @@ export default class Row extends Component {
     }
     
     static defaultProps={
-        align: 'stretch',
-        justify:'space-around'
+        
     }
     render () {
-        const {className,align,justify,...props}=this.props
-
-        const classes=cn(CLASS_NAME,className,{
-            [`${CLASS_NAME}-${align}`]:isNotEmptyString(align),
-            [`${CLASS_NAME}-${justify}`]:isNotEmptyString(justify)
-        })
+        const {className,row,columns,...props}=this.props
 
         const cols=React.Children.map(this.props.children,(col)=>{
             return col
         })
 
-        return <Layout className={classes} {...props}>{cols}</Layout>
+        return <Layout className={cn(className,CLASS_NAME)} {...props}>{cols}</Layout>
     }
 }

@@ -20,50 +20,48 @@ export default class GridDemo extends Component {
                 {
                     row: 0,
                     column: 0,
-                    el: <Label>1</Label>
+                    el: <Label className='layout-bg1'>1</Label>
                 }, {
                     row: 0,
                     column: 1,
-                    el: <Label>2</Label>
+                    el: <Label className='layout-bg2'>2</Label>
                 }, {
                     row: 1,
                     column: 0,
-                    el: <Label>4</Label>
+                    el: <Label className='layout-bg3'>4</Label>
                 }, {
                     row: 1,
                     column: 1,
-                    el: <Label>5</Label>
+                    el: <Label className='layout-bg4'>5</Label>
                 }, {
                     row: 1,
                     column: 2,
-                    el: <Label>6</Label>
+                    el: <Label className='layout-bg5'>7</Label>
                 }
             ]
         }
 
 
 
-        return <Layout hgap={20}>
-            第一种用法是直接用 &lt;Row&gt; 搭配 &lt;Col&gt; 展示内容
-                 <Row>
-                <Col grow={1}>0</Col>
-                <Col grow={1}>1</Col>
-                <Col grow={1}>2</Col>
+        return <GridLayout className='demo-border' rows={3} columns={4} vgap={20} hgap={20}>
+            <Row className='demo-border'>
+                <GridLayout rows={3} columns={4}>
+                    <Row row={1}>
+                        <Col className='layout-bg1'>0</Col>
+                        <Col className='layout-bg2'>1</Col>
+                    </Row>
+                    <Row>
+                        <Col className='layout-bg3'>4</Col>
+                        <Col className='layout-bg4'>1</Col>
+                        <Col className='layout-bg5'>2</Col>
+                    </Row>
+                </GridLayout>
             </Row>
-            <Row>
-                <Col grow={1}>
-                    <Layout>3</Layout>
-                </Col>
-                <Col grow={1}>
-                    <Layout>4</Layout>
-                </Col>
-                <Col grow={1}>
-                    <Layout>5</Layout>
-                </Col>
+            <Row className='demo-border'>
+                <GridLayout {...mockData}>
+                </GridLayout>
             </Row>
-            <br /> 另一种用法是通过 items 属性根据所得数据生成
-                 <GridLayout {...mockData}></GridLayout>
-            mmp,网格线对不齐,待研究
-        </Layout>
+        </GridLayout>
     }
 }
+
