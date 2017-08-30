@@ -92,8 +92,23 @@ const demos = [{
     }, {
         id: 26,
         pid: 2,
+        text: 'editor',
+        value: 'EditorDemo'
+    }, {
+        id: 27,
+        pid: 2,
         text: 'tree',
         value: 'TreeDemo'
+    }, {
+        id: 28,
+        pid: 2,
+        text: 'table',
+        value: 'TableDemo'
+    }, {
+        id: 29,
+        pid: 2,
+        text: 'pager',
+        value: 'PagerDemo'
     }, {
         id: 3,
         pid: -1,

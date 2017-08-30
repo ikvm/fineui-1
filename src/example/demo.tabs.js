@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Tabs from '../components/tabs'
-import { Layout } from '../layout'
+import { VerticalLayout } from '../layout'
 
 const TabPane = Tabs.TabPane
 
@@ -11,7 +11,7 @@ export default class TabsDemo extends Component {
 
     render() {
 
-        return <Layout height={ 200 } width={ 300 }>
+        return <VerticalLayout height={ 200 } width={ 300 }>
                  <Tabs defaultActiveKey='1' onChange={ () => {
                                                            console.log('回调触发')
                                                        } }>
@@ -19,6 +19,6 @@ export default class TabsDemo extends Component {
                    <TabPane tab='2' key='2'>Tab 2</TabPane>
                    <TabPane tab='3' key='3'>Tab 3</TabPane>
                  </Tabs>
-               </Layout>
+               </VerticalLayout>
     }
 }

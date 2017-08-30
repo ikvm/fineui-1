@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Button from '../button'
+import ButtonView from '../buttonView'
 import find from 'lodash/find'
-import { Layout, HorizontalLayout } from '../../layout'
+import { Layout, HorizontalLayout, VtapeLayout } from '../../layout'
 import cn from 'classnames'
 
-
+const CLASS_NAME = 'bi-tabs'
 
 class TabList extends Component {
     constructor(props, context) {
@@ -16,22 +17,41 @@ class TabList extends Component {
         this.props.changeHadler(key)
     }
 
-
-
     render() {
 
-        const {tabList, changeHadler} = this.props
+        const {className, tabList, changeHadler} = this.props
 
         return (
-            <HorizontalLayout>
+            <HorizontalLayout className={ className } height={ 200 }>
               { tabList.map((value) => {
-                    return <Button key={ value.key } handler={ this.handler.bind(null, value.key) }>
+                    return <Tab key={ value.key } handler={ this.handler.bind(null, value.key) }>
                              { value.tab }
-                           </Button>
+                           </Tab>
                 }) }
             </HorizontalLayout>
         )
     }
+}
+
+class Tab extends Component {
+    constructor(props, context) {
+        super(props, context)
+    }
+
+
+    handleTabClick = () => {
+        this.props.handler()
+    }
+
+    render() {
+
+        const {className, tab, ...props} = this.props
+
+        return <ButtonView className='bi-tabs-tab' handler={ this.handleTabClick } width={ 50 } height={ 30 }>
+                 { this.props.children }
+               </ButtonView>
+    }
+
 }
 
 
@@ -58,7 +78,7 @@ export default class Tabs extends Component {
     }
 
     render() {
-        const {children, activeKey, defaultActiveKey, onChange, ...props} = this.props
+        const {children, className, activeKey, defaultActiveKey, onChange, ...props} = this.props
         let tabList = React.Children.map(children, (child, index) => {
             return {
                 tab: child.props.tab,
@@ -70,12 +90,16 @@ export default class Tabs extends Component {
             return child.key === this.state.activeKey
         })
         return (
-            <Layout>
-              <TabList tabList={ tabList } changeHadler={ this.handleChange }></TabList>
-              <Layout>
-                { tabContent }
-              </Layout>
-            </Layout>
+            <VtapeLayout className={ cn(className, CLASS_NAME) }>
+              <VtapeLayout.Item height={ 32 }>
+                <TabList className='bi-tabs-list' tabList={ tabList } changeHadler={ this.handleChange }></TabList>
+              </VtapeLayout.Item>
+              <VtapeLayout.Item>
+                <Layout className='bi-tabs-content'>
+                  { tabContent }
+                </Layout>
+              </VtapeLayout.Item>
+            </VtapeLayout>
         )
     }
 }

@@ -86,7 +86,7 @@ class Combo extends Component {
     }
 
     componentWillUnmount() {
-        this._unmountPopup;
+        this._unmountPopup();
     }
 
     _unmountPopup() {
@@ -120,10 +120,23 @@ class Combo extends Component {
         this._assertPopup();
     };
     _mouseLeave = (e) => {
-        this._unmountPopup();
+        const self = this;
+        let enterPopup = false;
+        this.popup.addEventListener("mouseenter", function () {
+            enterPopup = true;
+        });
+
+        setTimeout(function () {
+            if (!enterPopup) {
+                self._unmountPopup();
+            } else {
+                self.popup.addEventListener("mouseleave", function () {
+                    self._unmountPopup();
+                });
+            }
+        },100);
+
     };
-
-
 
     render() {
         const self = this, { trigger, children, popupGetter, ...props } = this.props;

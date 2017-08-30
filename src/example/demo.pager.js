@@ -15,8 +15,8 @@ export default class PagerDemo extends Component {
 
 
 
-        return <Layout hgap={200}>
-           <Pager pages={18} groups={5}></Pager>
-        </Layout>
+        return <Layout hgap={ 200 } vgap={ 100 }>
+                 <Pager pages={ 18 } groups={ 5 }></Pager>
+               </Layout>
     }
 }

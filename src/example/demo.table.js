@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Table} from '../components/table';
-import {AbsoluteLayout} from '../layout';
+import React, { Component } from 'react';
+import { Table } from '../components/table';
+import { AbsoluteLayout } from '../layout';
 
-class TableDemo extends Component{
+class TableDemo extends Component {
 
     constructor(props, context) {
         super(props, context);
@@ -10,9 +10,12 @@ class TableDemo extends Component{
 
     render() {
 
-        let items = [], header = [], columnSize = [];
-        
-        let rowCount = 100, columnCount = 100;
+        let items = [],
+            header = [],
+            columnSize = [];
+
+        let rowCount = 100,
+            columnCount = 100;
 
         for (let i = 0; i < 1; i++) {
             header[i] = [];
@@ -35,25 +38,17 @@ class TableDemo extends Component{
         let mergeRule = (col1, col2) => {
             return col1 === col2;
         }
-        
+
         return (
-            <MyTable header={header} 
-                     items={items}
-                     columnSize={columnSize}
-                     mergeCols={mergeCols}
-                     mergeRows={mergeRows}
-                     freezeCols={freezeCols}
-                     isNeedFreeze={isNeedFreeze}
-                     mergeRule={mergeRule}
-                     tableHeight={480}
-                     tableWidth={800}/>
-                
-            
-        );
-        
+            <Table header={ header } items={ items } columnSize={ columnSize } mergeCols={ mergeCols } mergeRows={ mergeRows } freezeCols={ freezeCols }
+              isNeedFreeze={ isNeedFreeze } mergeRule={ mergeRule } tableHeight={ 480 } tableWidth={ 800 } />
+
+
+            );
+
     }
 
-    
+
 }
 
 export default TableDemo;
