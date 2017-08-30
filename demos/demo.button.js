@@ -17,8 +17,10 @@ class ButtonDemo extends Component {
         console.log(e.target)
     }
 
+
+
     render() {
-        return <LeftLayout hgap={ 20 } vgap={ 30 }>
+        return <LeftLayout hgap={ 20 } vgap={ 10 }>
                  <Button width={ '20%' } hgap={ 10 } handler={ this.buttonHandler }>默认</Button>
                  <Button width={ '20%' } hgap={ 10 } trigger='dblclick' level="common">common</Button>
                  <Button width={ '20%' } hgap={ 10 } level="success">success</Button>
@@ -34,7 +36,7 @@ class ButtonDemo extends Component {
                  <Button width={ '20%' } hgap={ 10 } level="ignore" disabled={ true }>ignore disabled</Button>
                  <Button width={ '20%' } hgap={ 10 } trigger='mouseup,mousedown,dbclick' iconCls='test-icon'>带图标的 button,trigger 同时为mouseup,mousedown,dbclick</Button>
                  <IconButton width={ '20%' } iconCls='test-icon'></IconButton>
-                 <TextButton width={ '20%' }>文字按钮</TextButton>
+                 <TextButton width={ '20%' } width={ '100%' }>文字按钮</TextButton>
                </LeftLayout>
     }
 }
