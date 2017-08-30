@@ -20,8 +20,8 @@ export default class IconButton extends Component {
     render() {
         const {className, iconCls, ...props} = this.props
 
-        return <ButtonView className={ cn(CLASS_NAME, className) }  >
-                 <Icon iconCls={ iconCls } {...props}></Icon>
+        return <ButtonView className={ cn(CLASS_NAME, className) } {...props}>
+                 <Icon iconCls={ iconCls }></Icon>
                </ButtonView>
     }
 }

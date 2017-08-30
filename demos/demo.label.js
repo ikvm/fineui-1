@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { VerticalLayout, CenterLayout, HorizontalCenterLayout } from '../layout'
-import Label from '../components/label'
-import Button from '../components/button'
-import Text from '../components/text'
+import { VerticalLayout, CenterLayout, HorizontalCenterLayout } from '../src/layout'
+import Label from '../src/components/label'
+import Button from '../src/components/button'
+import Text from '../src/components/text'
 
 class LabelDemo extends Component {
     constructor(props) {
@@ -32,17 +32,18 @@ class LabelDemo extends Component {
 
 
     render() {
-        return <HorizontalCenterLayout ref={ (wraper) => this.wraper = wraper } width={ 800 } style={{color:'#ffffff'}}>
+        return <HorizontalCenterLayout ref={ (wraper) => this.wraper = wraper } width={ 800 } style={ { color: '#ffffff' } }>
                  <Text>文本组件</Text>
                  <CenterLayout>
                    <Button hgap={ 20 } handler={ this.redMarkHandler }>切换标红</Button>
                    <Button handler={ this.highLightHandler }>切换高亮</Button>
                  </CenterLayout>
                  关键点就是几个重要因素, 是否有宽高, 是否设定了文字区域宽, whiteSpace 是什么,为了看着方便,暂时先给文本区域加个小边框
-                 <Label className='label-bg' whiteSpace='normal' keyword={ this.state.keyword } highLight={ this.state.isHighLight } textAlign='left' height={ 100 } width={ 600 } textWidth={ 300 }
-                   textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中河北省,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度,textAlign为left</Label>
+                 <Label className='label-bg' whiteSpace='normal' keyword={ this.state.keyword } highLight={ this.state.isHighLight } textAlign='left' height={ 100 } width={ 600 }
+                   textWidth={ 300 } textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中河北省,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度,textAlign为left</Label>
                  <Label className='label-bg' whiteSpace='normal' width={ 100 } textWidth={ 50 } vgap={ 20 }>label</Label>
-                 <Label className='label-bg' whiteSpace='normal' height={ 100 } width={ 600 } textWidth={ 300 } textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度.如果文字太长了的话,那么滚动条是很有必要的.不信你看</Label>
+                 <Label className='label-bg' whiteSpace='normal' height={ 100 } width={ 600 } textWidth={ 300 } textHeight={ 30 }
+                   vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度.如果文字太长了的话,那么滚动条是很有必要的.不信你看</Label>
                  <Label className='label-bg' whiteSpace='normal' textAlign='right' height={ 100 } width={ 600 } textWidth={ 300 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字宽度,没有文字高度,textAlign为right</Label>
                  <Label className='label-bg' whiteSpace='normal' height={ 100 } width={ 600 } textWidth={ 300 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,高度,文字宽度,没有文字高度,如果文字太长了,那么滚动条是很有不要的,不信你看.多加点字效果更明显一点,在多加点.more more more more more more more more more</Label>
                  <Label className='label-bg' whiteSpace='normal' width={ 600 } textWidth={ 300 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了宽度,文字宽度,没有高度,所以就是被撑开嘛,文字有多少就撑多高</Label>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Tabs from '../components/tabs'
-import { VerticalLayout } from '../layout'
+import Tabs from '../src/components/tabs'
+import { VerticalLayout } from '../src/layout'
 
 const TabPane = Tabs.TabPane
 

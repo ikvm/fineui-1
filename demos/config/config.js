@@ -8,6 +8,16 @@ const demos = [{
         pid: 1,
         text: " 布局"
     }, {
+        id: 110,
+        pid: 11,
+        text: "VerticalLayout",
+        value: 'VerticalLayoutDemo'
+    }, {
+        id: 111,
+        pid: 11,
+        text: "HorizontalLayout",
+        value: 'HorizontalLayoutDemo'
+    }, {
         id: 112,
         pid: 11,
         text: "CenterLayout",

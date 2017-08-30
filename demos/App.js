@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Button from '../components/button'
+import Button from '../src/components/button'
 import TreeDemo from './demo.tree'
 import ComboDemo from './demo.combo'
 import ButtonDemo from './demo.button'
@@ -7,7 +7,9 @@ import LabelDemo from './demo.label'
 import GridDemo from './Layout/demo.gird'
 import EditorDemo from './demo.editor'
 import PagerDemo from './demo.pager'
-import Tree from '../components/tree'
+import Tree from '../src/components/tree'
+import HorizontalLayoutDemo from './layout/demo.horizontalLayout'
+import VerticalLayoutDemo from './layout/demo.verticlaLayout'
 import CenterLayoutDemo from './Layout/demo.centerLayout'
 import HorizontalCenterLayoutDemo from './layout/demo.horizontalCenterLayout'
 import VerticalCenterLayoutDemo from './layout/demo.verticalCenterLayout'
@@ -30,7 +32,7 @@ import DownListDemo from './demo.downlist'
 
 import demos from './config/config'
 
-import { AbsoluteLayout, CenterLayout, HorizontalCenterLayout, VerticalCenterLayout, HorizontalLayout, HtapeLayout, VtapeLayout, Layout, CardLayout, VerticalLayout, HorizontalAdaptLayout, VerticalAdaptLayout } from '../layout'
+import { AbsoluteLayout, CenterLayout, HorizontalCenterLayout, VerticalCenterLayout, HorizontalLayout, HtapeLayout, VtapeLayout, Layout, CardLayout, VerticalLayout, HorizontalAdaptLayout, VerticalAdaptLayout } from '../src/layout'
 
 class App extends Component {
     constructor(props, context) {
@@ -72,6 +74,8 @@ class App extends Component {
                      <EditorDemo key='EditorDemo'></EditorDemo>
                      <ComboDemo key='ComboDemo'></ComboDemo>
                      <PagerDemo key='PagerDemo'></PagerDemo>
+                     <HorizontalLayoutDemo key='HorizontalLayoutDemo'></HorizontalLayoutDemo>
+                     <VerticalLayoutDemo key='VerticalLayoutDemo'></VerticalLayoutDemo>
                      <CenterLayoutDemo key='CenterLayoutDemo'></CenterLayoutDemo>
                      <HorizontalCenterLayoutDemo key='HorizontalCenterLayoutDemo'></HorizontalCenterLayoutDemo>
                      <VerticalCenterLayoutDemo key='VerticalCenterLayoutDemo'></VerticalCenterLayoutDemo>

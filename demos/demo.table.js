@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Table } from '../components/table';
-import { AbsoluteLayout } from '../layout';
+import { Table } from '../src/components/table';
+import { AbsoluteLayout } from '../src/layout';
 
 class TableDemo extends Component {
 
