@@ -16,11 +16,17 @@ import Label from '../label'
 import Text from '../text'
 import Icon from '../icon'
 import { CenterLayout } from '../../layout'
-export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
-export const Trigger = 'click' || 'mousedown' || 'dbclick' || 'mouseup'
 
 
 const CLASS_NAME = 'bi-button'
+
+const LEVEL = {
+    COMMON: 'common',
+    SUCCESS: 'success',
+    WARNING: 'warning',
+    IGNORE: 'ignore'
+}
+
 
 export default class Button extends React.Component {
     constructor(props) {
@@ -29,12 +35,14 @@ export default class Button extends React.Component {
     }
 
     static defaultProps = {
-        level: 'common'
+        level: LEVEL.COMMON,
+        iconWidth: 18,
+        iconheight: 18
     }
 
     render() {
 
-        const {level, iconCls, clear = false, className, disabled = false, ...props} = this.props
+        const {level, iconCls, iconWidth, iconheight, clear = false, className, disabled = false, ...props} = this.props
         //控制样式
         let classes = classNames(className, CLASS_NAME, {
             [`${CLASS_NAME}-${level}`]: level,
@@ -44,8 +52,8 @@ export default class Button extends React.Component {
 
         let icon = null
         if (iconCls) {
-            icon = <CenterLayout width={ 30 } height={ 30 }>
-                     <Icon iconCls={iconCls}></Icon>
+            icon = <CenterLayout width={ iconWidth } height={ iconheight }>
+                     <Icon iconCls={ iconCls }></Icon>
                    </CenterLayout>
         }
         return <ButtonView className={ classes } { ...props }>
@@ -56,3 +64,6 @@ export default class Button extends React.Component {
                </ButtonView>
     }
 }
+
+
+Button.LEVEL = LEVEL
