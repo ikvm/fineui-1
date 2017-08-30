@@ -8,11 +8,16 @@ import cn from 'classnames'
 import Icon from '../icon'
 import Text from '../text'
 import { CenterLayout } from '../../layout'
-export const ButonLevel = 'common' || 'success' || 'warning' || 'ignore'
-export const Trigger = 'click' || 'mousedown' || 'dbclick' || 'mouseup'
 
 
 const CLASS_NAME = 'bi-button-view'
+
+const TRIGGER = {
+    CLICK: 'click',
+    MOUSEDOWN: 'mousedown',
+    DBCLICK: 'dbclick',
+    MOUSEUP: 'mouseup'
+}
 
 export default class ButtonView extends React.Component {
     constructor(props, context) {
@@ -22,7 +27,7 @@ export default class ButtonView extends React.Component {
 
     static defaultProps = {
         stopPropagation: false,
-        trigger: "click",
+        trigger: TRIGGER.CLICK,
         handler: () => {
         }
     }
@@ -58,7 +63,7 @@ export default class ButtonView extends React.Component {
             e.stopPropagation()
         }
         console.log('click')
-        const { disabled, handler } = this.props
+        const {disabled, handler} = this.props
         if (!disabled && handler) {
             handler(e)
         } else {
@@ -90,10 +95,12 @@ export default class ButtonView extends React.Component {
 
     render() {
 
-        const { handler, trigger, className,stopPropagation, ...props } = this.props
+        const {handler, trigger, className, stopPropagation, ...props} = this.props
 
-        return <CenterLayout className={cn(CLASS_NAME, className)} {...this._bindEvent(trigger) } { ...props }>
-            {this.props.children}
-        </CenterLayout>
+        return <CenterLayout className={ cn(CLASS_NAME, className) } {...this._bindEvent(trigger) } { ...props }>
+                 { this.props.children }
+               </CenterLayout>
     }
 }
+
+ButtonView.TRIGGER = TRIGGER
