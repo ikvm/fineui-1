@@ -25,3 +25,6 @@ export VtapeLayout from './tape/VtapeLayout'
 //flow
 export LeftLayout from './flow/LeftLayout'
 export RightLaout from './flow/RightLayout'
+
+//fill
+export FillLayout from './fill/FillLayout'
