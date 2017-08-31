@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import Input from '../src/components/input'
-import Editor from '../src/components/editor'
-import { HorizontalCenterLayout, Layout } from '../src/layout'
-import Button from '../src/components/button'
-import Toast from '../src/components/tip/toast/Toast'
+import Editor from '../src/base/single/editor'
+import { HorizontalCenterLayout, Layout } from '../src/core/layout'
+import Button from '../src/base/single/button'
+import Toast from '../src/base/single/tip/toast/Toast'
 
 export default class EditorDemo extends Component {
     constructor(props, context) {

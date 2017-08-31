@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import Button from '../src/components/button'
-import IconButton from '../src/components/iconbutton'
-import TextButton from '../src/components/textbutton'
-import { HorizontalCenterLayout, LeftLayout } from '../src/layout'
-import Radio from '../src/components/input/radio/Radio'
-import RadioGroup from '../src/components/input/radiogroup/RadioGroup'
-import Checkbox from '../src/components/input/checkbox/Checkbox'
+import Button from '../src/base/single/button'
+import IconButton from '../src/base/single/iconbutton'
+import TextButton from '../src/base/single/textbutton'
+import { HorizontalCenterLayout, LeftLayout } from '../src/core/layout'
 
 class ButtonDemo extends Component {
     constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Toast from '../src/components/tip/toast/Toast'
-import Button from '../src/components/button'
-import { CenterLayout } from '../src/layout'
+import Toast from '../src/base/single/tip/toast/Toast'
+import Button from '../src/base/single/button'
+import { CenterLayout } from '../src/core/layout'
 
 
 export default class TipsDemo extends Component {

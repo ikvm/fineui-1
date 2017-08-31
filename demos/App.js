@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Button from '../src/components/button'
+import Button from '../src/base/single/button'
 import TreeDemo from './demo.tree'
 import ComboDemo from './demo.combo'
 import ButtonDemo from './demo.button'
@@ -28,11 +28,9 @@ import range from 'lodash/range'
 import './example.less'
 
 
-import DownListDemo from './demo.downlist'
-
 import demos from './config/config'
 
-import { AbsoluteLayout, CenterLayout, HorizontalCenterLayout, VerticalCenterLayout, HorizontalLayout, HtapeLayout, VtapeLayout, Layout, CardLayout, VerticalLayout, HorizontalAdaptLayout, VerticalAdaptLayout } from '../src/layout'
+import { AbsoluteLayout, CenterLayout, HorizontalCenterLayout, VerticalCenterLayout, HorizontalLayout, HtapeLayout, VtapeLayout, Layout, CardLayout, VerticalLayout, HorizontalAdaptLayout, VerticalAdaptLayout } from '../src/core/layout'
 
 class App extends Component {
     constructor(props, context) {
@@ -87,7 +85,6 @@ class App extends Component {
                      <RightLayoutDemo key="RightLayoutDemo"></RightLayoutDemo>
                      <TipsDemo key='TipsDemo'></TipsDemo>
                      <InputDemo key='InputDemo'></InputDemo>
-                     <DownListDemo key='DownListDemo'></DownListDemo>
                      <TabsDemo key='TabsDemo'></TabsDemo>
                    </CardLayout>
                  </HorizontalAdaptLayout.Item>

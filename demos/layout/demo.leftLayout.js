@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Label from '../../src/components/label'
-import LeftLayout from '../../src/layout/flow/LeftLayout'
+import Label from '../../src/base/single/label'
+import LeftLayout from '../../src/core/layout/flow/LeftLayout'
 
 export default class LeftLayoutDemo extends Component {
     render() {

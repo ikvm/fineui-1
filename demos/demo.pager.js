@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Layout } from '../src/layout'
-import Pager from '../src/components/pager'
-import '../src/layout/grid/GridLayout.less'
+import { Layout } from '../src/core/layout'
+import Pager from '../src/base/pager'
 
 export default class PagerDemo extends Component {
     constructor(props, context) {
