@@ -9,18 +9,35 @@
 }
 
 .tree-view-arrow:after {
-    content: '▾';
+    content: '-';
 }
 
 .tree-view-item {
     &:hover {
         background-color: rgba(148, 158, 158, 0.2);
     }
+    &-active{
+        background-color: rgba(148, 158, 158, 0.2);
+        color: #009de3;
+    }
 }
 
-.tree-view-arrow-collapsed {
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    transform: rotate(-90deg);
+.tree-view-arrow-collapsed:after {
+    content: '+';
+  }
+
+  .base-line-conn-background{
+      background: url('./tree-vertical-line-1.png')
+  }
+
+  .tree-collapse-icon-type2{
+      background: url('./tree-collapse-2.png')
+  }
+
+  .tree-expand-icon-type2{
+      background: url('./tree-expand-2.png')
+  }
+
+  .mid-line-conn-background{
+    background: url('./tree-vertical-line-3.png')
   }

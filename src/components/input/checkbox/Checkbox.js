@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import cn from 'classnames'
-import { HorizontalLayout } from '../../../layout'
+import { HorizontalLayout,VerticalCenterLayout } from '../../../layout'
 import ButtonView from '../../buttonView'
 
 
@@ -31,10 +31,10 @@ export default class Checkbox extends Component {
         opts.checked = this.state.checked
         opts.disabled = disabled
         return (
-                <HorizontalLayout className={cn(CLASS_NAME, className,{'disabled':disabled})} onClick={this.handleChange}>
+                <VerticalCenterLayout className={cn(CLASS_NAME, className,{'disabled':disabled})} onClick={this.handleChange}>
                     <input type='checkbox' readOnly={true} {...opts} />
                     {this.props.children}
-                </HorizontalLayout>
+                </VerticalCenterLayout>
         )
     }
 }

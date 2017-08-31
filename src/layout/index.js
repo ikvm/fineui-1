@@ -19,3 +19,7 @@ export VerticalAdaptLayout from './adapt/VerticalAdaptLayout'
 //tape
 export HtapeLayout from './tape/HtapeLayout'
 export VtapeLayout from './tape/VtapeLayout'
+
+//flow
+export LeftLayout from './flow/LeftLayout'
+export RightLaout from './flow/RightLayout'

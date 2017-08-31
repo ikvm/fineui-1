@@ -14,7 +14,7 @@ const VERTICAL_ALIGN = {
     STRETCH: '_stretch'
 }
 
-class HorizontalAdaptLayout extends Component {
+class HorizontalTapeLayout extends Component {
     constructor(props, context) {
         super(props, context);
     }
@@ -39,11 +39,11 @@ class Item extends Component {
     }
 
     render() {
-        const {children, width, className, ...props} = this.props;
+        const {children, width, className, height,...props} = this.props;
         return <Layout width={width}
                        className={cn('layout-item', {'layout-full-item': !width}, className)} {...props}>{children}</Layout>
     }
 }
-HorizontalAdaptLayout.Item = Item
-HorizontalAdaptLayout.VERTICAL_ALIGN = VERTICAL_ALIGN
-export default HorizontalAdaptLayout
+HorizontalTapeLayout.Item = Item
+HorizontalTapeLayout.VERTICAL_ALIGN = VERTICAL_ALIGN
+export default HorizontalTapeLayout

@@ -19,7 +19,7 @@ function getDefaultModules() {
         preLoaders: [
             {
                 test: /\.(js|jsx)$/,
-                include: srcPath,
+                include: [srcPath],
                 loader: 'eslint-loader'
             }
         ],
@@ -60,7 +60,7 @@ function getDefaultModules() {
 }
 
 module.exports = {
-    srcPath: srcPath,
+    srcPath: [srcPath],
     publicPath: '/assets/',
     port: dfltPort,
     getDefaultModules: getDefaultModules

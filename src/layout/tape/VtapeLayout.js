@@ -14,7 +14,7 @@ const HORIZONTAL_ALIGN = {
     RIGHT: '_right'
 }
 
-class VerticalAdaptLayout extends Component {
+class VerticalTapeLayout extends Component {
     constructor(props, context) {
         super(props, context);
     }
@@ -39,11 +39,11 @@ class Item extends Component {
     }
 
     render() {
-        const {children, height, className, ...props} = this.props;
+        const {children, height, className,width, ...props} = this.props;
         return <Layout height={height}
                        className={cn('layout-item', {'layout-full-item': !height}, className)} {...props}>{children}</Layout>
     }
 }
-VerticalAdaptLayout.Item = Item
-VerticalAdaptLayout.VERTICAL_ALIGN = HORIZONTAL_ALIGN
-export default VerticalAdaptLayout
+VerticalTapeLayout.Item = Item
+VerticalTapeLayout.VERTICAL_ALIGN = HORIZONTAL_ALIGN
+export default VerticalTapeLayout
