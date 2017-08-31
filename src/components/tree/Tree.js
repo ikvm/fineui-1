@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Layout, CenterLayout,HorizontalLayout, VerticalLayout,VerticalCenterLayout } from '../../layout'
-import Label from '../label'
+import { Layout, CenterLayout, HorizontalLayout, VerticalLayout, VerticalCenterLayout } from '../../core/layout'
+import Label from '../../base/single/label'
 import TreeView from './TreeView'
-import Checkbox from '../input/checkbox'
 
 import filter from 'lodash/filter'
 import forEach from 'lodash/forEach'
@@ -26,7 +25,7 @@ export default class Tree extends Component {
             return value.id === id
         })
         this.props.handler(target)
-        this.activeNode=id
+        this.activeNode = id
     }
 
     initTree = (id, depth) => {
@@ -37,7 +36,7 @@ export default class Tree extends Component {
             if (value.id === id) {
                 current = value
             }
-            if (value.pid === id) {//找到属于 id 的子孙,递归向下生成
+            if (value.pid === id) { //找到属于 id 的子孙,递归向下生成
                 this.counter++
                 childrenNode.push(this.initTree(value.id, depth + 1))
             }
@@ -48,17 +47,21 @@ export default class Tree extends Component {
         }
 
         let content = ''
-        let item=null
+        let item = null
         if (current) {
             content = current.text
             //树的 item部分,愿意写什么写什么,加上 checkbox 就变成 muliti 的了,窝不关心
-            item= <CenterLayout><Label>{content}</Label></CenterLayout>
+            item = <CenterLayout>
+                     <Label>
+                       { content }
+                     </Label>
+                   </CenterLayout>
         }
-        
-        
-        return <TreeView key={UUID()} active={id===this.activeNode} item={item} depth={depth} handler={itemClicked} open={(current && current.open === false) ? false : true} >
-            {childrenNode.length > 0 ? childrenNode : null}
-        </TreeView>
+
+
+        return <TreeView key={ UUID() } active={ id === this.activeNode } item={ item } depth={ depth } handler={ itemClicked } open={ (current && current.open === false) ? false : true }>
+                 { childrenNode.length > 0 ? childrenNode : null }
+               </TreeView>
     }
 
     render() {
@@ -79,9 +82,9 @@ export default class Tree extends Component {
         })))
 
         return <Layout>
-            {root.map((value) => {
-                return this.initTree(value, 0)
-            })}
-        </Layout>
+                 { root.map((value) => {
+                       return this.initTree(value, 0)
+                   }) }
+               </Layout>
     }
 }

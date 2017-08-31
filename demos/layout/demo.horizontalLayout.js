@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Label from '../../src/components/label/'
-import { HorizontalLayout } from '../../src/layout'
+import Label from '../../src/base/single/label'
+import { HorizontalLayout } from '../../src/core/layout'
 
 export default class HorizontalLayoutDemo extends Component {
     render() {
