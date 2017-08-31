@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Layout } from '../../src/layout'
-import GridLayout from '../../src/layout/grid/GridLayout.js'
-import Row from '../../src/layout/grid/Row'
-import Col from '../../src/layout/grid/Col'
-import Label from '../../src/components/label'
-import '../../src/layout/grid/GridLayout.less'
+import { Layout } from '../../src/core/layout'
+import GridLayout from '../../src/core/layout/grid/GridLayout.js'
+import Row from '../../src/core/layout/grid/Row'
+import Col from '../../src/core/layout/grid/Col'
+import Label from '../../src/base/single/label'
+import '../../src/core/layout/grid/GridLayout.less'
 
 export default class GridDemo extends Component {
     constructor(props, context) {

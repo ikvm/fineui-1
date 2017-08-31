@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Label from '../../src/components/label'
-import { VerticalLayout } from '../../src/layout'
+import Label from '../../src/base/single/label'
+import { VerticalLayout } from '../../src/core/layout'
 
 export default class VerticalLayoutDemo extends Component {
     render() {

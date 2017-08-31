@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Layout } from '../../layout'
+import { Layout } from '../../core/layout'
 import Widget from '../../core/Widget'
 
 export default class Single extends Component {

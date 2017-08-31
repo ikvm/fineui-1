@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Layout } from '../layout'
+import { Layout } from './layout'
 
 
 export default class Widget extends Component {
@@ -16,6 +16,10 @@ export default class Widget extends Component {
     render() {
 
         const {disabled, invisible, invalid, ...props} = this.props
+
+        const styleObj = {
+            pointerEvents: disabled ? 'none' : 'auto'
+        }
 
         return (
             <Layout {...props}>

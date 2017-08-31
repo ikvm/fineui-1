@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import Tree from '../src/components/tree'
-import Button from '../src/components/button'
-import IconButton from '../src/components/iconbutton'
-import TextButton from '../src/components/textbutton'
-import { HorizontalLayout } from '../src/layout'
+import { HorizontalLayout } from '../src/core/layout'
 
 export default class TreeDemo extends Component {
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Label from '../../src/components/label'
-import { VerticalCenterLayout } from '../../src/layout'
+import Label from '../../src/base/single/label'
+import { VerticalCenterLayout } from '../../src/core/layout'
 
 export default class VerticalCenterLayoutDemo extends Component {
     render() {

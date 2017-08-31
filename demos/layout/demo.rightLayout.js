@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Label from '../../src/components/label'
-import RightLayout from '../../src/layout/flow/RightLayout'
+import Label from '../../src/base/single/label'
+import RightLayout from '../../src/core/layout/flow/RightLayout'
 
 export default class RightLayoutDemo extends Component {
     render() {
