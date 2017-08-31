@@ -126,13 +126,16 @@ class Combo extends Component {
             enterPopup = true;
         });
 
-        if (!enterPopup) {
-            self._unmountPopup();
-        } else {
-            self.popup.addEventListener("mouseleave", function () {
+        setTimeout(function () {
+            if (!enterPopup) {
                 self._unmountPopup();
-            });
-        }
+            } else {
+                self.popup.addEventListener("mouseleave", function () {
+                    self._unmountPopup();
+                });
+            }
+        },100);
+
     };
 
     render() {
