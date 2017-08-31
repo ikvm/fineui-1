@@ -6,7 +6,12 @@ import React, { Component, PropTypes } from 'react'
 import ReactDom from 'react-dom'
 import cn from 'classnames'
 import emptyFunction from 'fbjs/lib/emptyFunction'
-import { Layout, CenterLayout, VerticalLayout} from '../../core/layout'
+import debounce from 'lodash/debounce'
+import {
+    Layout,
+    CenterLayout,
+    VerticalLayout
+} from '../../layout'
 
 const CLASS_NAME = 'bi-react-combo';
 
@@ -33,13 +38,12 @@ class Combo extends Component {
     }
 
     _assertPopup() {
-        const self = this,
-            {popupGetter} = this.props;
+        const self = this, {popupGetter} = this.props;
 
         this.popup = document.createElement("div");
         document.body.appendChild(this.popup);
 
-        ReactDom.render(popupGetter, this.popup, function() {
+        ReactDom.render(popupGetter, this.popup, function () {
             let position = self._getPosition();
             self.popup.style.position = 'fixed';
             self.popup.style.left = position.left;
@@ -51,14 +55,13 @@ class Combo extends Component {
     }
 
     _getPosition() {
-        const {direction} = this.props;
+        const { direction } = this.props;
         let triggerX = ReactDom.findDOMNode(this.refs.trigger).getBoundingClientRect().left,
             triggerY = ReactDom.findDOMNode(this.refs.trigger).getBoundingClientRect().top,
             triggerH = ReactDom.findDOMNode(this.refs.trigger).offsetHeight,
             popupH = this.popup.offsetHeight;
 
-        let left = triggerX + 'px',
-            top;
+        let left = triggerX + 'px', top;
         switch (direction) {
             case "bottom":
                 top = (triggerY + triggerH) + 'px';
@@ -78,7 +81,7 @@ class Combo extends Component {
 
     componentDidUpdate() {
         const {popupGetter} = this.props;
-        if (this._render) {
+        if (this._render){
             ReactDom.render(popupGetter, this.popup);
         }
     }
@@ -97,19 +100,15 @@ class Combo extends Component {
         const self = this;
         e.nativeEvent.stopImmediatePropagation();
 
-        self.setState({
-            popupShow: !self.state.popupShow
-        });
+        self.setState({ popupShow: !self.state.popupShow });
 
         if (this.state.popupShow) {
             this._assertPopup();
-            document.onclick = function(e) {
+            document.onclick = function (e) {
                 e.stopPropagation();
                 if (self._render) {
                     self._unmountPopup();
-                    self.setState({
-                        popupShow: true
-                    });
+                    self.setState({ popupShow: true });
                 }
             };
         } else {
@@ -118,39 +117,29 @@ class Combo extends Component {
             }
         }
     };
-    _mouseEnter = (e) => {
-        this._assertPopup();
-    };
-    _mouseLeave = (e) => {
-        const self = this;
-        let enterPopup = false;
-        this.popup.addEventListener("mouseenter", function() {
-            enterPopup = true;
-        });
-
-        setTimeout(function() {
-            if (!enterPopup) {
-                self._unmountPopup();
-            } else {
-                self.popup.addEventListener("mouseleave", function() {
-                    self._unmountPopup();
-                });
-            }
-        }, 100);
-
-    };
 
     render() {
-        const self = this,
-            {trigger, children, popupGetter, ...props} = this.props;
+        const self = this, { trigger, children, popupGetter, ...props } = this.props;
 
-        let evs = trigger.split(","),
-            eventArr = {};
-        evs.map(function(ev) {
+        let evs = trigger.split(","), eventArr = {};
+        evs.map(function (ev) {
             switch (ev) {
                 case "hover":
-                    eventArr.onMouseEnter = self._mouseEnter;
-                    eventArr.onMouseLeave = self._mouseLeave;
+                    eventArr.onMouseEnter = debounce(function () {
+                        self._assertPopup();
+                        self.enterPopup = false;
+                        self.popup.addEventListener("mouseenter", function () {
+                            self.enterPopup = true;
+                        });
+                        self.popup.addEventListener("mouseleave", function () {
+                            self._unmountPopup();
+                        });
+                    });
+                    eventArr.onMouseLeave = debounce(function () {
+                        if (!self.enterPopup && self._render) {
+                            self._unmountPopup();
+                        }
+                    });
                     break;
                 case "click":
                     eventArr.onClick = self._handler;
@@ -160,11 +149,11 @@ class Combo extends Component {
             }
         });
 
-        return <VerticalLayout className={ cn(CLASS_NAME) } {...props}>
-                 <Layout className={ cn("bi-react-trigger") } {...eventArr} ref="trigger">
-                   { children }
-                 </Layout>
-               </VerticalLayout>
+        return <VerticalLayout className={cn(CLASS_NAME)} {...props}>
+            <Layout className={cn("bi-react-trigger")} {...eventArr} ref="trigger">
+                {children}
+            </Layout>
+        </VerticalLayout>
     }
 }
 export default Combo
