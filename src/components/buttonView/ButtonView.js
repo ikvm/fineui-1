@@ -7,6 +7,7 @@ import React from 'react'
 import cn from 'classnames'
 import Icon from '../icon'
 import Text from '../text'
+import Single from '../../base/single/Single'
 import { CenterLayout } from '../../layout'
 
 
@@ -97,9 +98,11 @@ export default class ButtonView extends React.Component {
 
         const {handler, trigger, className, stopPropagation, ...props} = this.props
 
-        return <CenterLayout className={ cn(CLASS_NAME, className) } {...this._bindEvent(trigger) } { ...props }>
-                 { this.props.children }
-               </CenterLayout>
+        return <Single className={ cn(CLASS_NAME, className) } {...this._bindEvent(trigger) } { ...props }>
+                 <CenterLayout>
+                   { this.props.children }
+                 </CenterLayout>
+               </Single>
     }
 }
 
