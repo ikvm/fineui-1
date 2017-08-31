@@ -2,7 +2,9 @@ import './index.less'
 export Layout from './Layout'
 
 export AbsoluteLayout from './AbsoluteLayout'
-export CardLayout from './CardLayout'
+
+//card
+export CardLayout from './card/CardLayout'
 
 export HorizontalLayout from './HorizontalLayout'
 export VerticalLayout from './VerticalLayout'
