@@ -6,6 +6,7 @@ import React, { Component, PropTypes } from 'react'
 import ReactDom from 'react-dom'
 import cn from 'classnames'
 import emptyFunction from 'fbjs/lib/emptyFunction'
+import debounce from 'lodash/debounce'
 import {
     Layout,
     CenterLayout,
@@ -116,27 +117,6 @@ class Combo extends Component {
             }
         }
     };
-    _mouseEnter = (e) => {
-        this._assertPopup();
-    };
-    _mouseLeave = (e) => {
-        const self = this;
-        let enterPopup = false;
-        this.popup.addEventListener("mouseenter", function () {
-            enterPopup = true;
-        });
-
-        setTimeout(function () {
-            if (!enterPopup) {
-                self._unmountPopup();
-            } else {
-                self.popup.addEventListener("mouseleave", function () {
-                    self._unmountPopup();
-                });
-            }
-        },100);
-
-    };
 
     render() {
         const self = this, { trigger, children, popupGetter, ...props } = this.props;
@@ -145,8 +125,21 @@ class Combo extends Component {
         evs.map(function (ev) {
             switch (ev) {
                 case "hover":
-                    eventArr.onMouseEnter = self._mouseEnter;
-                    eventArr.onMouseLeave = self._mouseLeave;
+                    eventArr.onMouseEnter = debounce(function () {
+                        self._assertPopup();
+                        self.enterPopup = false;
+                        self.popup.addEventListener("mouseenter", function () {
+                            self.enterPopup = true;
+                        });
+                        self.popup.addEventListener("mouseleave", function () {
+                            self._unmountPopup();
+                        });
+                    });
+                    eventArr.onMouseLeave = debounce(function () {
+                        if (!self.enterPopup && self._render) {
+                            self._unmountPopup();
+                        }
+                    });
                     break;
                 case "click":
                     eventArr.onClick = self._handler;
