@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { HorizontalLayout, VerticalLayout, AbsoluteLayout } from '../../../core/layout'
-import { TableCellResizer, translateDOMPositionXY } from '../Component'
+import { TableCellResizer } from '../Component'
+import { translateDOMPositionXY } from '../../../utils'
 
 
 class HeadCell extends Component {

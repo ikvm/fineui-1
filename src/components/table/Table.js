@@ -217,44 +217,80 @@ class Table extends Component {
 
     _renderLeftHead(leftHeadState, leftHeadArray, startCol, realLeft, leftLayoutWidth, leftLayoutHeight) {
 
-        return <TableHead left={realLeft} array={leftHeadArray}
-                layoutPosition="leftHead"
-            width={leftLayoutWidth} height={leftLayoutHeight} colLength={leftColLength}
-            onTableCellResize={this._handleTableCellResize} endCol={freezeColLength - 1}
-            cellState={leftHeadState} startCol={startCol} layoutLeft={0} />;
+        return <TableHead 
+                    left={realLeft} 
+                    array={leftHeadArray}
+                    layoutPosition="leftHead"
+                    width={leftLayoutWidth} 
+                    height={leftLayoutHeight} 
+                    colLength={leftColLength}
+                    onTableCellResize={this._handleTableCellResize} 
+                    endCol={freezeColLength - 1}
+                    cellState={leftHeadState} 
+                    startCol={startCol} 
+                    layoutLeft={0} />;
     }
 
     _renderRightHead(rightHeadState, rightHeadArray, startCol, realLeft, rightLayoutWidth, leftLayoutWidth, rightLayoutHeight, freezeColLength) {
 
-        return <TableHead left={realLeft} array={rightHeadArray}
-            layoutPosition="rightHead"
-            width={rightLayoutWidth} height={rightLayoutHeight} colLength={rightColLength}
-            onTableCellResize={this._handleTableCellResize}
-            cellState={rightHeadState} startCol={startCol}
-            layoutLeft={leftLayoutWidth} />;
+        return <TableHead 
+                    left={realLeft} 
+                    array={rightHeadArray}
+                    layoutPosition="rightHead"
+                    width={rightLayoutWidth}
+                    height={rightLayoutHeight} 
+                    colLength={rightColLength}
+                    onTableCellResize={this._handleTableCellResize}
+                    cellState={rightHeadState} 
+                    startCol={startCol}
+                    layoutLeft={leftLayoutWidth} />;
     }
 
     _renderLeftBody(leftBodyState, leftBodyArray, startCol, realLeft, realTop, leftLayoutWidth, leftLayoutHeight, leftColLength, rowSize) {
 
-        return <TableBody left={realLeft} top={realTop} array={leftBodyArray}
-            width={leftLayoutWidth} rowSize={rowSize}
-            height={leftLayoutHeight} colLength={leftColLength} handleScroll={this._handleLeftScroll}
-            cellState={leftBodyState} startCol={startCol} layoutLeft={0} scrollLock={this.state.leftScrollLock} />;
+        return <TableBody 
+                    left={realLeft} 
+                    top={realTop} 
+                    array={leftBodyArray}
+                    width={leftLayoutWidth} 
+                    rowSize={rowSize}
+                    height={leftLayoutHeight} 
+                    colLength={leftColLength} 
+                    handleScroll={this._handleLeftScroll}
+                    cellState={leftBodyState} 
+                    startCol={startCol} 
+                    layoutLeft={0} 
+                    scrollLock={this.state.leftScrollLock} />;
     }
 
     _renderRightBody(rightBodyState, rightBodyArray, startCol, realLeft, realTop, rightLayoutWidth, leftLayoutWidth, rightLayoutHeight, rightColLength, rowSize) {
 
-        return <TableBody left={realLeft} top={realTop}
-            array={rightBodyArray} cellState={rightBodyState} width={rightLayoutWidth}
-            height={rightLayoutHeight} layoutLeft={leftLayoutWidth} startCol={startCol} colLength={rightColLength}
-            handleScroll={this._handleRightScroll} rowSize={rowSize} scrollLock={this.state.rightScrollLock} />;
+        return <TableBody 
+                    left={realLeft} 
+                    top={realTop}
+                    array={rightBodyArray} 
+                    cellState={rightBodyState} 
+                    width={rightLayoutWidth}
+                    height={rightLayoutHeight}
+                    layoutLeft={leftLayoutWidth} 
+                    startCol={startCol} 
+                    colLength={rightColLength}
+                    handleScroll={this._handleRightScroll} 
+                    rowSize={rowSize} 
+                    scrollLock={this.state.rightScrollLock} />;
     }
 
     _renderScrollBarBottom(left, top, leftLayoutWidth, length, coreLength, onScrollChangeX, visibility, flag) {
 
         if (visibility) {
-            return <ScrollBarBottom onScrollChange={onScrollChangeX} left={left} top={top} layoutLeft={leftLayoutWidth}
-                height={10} width={length} coreLength={coreLength} />;
+            return <ScrollBarBottom 
+                        onScrollChange={onScrollChangeX} 
+                        left={left} 
+                        top={top} 
+                        layoutLeft={leftLayoutWidth}
+                        height={10} 
+                        width={length} 
+                        coreLength={coreLength} />;
         }
     }
 
@@ -262,16 +298,25 @@ class Table extends Component {
         let onScrollChangeY = this._handleScrollChangeY;
         let height = tableHeight - headerRowSize - 2;
 
-        return <ScrollBarRight onScrollChange={onScrollChangeY} top={top} headerRowSize={headerRowSize}
-            height={height} width={10} />;
+        return <ScrollBarRight 
+                    onScrollChange={onScrollChangeY} 
+                    top={top} 
+                    headerRowSize={headerRowSize}
+                    height={height} 
+                    width={10} />;
     }
 
     _renderTableResizer(tableHeight, leftLayoutWidth) {
         let onTableResize = this._handleTableResize;
         let left = leftLayoutWidth - 2;
 
-        return <TableResizer height={tableHeight} width={1} left={left} top={0} onTableResize={onTableResize}
-            tableWidth={this.props.tableWidth} />;
+        return <TableResizer 
+                    height={tableHeight} 
+                    width={1} 
+                    left={left} 
+                    top={0} 
+                    onTableResize={onTableResize}
+                    tableWidth={this.props.tableWidth} />;
     }
 
     _getFreezeColLength(isNeedFreeze, freezeCol) {
