@@ -133,11 +133,6 @@ const demos = [{
         pid: 3,
         text: "tabs",
         value: 'TabsDemo'
-    }, {
-        id: 33,
-        pid: 2,
-        text: "table",
-        value: 'TableDemo'
     }
 ]
 
