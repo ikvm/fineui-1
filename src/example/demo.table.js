@@ -37,7 +37,7 @@ class TableDemo extends Component{
         }
         
         return (
-            <MyTable header={header} 
+            <Table header={header}
                      items={items}
                      columnSize={columnSize}
                      mergeCols={mergeCols}
@@ -47,13 +47,8 @@ class TableDemo extends Component{
                      mergeRule={mergeRule}
                      tableHeight={480}
                      tableWidth={800}/>
-                
-            
         );
-        
     }
-
-    
 }
 
 export default TableDemo;

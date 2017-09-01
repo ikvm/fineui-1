@@ -4,7 +4,7 @@ import { Cell } from '../Component';
 import { VerticalLayout, AbsoluteLayout } from '../../../layout';
 import throttle from 'lodash/throttle';
 
-class TableBody extends Component {
+class TableLeftBody extends Component {
 
     constructor(props, context) {
         super(props, context);
@@ -12,11 +12,11 @@ class TableBody extends Component {
 
     render() {
         let self = this;
-        const { className, array, cellState, width, height, layoutPosition, layoutLeft, top, left, startCol, colLength, flag, rowSize, handleScroll, scrollLock, ...props } = this.props;
+        const { className, array, cellState, width, height, layoutPosition, layoutLeft, top, left, startCol, handleScroll, colLength, flag, rowSize, scrollLock, ...props } = this.props;
 
         return (
 
-            <VerticalLayout ref={(div) => { this.scrollDiv = div }} scrollable={true} width={width + 6} height={height + 6}
+            <VerticalLayout ref={(div) => { this.leftScrollDiv = div }} scrollable={true} width={width + 6} height={height + 6}
                 {...{
                     onScroll: throttle(function () {
                         if (!scrollLock) {
@@ -50,8 +50,10 @@ class TableBody extends Component {
         );
     }
 
+
+
     componentWillUpdate(nextProps, nextState) {
-        let divE = ReactDom.findDOMNode(this.scrollDiv);
+        let divE = ReactDom.findDOMNode(this.leftScrollDiv);
         if (nextProps.scrollLock) {
             divE.scrollTop = nextProps.top;
         }
@@ -59,4 +61,4 @@ class TableBody extends Component {
     }
 }
 
-export default TableBody
+export default TableLeftBody

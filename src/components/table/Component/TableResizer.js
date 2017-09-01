@@ -1,27 +1,25 @@
-import React, {Component} from 'react';
-
-let initLeft;
-let height;
+import React, { Component } from 'react';
+import { Layout, AbsoluteLayout } from '../../../layout';
 
 class TableResizer extends Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            left: null,
+            left: null
         };
     }
 
     _handleMouseMove(dx, tableWidth, context) {
         let newLeft = context.state.left + dx;
         context.setState({
-            left: (newLeft < 19) ? 19 : (((tableWidth - newLeft) < 23) ? tableWidth - 23 : newLeft),
+            left: (newLeft < 19) ? 19 : (((tableWidth - newLeft) < 23) ? tableWidth - 23 : newLeft)
         });
     }
 
     _handleMouseDown = (e) => {
         e.preventDefault();
-        const {onTableResize, tableWidth} = this.props;
+        const { onTableResize, tableWidth } = this.props;
         let oldX = e.pageX, initX = e.pageX;
 
         let mouseMove = this._handleMouseMove;
@@ -35,7 +33,7 @@ class TableResizer extends Component {
         let func2 = (e) => {
             let newX = e.pageX;
             let dx = newX - initX;
-            if (typeof(dx) != "undefined")
+            if (typeof (dx) !== "undefined")
                 onTableResize(dx);
             document.body.removeEventListener("mousemove", func);
             document.body.removeEventListener("mouseup", func2);
@@ -46,26 +44,23 @@ class TableResizer extends Component {
 
     componentWillMount() {
         this.setState({
-            left: this.props.left,
+            left: this.props.left
         });
-        initLeft = this.props.left;
-        height = this.props.height;
     }
 
     render() {
+        const { height, width, top } = this.props;
 
-        return(
-            <div className="table-resizer" style={{height: height, 
-                                                   left: this.state.left,
-                                                 }} 
-                 onMouseDown={this._handleMouseDown}
-            />
+        return (
+            <AbsoluteLayout className="table-resizer" style={{ position: "absolute", left: this.state.left, top: top }}>
+                <div style={{ height: height, width: width }} onMouseDown={this._handleMouseDown} />
+            </AbsoluteLayout>
         );
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            left: nextProps.left,
+            left: nextProps.left
         });
     }
 }

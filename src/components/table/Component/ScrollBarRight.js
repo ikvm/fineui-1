@@ -1,56 +1,73 @@
-import React, {Component} from 'react';
-import {VerticalLayout} from '../../../layout'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { VerticalLayout } from '../../../layout'
+import { getElementTop } from '../../../utils/utils/getElementPosition';
+import throttle from 'lodash/throttle';
 
-let oldY = 72;
+let oldY = null;
 
 class ScrollBarRight extends Component {
 
     constructor() {
         super();
+        this._throttleMouseMove = throttle(this._throttleMouseMove.bind(this), 150);
     }
 
     _handleMouseClick = (e) => {
         e.preventDefault();
-        const {onScrollChange} = this.props;
+
+        const { onScrollChange, coreLength, width } = this.props;
+        if (oldY === null) {
+            oldY = getElementTop(ReactDOM.findDOMNode(this._bottomBar)) + 10;
+        }
+        let newY = e.pageY;
+        let dy = newY - oldY;
+        onScrollChange(dy, coreLength, width);
+    }
+
+    _onMouseUp = (e) => {
+        oldY = e.pageY;
+        document.body.removeEventListener("mousemove", this._throttleMouseMove);
+        document.body.removeEventListener("mouseup", this._onMouseUp);
+    }
+
+    _throttleMouseMove = (e) => {
+        const { onScrollChange, coreLength, width } = this.props;
         let newY = e.pageY;
         let dy = newY - oldY;
         oldY = newY;
-        onScrollChange(dy);
+        onScrollChange(dy, coreLength, width);
     }
 
     _handleMouseDown = (e) => {
         e.preventDefault();
-        const {onScrollChange} = this.props;
+
         oldY = e.pageY;
-        
-        let func = (e) => {
-            let newY = e.pageY;
-            let dy = newY - oldY;
-            oldY = newY;
-            onScrollChange(dy);
-        };
-        
-        let func2 = (e) => {
-            document.body.removeEventListener("mousemove", func);
-            document.body.removeEventListener("mouseup", func2);
-        };
-        
-        document.body.addEventListener("mousemove", func);
-        document.body.addEventListener("mouseup", func2);
+        document.body.addEventListener("mousemove", this._throttleMouseMove);
+        document.body.addEventListener("mouseup", this._onMouseUp);
+    }
+
+    componentWillMount() {
+        window.isMove = false;
     }
 
     render() {
 
-        const {top, ...props} = this.props;
+        const { top, headerRowSize, onScrollChange, ...props } = this.props;
 
-        return(
-                <VerticalLayout className="scroll-bar-right" scrolly={true} {...props}>
-                    <div className="scroll-cover" onClick={this._handleMouseClick}>
-                        <div className="scroll-bar-right-core" onMouseDown={this._handleMouseDown} style={{top: top + "px"}}/>
-                    </div>
-                </VerticalLayout>
-            );
+        return (
+            <VerticalLayout className="scroll-bar-right" scrollx={false} scrolly={false} scrollable={false}
+                horizontalAlign="_center" {...props}>
+                <div className="scroll-cover" onClick={this._handleMouseClick}>
+                    <VerticalLayout scrollx={false} scrolly={false} scrollable={false}
+                        horizontalAlign="_center" {...props}>
+                        <div className="scroll-bar-right-core" ref={(rightBar) => this._rightBar = rightBar} onMouseDown={this._handleMouseDown} style={{ top: top + 2 + "px" }} />
+                    </VerticalLayout>
+                </div>
+            </VerticalLayout>
+        );
     }
+
 }
 
 export default ScrollBarRight

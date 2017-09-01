@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 let height;
 let oldX;
@@ -8,20 +8,20 @@ class TableCellResizer extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            left: null,
+            left: null
         }
     }
 
     _handleMouseMove(newLeft, width, context) {
         context.setState({
-            left: (newLeft + width < 21) ? (21 - width) : newLeft,
+            left: (newLeft + width < 21) ? (21 - width) : newLeft
         });
     }
 
     _handleMouseDown = (e) => {
         e.preventDefault();
         oldX = e.pageX;
-        const {onTableCellResize, onResizerBar, index, width} = this.props;
+        const { onTableCellResize, onResizerBar, index, width } = this.props;
         let dx;
         let newLeft = 0;
         let mouseMove = this._handleMouseMove;
@@ -44,29 +44,30 @@ class TableCellResizer extends Component {
 
     componentWillMount() {
         this.setState({
-            left: this.props.left,
+            left: this.props.left
         });
         height = this.props.height;
     }
 
     render() {
 
-        return(
-                <div className="table-resizer" style={{height: height, 
-                                                       left: this.state.left,
-                                                     }} 
-                     onMouseDown={this._handleMouseDown}
-                />  
+        return (
+            <div className="table-resizer" style={{
+                height: height,
+                left: this.state.left
+            }}
+                onMouseDown={this._handleMouseDown}
+            />
         );
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
-            left: nextProps.left,
+            left: nextProps.left
         });
         height = nextProps.height;
     }
-    
+
 }
 
 export default TableCellResizer
