@@ -1,60 +1,74 @@
-import React, {Component} from 'react';
-import {HeadCell, Cell} from '../Component';
-import {HorizontalLayout} from '../../../layout'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { HeadCell, Cell } from '../Component';
+import { AbsoluteLayout, HorizontalLayout, VerticalLayout } from '../../../core/layout';
 
 class TableHead extends Component {
 
     render() {
 
-        const {className, array, cellState, width, height, layoutPosition, top, left, startCol, layoutLeft, endCol, ...props} = this.props;
-        
-        return(
-                <HorizontalLayout className={className}  scrollx={false} scrolly={false} scrollable={false}  verticalAlign="_middle"
-                                  width={width} height={height} left={layoutLeft}>
+        const { className, array, cellState, width, height, layoutPosition, top, left, startCol, layoutLeft, endCol,
+            onTableCellResize, colLength, ...props } = this.props;
+
+        return (
+
+            <VerticalLayout ref={(div) => this._headDiv = div} scrollable={true} width={width + 6} height={height * array.length + 6}>
+                <AbsoluteLayout width={colLength} height={height * array.length}>
                     {
                         cellState.map((item, index) => {
                             let r = item.row;
                             let c = item.col;
                             let text = array[r][c];
-                            let newLeft = item.x + left;
+                            let newLeft = item.x;
                             let newTop = item.y + top;
-                            switch(layoutPosition) {
+                            let children = <span>{text}</span>;
+                            switch (layoutPosition) {
                                 case "leftHead":
                                     if (c === startCol) {
-                                        return <HeadCell className="cell-complete" col={item.col} key={text} 
-                                                         width={item.width - 2} height={item.height - 2} text={text}
-                                                         position="absolute" left={newLeft} top={0} {...props}/>;
+                                        return <HeadCell className="cell-complete" col={item.col} key={text}
+                                            width={item.width - 2} height={item.height - 2} text={text}
+                                            left={newLeft} top={0} children={children}
+                                            onTableCellResize={onTableCellResize} {...props} />;
                                     }
-                                    else if (c != endCol) {
-                                        return <HeadCell className="cell-lack-left" col={item.col} key={text} 
-                                                         width={item.width - 1} height={item.height - 2} text={text}
-                                                         position="absolute" left={newLeft} top={0} {...props}/>;
+                                    else if (c !== endCol) {
+                                        return <HeadCell className="cell-lack-left" col={item.col} key={text}
+                                            width={item.width - 1} height={item.height - 2} text={text}
+                                            left={newLeft} top={0} children={children}
+                                            onTableCellResize={onTableCellResize} {...props} />;
                                     } else {
-                                        return <Cell className="cell-lack-left" key={text} width={item.width - 1} 
-                                                     height={item.height - 2} position="absolute" text={text} 
-                                                     left={newLeft} top={0} {...props}/>;
+                                        return <Cell className="cell-lack-left" key={text} width={item.width - 1}
+                                            height={item.height - 2} text={text} children={children}
+                                            left={newLeft} top={0} {...props} />;
                                     }
-                                    break;
-                                case "rightHead":
-                                    if (newLeft < width && newLeft > -item.width) {
+                                    
+                                default:
+                                    if (item.x - left < width && item.x - left > -item.width) {
                                         if (c === startCol) {
-                                            return <HeadCell className="cell-complete" col={item.col} key={text} 
-                                                             width={item.width - 2} height={item.height - 2} text={text}
-                                                             position="absolute" left={newLeft} top={0} {...props}/>;
+                                            return <HeadCell className="cell-complete" col={item.col} key={text}
+                                                width={item.width - 2} height={item.height - 2} text={text}
+                                                left={newLeft} top={0} children={children}
+                                                onTableCellResize={onTableCellResize} {...props} />;
                                         } else {
-                                            return <HeadCell className="cell-lack-left" col={item.col} key={text} 
-                                                             width={item.width - 1} height={item.height - 2} 
-                                                             position="absolute" text={text} left={newLeft} top={0} 
-                                                             {...props}/>;
+                                            return <HeadCell className="cell-lack-left" col={item.col} key={text}
+                                                width={item.width - 1} height={item.height - 2}
+                                                text={text} left={newLeft} top={0} children={children}
+                                                onTableCellResize={onTableCellResize} {...props} />;
                                         }
                                     }
 
                             }
                         })
                     }
-                </HorizontalLayout>
-            );
+                </AbsoluteLayout>
+            </VerticalLayout>
+        );
     }
+
+    componentWillUpdate(nextProps, nextState) {
+        let divE = ReactDOM.findDOMNode(this._headDiv);
+        divE.scrollLeft = nextProps.left;
+    }
+
 }
 
 export default TableHead

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from '../src/components/table';
-import { AbsoluteLayout } from '../src/layout';
+import { AbsoluteLayout } from '../src/core/layout';
 
 class TableDemo extends Component {
 
@@ -40,15 +40,21 @@ class TableDemo extends Component {
         }
 
         return (
-            <Table header={ header } items={ items } columnSize={ columnSize } mergeCols={ mergeCols } mergeRows={ mergeRows } freezeCols={ freezeCols }
-              isNeedFreeze={ isNeedFreeze } mergeRule={ mergeRule } tableHeight={ 480 } tableWidth={ 800 } />
 
-
-            );
+            <Table header={header}
+                     items={items}
+                     columnSize={columnSize}
+                     mergeCols={mergeCols}
+                     mergeRows={mergeRows}
+                     freezeCols={freezeCols}
+                     isNeedFreeze={isNeedFreeze}
+                     mergeRule={mergeRule}
+                     tableHeight={480}
+                     tableWidth={800}/>             
+            
+        );
 
     }
-
-
 }
 
 export default TableDemo;

@@ -23,7 +23,7 @@ import TipsDemo from './demo.tips.js'
 import InputDemo from './demo.input'
 import TabsDemo from './demo.tabs'
 //eslint warning 和react warning太多了,先注释了
-//import TableDemo from './demo.table'
+import TableDemo from './demo.table'
 import range from 'lodash/range'
 import './example.less'
 
@@ -86,6 +86,7 @@ class App extends Component {
                      <TipsDemo key='TipsDemo'></TipsDemo>
                      <InputDemo key='InputDemo'></InputDemo>
                      <TabsDemo key='TabsDemo'></TabsDemo>
+                     <TableDemo key='TableDemo'></TableDemo>
                    </CardLayout>
                  </HorizontalAdaptLayout.Item>
                </HorizontalAdaptLayout>
