@@ -1,0 +1,114 @@
+@import '../../../less/BI.base.less';
+.bi-button {
+    position: relative;
+    cursor: pointer;
+    padding: 0 10px;
+    font-size: 14px;
+    min-width: 90px;
+    line-height: 28px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid @color-bi-border-highlight;
+    border-radius: 2px;
+    background-color: @color-bi-background-highlight;
+    white-space: nowrap;
+    &:hover::before {
+        //做 hover 的时候 mask 效果
+        position: absolute;
+        content: '';
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        background-color: fade(@color-bi-background-default, 20%)
+    }
+    &-common {
+        color: @color-bi-text;
+        &-clear {
+            background-color: transparent;
+            border-width: 0;
+            color: @color-bi-text-highlight;
+            &:hover {
+                opacity: 0.75;
+            }
+        }
+        &-disabled {
+            background-color: @color-bi-background-disabled;
+            border-color: @color-bi-border-disabled;
+            pointer-events: none;
+        }
+    }
+    &-success {
+        color: #ffffff;
+        background-color: @color-bi-background-success;
+        border-color: @color-bi-border-success;
+        &-clear {
+            background-color: transparent;
+            border-width: 0;
+            color: @color-bi-text-success;
+            &:hover {
+                opacity: 0.75;
+            }
+        }
+        &-disabled {
+            background-color: @color-bi-background-disabled;
+            border-color: @color-bi-border-disabled;
+            pointer-events: none;
+        }
+    }
+    &-warning {
+        color: @color-bi-text;
+        background-color: @color-bi-background-delete;
+        border-color: @color-bi-border-delete;
+        &-clear {
+            background-color: transparent;
+            border-width: 0;
+            color: @color-bi-text-warning;
+            &:hover {
+                opacity: 0.75;
+            }
+        }
+        &-disabled {
+            background-color: @color-bi-background-disabled;
+            border-color: @color-bi-border-disabled;
+            pointer-events: none;
+        }
+    }
+    &-ignore {
+        color: @color-bi-text-black;
+        background-color: @color-bi-background-default;
+        border-color: @color-bi-border-line;
+        &:hover::before {
+            position: absolute;
+            content: '';
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: fade(@color-bi-text-black, 20%)
+        }
+        &-clear {
+            background-color: transparent;
+            border-width: 0;
+            color: @color-bi-text-black;
+            &:hover::before {
+                position: absolute;
+                content: '';
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background-color: transparent;
+            }
+            &:hover {
+                opacity: 0.75;
+            }
+        }
+        &-disabled {
+            pointer-events: none;
+            color: @color-bi-text;
+            background-color: @color-bi-background-disabled;
+            border-color: @color-bi-border-disabled;
+        }
+    }
+}
