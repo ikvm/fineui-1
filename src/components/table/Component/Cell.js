@@ -1,23 +1,48 @@
-import React, {Component} from 'react';
-import {isCellColVisible, isCellRowVisible} from '../../../utils/utils/isCellVisible';
-import {HorizontalLayout, VerticalLayout} from '../../../layout'
+import React, { Component } from 'react';
+import { HorizontalLayout, VerticalLayout, AbsoluteLayout } from '../../../core/layout'
+import { translateDOMPositionXY } from '../Component'
 
 class Cell extends Component {
 
+
+    componentWillMount() {
+        if (isNaN(window.cellCount))
+            window.cellCount = 0;
+    }
+
+
     render() {
+        window.cellCount++;
+        const { className, left, top, text, width, height, children } = this.props;
+        const pos = {};
+        translateDOMPositionXY(pos, left, top);
+        //let children = <span>{text}</span>;
 
-        const {className, left, top, text, ...props} = this.props;
+        /*
+        <HorizontalLayout className={className} lgap={left} tgap={top} scrollx={false}
+                          scrolly={false} verticalAlign="_middle" {...props}>
+            <VerticalLayout className="text-container" horizontalAlign="_center" scrollx={false}
+                            scrolly={false} children={children} tgap={0} lgap={0}>
+            </VerticalLayout>
+        </HorizontalLayout>
+        */
 
-        let children = <span>{text}</span>;
+        return (
+            //<AbsoluteLayout className={className} style={{ position: "absolute", left: left, top: top }} height={height} width={width}>
+            <AbsoluteLayout className={className} style={{ position: "absolute", ...pos }} height={height} width={width}>
+                <AbsoluteLayout.Item children={children} left={0} top={0} right={0} bottom={0} />
+            </AbsoluteLayout>
+        );
+    }
 
-        return(
-                <HorizontalLayout className={className} left={left} top={top} scrollx={false}
-                                  scrolly={false} verticalAlign="_middle" {...props}>
-                    <VerticalLayout className="text-container" horizontalAlign="_center" scrollx={false} 
-                                    scrolly={false} children={children} top={0} left={0}>
-                    </VerticalLayout>
-                </HorizontalLayout>
-            );
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.height === nextProps.height
+            && this.props.width === nextProps.width
+            && this.props.left === nextProps.left) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 

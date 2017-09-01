@@ -22,11 +22,8 @@ import RightLayoutDemo from './layout/demo.rightLayout'
 import TipsDemo from './demo.tips.js'
 import InputDemo from './demo.input'
 import TabsDemo from './demo.tabs'
-import FillLayoutDemo from './layout/demo.fillLayout'
-
-
 //eslint warning 和react warning太多了,先注释了
-//import TableDemo from './demo.table'
+import TableDemo from './demo.table'
 import range from 'lodash/range'
 import './example.less'
 
@@ -39,7 +36,7 @@ class App extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
-            defaultShowKey: 'TipsDemo',
+            defaultShowKey: 'ButtonDemo',
             demos: demos
         }
     }
@@ -61,11 +58,11 @@ class App extends Component {
     render() {
         const {...props} = this.props,
             {...state} = this.state;
-        return <HtapeLayout style={ { position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 } }>
-                 <HtapeLayout.Item width={ 200 } scrollx={ false } style={ { borderRight: ' 1px solid #eff1f4' } }>
+        return <HorizontalAdaptLayout style={ { position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 } }>
+                 <HorizontalAdaptLayout.Item width={ 200 } height={ '100%' } scrollx={ false } style={ { borderRight: ' 1px solid #eff1f4' } }>
                    <Tree handler={ this.handleTreeEvent } nodes={ state.demos }></Tree>
-                 </HtapeLayout.Item>
-                 <HtapeLayout.Item scrolly={ true }>
+                 </HorizontalAdaptLayout.Item>
+                 <HorizontalAdaptLayout.Item scrolly={ true } height={ '100%' }>
                    <CardLayout defaultShowKey={ state.defaultShowKey }>
                      <ButtonDemo key='ButtonDemo'></ButtonDemo>
                      <LabelDemo key='LabelDemo'></LabelDemo>
@@ -89,10 +86,10 @@ class App extends Component {
                      <TipsDemo key='TipsDemo'></TipsDemo>
                      <InputDemo key='InputDemo'></InputDemo>
                      <TabsDemo key='TabsDemo'></TabsDemo>
-                     <FillLayoutDemo key='FillLayoutDemo'></FillLayoutDemo>
+                     <TableDemo key='TableDemo'></TableDemo>
                    </CardLayout>
-                 </HtapeLayout.Item>
-               </HtapeLayout>
+                 </HorizontalAdaptLayout.Item>
+               </HorizontalAdaptLayout>
     }
 }
 export default App
