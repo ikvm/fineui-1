@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import { Cell } from '../Component';
-import { VerticalLayout, AbsoluteLayout } from '../../../layout';
+import { VerticalLayout, AbsoluteLayout } from '../../../core/layout';
 import throttle from 'lodash/throttle';
 
 class TableBody extends Component {

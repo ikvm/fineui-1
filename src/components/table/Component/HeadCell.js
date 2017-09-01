@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AbsoluteLayout, HorizontalLayout, VerticalLayout } from '../../../layout'
+import { HorizontalLayout, VerticalLayout, AbsoluteLayout } from '../../../core/layout'
 import { TableCellResizer, translateDOMPositionXY } from '../Component'
 
 

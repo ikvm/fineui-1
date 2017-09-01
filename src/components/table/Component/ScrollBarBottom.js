@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { HorizontalLayout } from '../../../layout';
+import { HorizontalLayout } from '../../../core/layout';
 import { getElementLeft } from '../../../utils/utils/getElementPosition';
 import cn from 'classnames';
 import throttle from 'lodash/throttle';

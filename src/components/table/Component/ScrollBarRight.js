@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { VerticalLayout } from '../../../layout'
+import { VerticalLayout } from '../../../core/layout';
 import { getElementTop } from '../../../utils/utils/getElementPosition';
 import throttle from 'lodash/throttle';
 

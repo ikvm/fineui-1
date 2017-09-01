@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import './table.less';
 import { ScrollBarBottom, ScrollBarRight, TableHead, TableBody, TableResizer, ResizerBar } from './Component';
-import { AbsoluteLayout } from '../../layout';
+import { AbsoluteLayout } from '../../core/layout';
 import debounce from 'lodash/debounce';
 import emptyFunction from 'fbjs/lib/emptyFunction'
 

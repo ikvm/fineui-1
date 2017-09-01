@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, AbsoluteLayout } from '../../../layout';
+import { Layout, AbsoluteLayout } from '../../../core/layout';
 
 class TableResizer extends Component {
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { HeadCell, Cell } from '../Component';
-import { AbsoluteLayout, HorizontalLayout, VerticalLayout } from '../../../layout';
+import { AbsoluteLayout, HorizontalLayout, VerticalLayout } from '../../../core/layout';
 
 class TableHead extends Component {
 

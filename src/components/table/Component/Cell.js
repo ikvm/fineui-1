@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HorizontalLayout, VerticalLayout, AbsoluteLayout } from '../../../layout'
+import { HorizontalLayout, VerticalLayout, AbsoluteLayout } from '../../../core/layout'
 import { translateDOMPositionXY } from '../Component'
 
 class Cell extends Component {
