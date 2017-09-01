@@ -39,7 +39,7 @@ class App extends Component {
     constructor(props, context) {
         super(props, context)
         this.state = {
-            defaultShowKey: 'ButtonDemo',
+            defaultShowKey: 'TipsDemo',
             demos: demos
         }
     }
