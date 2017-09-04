@@ -109,7 +109,7 @@ BI.TdLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function(){
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {

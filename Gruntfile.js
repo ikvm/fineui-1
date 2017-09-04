@@ -19,6 +19,7 @@ module.exports = function (grunt) {
                     'src/core/mvc/**/*.js',
                     'src/core/base.js',
                     'src/core/ob.js',
+                    'src/core/element.js',
                     'src/core/widget.js',
                     'src/core/model.js',
                     'src/core/view.js',

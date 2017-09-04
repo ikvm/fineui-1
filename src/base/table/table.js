@@ -387,7 +387,7 @@ BI.Table = BI.inherit(BI.Widget, {
         Ws = Ws || {};
         start = start || 0;
         rowSize || (rowSize = o.rowSize);
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(items, function (i, rows) {
             var tr = $("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
             BI.each(rows, function (j, row) {
@@ -520,7 +520,7 @@ BI.Table = BI.inherit(BI.Widget, {
         var self = this, o = this.options;
         columnSize = columnSize || o.columnSize;
         store = store || {};
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(columnSize, function (i, size) {
             var width = self._calculateWidth(size);
             var col = $("<col>").attr("width", width).css("width", width);

@@ -3153,49 +3153,49 @@ BI.Combo = BI.inherit(BI.Widget, {
         switch (o.direction) {
             case "bottom":
             case "bottom,right":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'right', 'left'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'right', 'left'], o.offsetStyle);
                 break;
             case "top":
             case "top,right":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'right', 'left'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'right', 'left'], o.offsetStyle);
                 break;
             case "left":
             case "left,bottom":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'bottom', 'top'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'bottom', 'top'], o.offsetStyle);
                 break;
             case "right":
             case "right,bottom":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'bottom', 'top'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'bottom', 'top'], o.offsetStyle);
                 break;
             case "top,left":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'left', 'right'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'left', 'right'], o.offsetStyle);
                 break;
             case "bottom,left":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'left', 'right'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'left', 'right'], o.offsetStyle);
                 break;
             case "left,top":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'top', 'bottom'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'top', 'bottom'], o.offsetStyle);
                 break;
             case "right,top":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'top', 'bottom'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'top', 'bottom'], o.offsetStyle);
                 break;
             case "top,custom":
             case "custom,top":
-                p = $.getTopAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
+                p = BI.Element.getTopAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
                 break;
             case "custom,bottom":
             case "bottom,custom":
-                p = $.getBottomAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
+                p = BI.Element.getBottomAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
                 break;
             case "left,custom":
             case "custom,left":
-                p = $.getLeftAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
+                p = BI.Element.getLeftAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
                 delete p.top;
                 delete p.adaptHeight;
                 break;
             case "custom,right":
             case "right,custom":
-                p = $.getRightAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
+                p = BI.Element.getRightAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
                 delete p.top;
                 delete p.adaptHeight;
                 break;
@@ -14521,7 +14521,7 @@ $.extend(BI, {
                 // BI.Msg.prompt(title, message, value, callback, min_width);
             },
             toast: function (message, level, context) {
-                context = context || $("body");
+                context = context || BI.Element("body");
                 var toast = BI.createWidget({
                     type: "bi.toast",
                     level: level,
@@ -15046,7 +15046,7 @@ BI.FloatBox = BI.inherit(BI.Widget, {
         this.element.draggable && this.element.draggable({
             handle: ".bi-message-title",
             drag: function (e, ui) {
-                var W = $("body").width(), H = $("body").height();
+                var W = BI.Element("body").width(), H = BI.Element("body").height();
                 if (ui.position.left + o.width > W) {
                     ui.position.left = W - o.width;
                 }
@@ -15706,7 +15706,7 @@ BI.VirtualList = BI.inherit(BI.Widget, {
                 this.cache[i].destroyed = true;
             }
         }
-        var firstFragment = document.createDocumentFragment(), lastFragment = document.createDocumentFragment();
+        var firstFragment = BI.Element.createDocumentFragment(), lastFragment = BI.Element.createDocumentFragment();
         var currentFragment = firstFragment;
         for (var i = (start < 0 ? 0 : start); i <= end && i <= this.renderedIndex; i++) {
             var index = this.cache[i].index;
@@ -31341,7 +31341,7 @@ BI.Table = BI.inherit(BI.Widget, {
         Ws = Ws || {};
         start = start || 0;
         rowSize || (rowSize = o.rowSize);
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(items, function (i, rows) {
             var tr = $("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
             BI.each(rows, function (j, row) {
@@ -31474,7 +31474,7 @@ BI.Table = BI.inherit(BI.Widget, {
         var self = this, o = this.options;
         columnSize = columnSize || o.columnSize;
         store = store || {};
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(columnSize, function (i, size) {
             var width = self._calculateWidth(size);
             var col = $("<col>").attr("width", width).css("width", width);

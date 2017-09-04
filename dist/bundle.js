@@ -14360,7 +14360,340 @@ $.extend(BI.OB.prototype, {
         this.destroyed && this.destroyed();
         this.purgeListeners();
     }
-});/**
+});BI.Element = function (tag) {
+    if (!(this instanceof BI.Element)) {
+        return new BI.Element(tag);
+    }
+    this.$$el = BI.Element.module.apply(null, arguments);
+    this[0] = this.$$el[0];
+    this.length = this.$$el.length;
+};
+BI.Element.prototype = {
+    append: function (cls) {
+        this.$$el.append.apply(this.$$el, arguments);
+        return this;
+    },
+    appendTo: function (ele) {
+        this.$$el.appendTo(ele.$$el);
+        return this;
+    },
+
+    prepend: function (cls) {
+        this.$$el.prepend.apply(this.$$el, arguments);
+        return this;
+    },
+
+    prependTo: function (ele) {
+        this.$$el.prependTo(ele.$$el);
+        return this;
+    },
+
+    before: function (ele) {
+        this.$$el.before(ele.$$el);
+        return this;
+    },
+    after: function (ele) {
+        this.$$el.after(ele.$$el);
+        return this;
+    },
+
+    empty: function (cls) {
+        this.$$el.empty.apply(this.$$el, arguments);
+        return this;
+    },
+
+    remove: function () {
+        this.$$el.remove.apply(this.$$el, arguments);
+        return this;
+    },
+
+    //属性
+    addClass: function (cls) {
+        this.$$el.addClass.apply(this.$$el, arguments);
+        return this;
+    },
+    removeClass: function (cls) {
+        this.$$el.removeClass.apply(this.$$el, arguments);
+        return this;
+    },
+    is: function (cls) {
+        var res = this.$$el.is.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    attr: function (cls) {
+        var res = this.$$el.attr.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    data: function (cls) {
+        var res = this.$$el.data.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    css: function (cls) {
+        var res = this.$$el.css.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    text: function (cls) {
+        var res = this.$$el.text.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    val: function () {
+        var res = this.$$el.val.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    width: function (cls) {
+        var res = this.$$el.width.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    height: function (cls) {
+        var res = this.$$el.height.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    outerWidth: function (cls) {
+        var res = this.$$el.outerWidth.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    outerHeight: function (cls) {
+        var res = this.$$el.outerHeight.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    find: function (ele) {
+        var res = this.$$el.find(ele.$$el || ele);
+        return BI.Element(res);
+    },
+    scrollTop: function () {
+        var res = this.$$el.scrollTop.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    scrollLeft: function () {
+        var res = this.$$el.scrollLeft.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    position: function () {
+        var res = this.$$el.position.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    offset: function () {
+        var res = this.$$el.offset.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    padding: function () {
+        var res = this.$$el.padding.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+
+    border: function () {
+        var res = this.$$el.border.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    insets: function () {
+        var p = this.padding(),
+            b = this.border();
+        return {
+            'top': p.top,
+            'bottom': p.bottom + b.bottom + b.top,
+            'left': p.left,
+            'right': p.right + b.right + b.left
+        };
+    },
+
+    bounds: function (value) {
+        var tmp = {hasIgnoredBounds: true};
+
+        if (value) {
+            if (!isNaN(value.x)) {
+                tmp.left = value.x;
+            }
+            if (!isNaN(value.y)) {
+                tmp.top = value.y;
+            }
+            if (value.width != null) {
+                tmp.width = (value.width - (this.outerWidth(true) - this.width()));
+                tmp.width = (tmp.width >= 0) ? tmp.width : value.width;
+                // fix chrome
+                //tmp.width = (tmp.width >= 0) ? tmp.width : 0;
+            }
+            if (value.height != null) {
+                tmp.height = value.height - (this.outerHeight(true) - this.height());
+                tmp.height = (tmp.height >= 0) ? tmp.height : value.height;
+                // fix chrome
+                //tmp.height = (tmp.height >= 0) ? tmp.height : value.0;
+            }
+            this.css(tmp);
+            return this;
+        }
+        else {
+            // richer:注意此方法只对可见元素有效
+            tmp = this.position();
+            return {
+                'x': tmp.left,
+                'y': tmp.top,
+                // richer:这里计算外部宽度和高度的时候，都不包括边框
+                'width': this.outerWidth(),
+                'height': this.outerHeight()
+            };
+        }
+    },
+
+    //事件
+    on: function () {
+        this.$$el.on.apply(this.$$el, arguments);
+        return this;
+    },
+    bind: function () {
+        this.$$el.bind.apply(this.$$el, arguments);
+        return this;
+    },
+
+    off: function () {
+        this.$$el.off.apply(this.$$el, arguments);
+        return this;
+    },
+    trigger: function () {
+        this.$$el.trigger.apply(this.$$el, arguments);
+        return this;
+    },
+
+    click: function () {
+        this.$$el.click.apply(this.$$el, arguments);
+        return this;
+    },
+
+    hover: function () {
+        this.$$el.hover.apply(this.$$el, arguments);
+        return this;
+    },
+
+    mousedown: function () {
+        this.$$el.mousedown.apply(this.$$el, arguments);
+        return this;
+    },
+
+    mouseup: function () {
+        this.$$el.mouseup.apply(this.$$el, arguments);
+        return this;
+    },
+
+    mouseover: function () {
+        this.$$el.mouseover.apply(this.$$el, arguments);
+        return this;
+    },
+
+    keydown: function () {
+        this.$$el.keydown.apply(this.$$el, arguments);
+        return this;
+    },
+
+    keyup: function () {
+        this.$$el.keyup.apply(this.$$el, arguments);
+        return this;
+    },
+
+    focus: function () {
+        this.$$el.focus.apply(this.$$el, arguments);
+        return this;
+    },
+    focusout: function () {
+        this.$$el.focusout.apply(this.$$el, arguments);
+        return this;
+    },
+    select: function () {
+        this.$$el.select.apply(this.$$el, arguments);
+        return this;
+    },
+
+    scroll: function () {
+        this.$$el.scroll.apply(this.$$el, arguments);
+        return this;
+    },
+
+    slideDown: function () {
+        this.$$el.slideDown.apply(this.$$el, arguments);
+        return this;
+    },
+    slideUp: function () {
+        this.$$el.slideUp.apply(this.$$el, arguments);
+        return this;
+    },
+
+    fadeIn: function () {
+        this.$$el.fadeIn.apply(this.$$el, arguments);
+        return this;
+    },
+
+    fadeOut: function () {
+        this.$$el.fadeOut.apply(this.$$el, arguments);
+        return this;
+    },
+
+    show: function () {
+        this.$$el.show.apply(this.$$el, arguments);
+        return this;
+    },
+    hide: function () {
+        this.$$el.hide.apply(this.$$el, arguments);
+        return this;
+    },
+};
+
+BI.Element.createElement = function (tagName) {
+    return document.createElement(tagName);
+};
+
+BI.Element.createDocumentFragment = function () {
+    return document.createDocumentFragment();
+};
+
+BI.Element.registerModule = function (module) {
+    BI.Element.module = module;
+};/**
  * Widget超类
  * @class BI.Widget
  * @extends BI.OB
@@ -14436,10 +14769,10 @@ BI.Widget = BI.inherit(BI.OB, {
             // if (o.root !== true) {
             //     throw new Error("root is a required property");
             // }
-            this.element = $(o.element);
+            this.element = new BI.Element(o.element);
             this._isRoot = true;
         } else {
-            this.element = $(document.createElement(o.tagName));
+            this.element = new BI.Element(BI.Element.createElement(o.tagName));
         }
         if (o.baseCls || o.extraCls || o.cls) {
             this.element.addClass((o.baseCls || "") + " " + (o.extraCls || "") + " " + (o.cls || ""));
@@ -19570,7 +19903,7 @@ BI.Layout = BI.inherit(BI.Widget, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -19788,7 +20121,7 @@ BI.Layout = BI.inherit(BI.Widget, {
 
     addItems: function (items) {
         var self = this, o = this.options;
-        var fragment = document.createDocumentFragment();
+        var fragment = BI.Element.createDocumentFragment();
         var added = [];
         BI.each(items, function (i, item) {
             var w = self._addElement(o.items.length, item);
@@ -19806,7 +20139,7 @@ BI.Layout = BI.inherit(BI.Widget, {
     prependItems: function (items) {
         var self = this;
         items = items || [];
-        var fragment = document.createDocumentFragment();
+        var fragment = BI.Element.createDocumentFragment();
         var added = [];
         for (var i = items.length - 1; i >= 0; i--) {
             this._addItemAt(0, items[i]);
@@ -21537,10 +21870,10 @@ BI.TooltipsController = BI.inherit(BI.Controller, {
         tooltip.element.height(tooltip.element[0].scrollHeight);
         this.showingTips[name] = true;
         var x = e.pageX || e.clientX, y = (e.pageY || e.clientY) + 15;
-        if (x + tooltip.element.outerWidth() > $("body").outerWidth()) {
+        if (x + tooltip.element.outerWidth() > BI.Element("body").outerWidth()) {
             x -= tooltip.element.outerWidth();
         }
-        if (y + tooltip.element.outerHeight() > $("body").outerHeight()) {
+        if (y + tooltip.element.outerHeight() > BI.Element("body").outerHeight()) {
             y -= tooltip.element.outerHeight() + 15;
             top = offset.top - tooltip.element.outerHeight() - 5;
             !opt.belowMouse && (y = Math.min(y, top));
@@ -22210,7 +22543,7 @@ _.extend(BI, {
  * guy
  * 最基础的dom操作
  */
-BI.extend(jQuery.fn, {
+BI.extend(BI.Element.prototype, {
 
     destroy: function () {
         this.remove();
@@ -22250,7 +22583,7 @@ BI.extend(jQuery.fn, {
 
             if (tidx >= 0) {
                 this.append(textLeft.substr(0, tidx));
-                this.append($("<span>").addClass("bi-keyword-red-mark")
+                this.append(BI.Element("<span>").addClass("bi-keyword-red-mark")
                     .text(textLeft.substr(tidx, keyword.length).replaceAll(" ", "　")));
 
                 textLeft = textLeft.substr(tidx + keyword.length);
@@ -22259,7 +22592,7 @@ BI.extend(jQuery.fn, {
                 }
             } else if (pidx != null && pidx >= 0 && Math.floor(pidx / text.length) === Math.floor((pidx + keyword.length - 1) / text.length)) {
                 this.append(textLeft.substr(0, pidx));
-                this.append($("<span>").addClass("bi-keyword-red-mark")
+                this.append(BI.Element("<span>").addClass("bi-keyword-red-mark")
                     .text(textLeft.substr(pidx, keyword.length).replaceAll(" ", "　")));
                 if (py != null) {
                     py = py.substr(pidx + keyword.length);
@@ -22374,7 +22707,7 @@ BI.extend(jQuery.fn, {
     }
 });
 
-BI.extend(jQuery, {
+BI.extend(BI.Element, {
 
     getLeftPosition: function (combo, popup, extraWidth) {
         return {
@@ -22403,35 +22736,35 @@ BI.extend(jQuery, {
     },
 
     isLeftSpaceEnough: function (combo, popup, extraWidth) {
-        return $.getLeftPosition(combo, popup, extraWidth).left >= 0;
+        return BI.Element.getLeftPosition(combo, popup, extraWidth).left >= 0;
     },
 
     isRightSpaceEnough: function (combo, popup, extraWidth) {
-        var viewBounds = popup.element.bounds(), windowBounds = $("body").bounds();
-        return $.getRightPosition(combo, popup, extraWidth).left + viewBounds.width <= windowBounds.width;
+        var viewBounds = popup.element.bounds(), windowBounds = BI.Element("body").bounds();
+        return BI.Element.getRightPosition(combo, popup, extraWidth).left + viewBounds.width <= windowBounds.width;
     },
 
     isTopSpaceEnough: function (combo, popup, extraHeight) {
-        return $.getTopPosition(combo, popup, extraHeight).top >= 0;
+        return BI.Element.getTopPosition(combo, popup, extraHeight).top >= 0;
     },
 
     isBottomSpaceEnough: function (combo, popup, extraHeight) {
-        var viewBounds = popup.element.bounds(), windowBounds = $("body").bounds();
-        return $.getBottomPosition(combo, popup, extraHeight).top + viewBounds.height <= windowBounds.height;
+        var viewBounds = popup.element.bounds(), windowBounds = BI.Element("body").bounds();
+        return BI.Element.getBottomPosition(combo, popup, extraHeight).top + viewBounds.height <= windowBounds.height;
     },
 
     isRightSpaceLarger: function (combo) {
-        var windowBounds = $("body").bounds();
+        var windowBounds = BI.Element("body").bounds();
         return windowBounds.width - combo.element.offset().left - combo.element.bounds().width >= combo.element.offset().left;
     },
 
     isBottomSpaceLarger: function (combo) {
-        var windowBounds = $("body").bounds();
+        var windowBounds = BI.Element("body").bounds();
         return windowBounds.height - combo.element.offset().top - combo.element.bounds().height >= combo.element.offset().top;
     },
 
     getLeftAlignPosition: function (combo, popup, extraWidth) {
-        var viewBounds = popup.element.bounds(), windowBounds = $("body").bounds();
+        var viewBounds = popup.element.bounds(), windowBounds = BI.Element("body").bounds();
         var left = combo.element.offset().left + extraWidth;
         if (left + viewBounds.width > windowBounds.width) {
             left = windowBounds.width - viewBounds.width;
@@ -22445,8 +22778,8 @@ BI.extend(jQuery, {
     },
 
     getLeftAdaptPosition: function (combo, popup, extraWidth) {
-        if ($.isLeftSpaceEnough(combo, popup, extraWidth)) {
-            return $.getLeftPosition(combo, popup, extraWidth);
+        if (BI.Element.isLeftSpaceEnough(combo, popup, extraWidth)) {
+            return BI.Element.getLeftPosition(combo, popup, extraWidth);
         }
         return {
             left: 0
@@ -22465,20 +22798,20 @@ BI.extend(jQuery, {
     },
 
     getRightAdaptPosition: function (combo, popup, extraWidth) {
-        if ($.isRightSpaceEnough(combo, popup, extraWidth)) {
-            return $.getRightPosition(combo, popup, extraWidth);
+        if (BI.Element.isRightSpaceEnough(combo, popup, extraWidth)) {
+            return BI.Element.getRightPosition(combo, popup, extraWidth);
         }
         return {
-            left: $("body").bounds().width - popup.element.bounds().width
+            left: BI.Element("body").bounds().width - popup.element.bounds().width
         }
     },
 
     getTopAlignPosition: function (combo, popup, extraHeight, needAdaptHeight) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
+            windowBounds = BI.Element("body").bounds();
         var top, adaptHeight;
-        if ($.isBottomSpaceEnough(combo, popup, -1 * comboBounds.height + extraHeight)) {
+        if (BI.Element.isBottomSpaceEnough(combo, popup, -1 * comboBounds.height + extraHeight)) {
             top = comboOffset.top + extraHeight;
         } else if (needAdaptHeight) {
             top = comboOffset.top + extraHeight;
@@ -22501,9 +22834,9 @@ BI.extend(jQuery, {
     },
 
     getTopAdaptPosition: function (combo, popup, extraHeight, needAdaptHeight) {
-        var popupBounds = popup.element.bounds(), windowBounds = $("body").bounds();
-        if ($.isTopSpaceEnough(combo, popup, extraHeight)) {
-            return $.getTopPosition(combo, popup, extraHeight);
+        var popupBounds = popup.element.bounds(), windowBounds = BI.Element("body").bounds();
+        if (BI.Element.isTopSpaceEnough(combo, popup, extraHeight)) {
+            return BI.Element.getTopPosition(combo, popup, extraHeight);
         }
         if (needAdaptHeight) {
             return {
@@ -22525,9 +22858,9 @@ BI.extend(jQuery, {
     getBottomAlignPosition: function (combo, popup, extraHeight, needAdaptHeight) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
+            windowBounds = BI.Element("body").bounds();
         var top, adaptHeight;
-        if ($.isTopSpaceEnough(combo, popup, -1 * comboBounds.height + extraHeight)) {
+        if (BI.Element.isTopSpaceEnough(combo, popup, -1 * comboBounds.height + extraHeight)) {
             top = comboOffset.top + comboBounds.height - popupBounds.height - extraHeight;
         } else if (needAdaptHeight) {
             top = 0;
@@ -22552,9 +22885,9 @@ BI.extend(jQuery, {
     getBottomAdaptPosition: function (combo, popup, extraHeight, needAdaptHeight) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
-        if ($.isBottomSpaceEnough(combo, popup, extraHeight)) {
-            return $.getBottomPosition(combo, popup, extraHeight);
+            windowBounds = BI.Element("body").bounds();
+        if (BI.Element.isBottomSpaceEnough(combo, popup, extraHeight)) {
+            return BI.Element.getBottomPosition(combo, popup, extraHeight);
         }
         if (needAdaptHeight) {
             return {
@@ -22576,7 +22909,7 @@ BI.extend(jQuery, {
     getCenterAdaptPosition: function (combo, popup) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
+            windowBounds = BI.Element("body").bounds();
         var left;
         if (comboOffset.left + comboBounds.width / 2 + popupBounds.width / 2 > windowBounds.width) {
             left = windowBounds.width - popupBounds.width;
@@ -22594,7 +22927,7 @@ BI.extend(jQuery, {
     getMiddleAdaptPosition: function (combo, popup) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
+            windowBounds = BI.Element("body").bounds();
         var top;
         if (comboOffset.top + comboBounds.height / 2 + popupBounds.height / 2 > windowBounds.height) {
             top = windowBounds.height - popupBounds.height;
@@ -22639,13 +22972,13 @@ BI.extend(jQuery, {
                 case "left":
                     if (!isNeedAdaptHeight) {
                         var tW = tbFirst ? extraHeight : extraWidth, tH = tbFirst ? 0 : extraHeight;
-                        if ($.isLeftSpaceEnough(combo, popup, tW)) {
-                            left = $.getLeftPosition(combo, popup, tW).left;
+                        if (BI.Element.isLeftSpaceEnough(combo, popup, tW)) {
+                            left = BI.Element.getLeftPosition(combo, popup, tW).left;
                             if (topBottom[0] === "bottom") {
-                                pos = $.getTopAlignPosition(combo, popup, tH, needAdaptHeight);
+                                pos = BI.Element.getTopAlignPosition(combo, popup, tH, needAdaptHeight);
                                 pos.dir = "left,bottom";
                             } else {
-                                pos = $.getBottomAlignPosition(combo, popup, tH, needAdaptHeight);
+                                pos = BI.Element.getBottomAlignPosition(combo, popup, tH, needAdaptHeight);
                                 pos.dir = "left,top";
                             }
                             if (tbFirst) {
@@ -22660,13 +22993,13 @@ BI.extend(jQuery, {
                 case "right":
                     if (!isNeedAdaptHeight) {
                         var tW = tbFirst ? extraHeight : extraWidth, tH = tbFirst ? extraWidth : extraHeight;
-                        if ($.isRightSpaceEnough(combo, popup, tW)) {
-                            left = $.getRightPosition(combo, popup, tW).left;
+                        if (BI.Element.isRightSpaceEnough(combo, popup, tW)) {
+                            left = BI.Element.getRightPosition(combo, popup, tW).left;
                             if (topBottom[0] === "bottom") {
-                                pos = $.getTopAlignPosition(combo, popup, tH, needAdaptHeight);
+                                pos = BI.Element.getTopAlignPosition(combo, popup, tH, needAdaptHeight);
                                 pos.dir = "right,bottom";
                             } else {
-                                pos = $.getBottomAlignPosition(combo, popup, tH, needAdaptHeight);
+                                pos = BI.Element.getBottomAlignPosition(combo, popup, tH, needAdaptHeight);
                                 pos.dir = "right,top";
                             }
                             if (tbFirst) {
@@ -22680,13 +23013,13 @@ BI.extend(jQuery, {
                     break;
                 case "top":
                     var tW = lrFirst ? extraHeight : extraWidth, tH = lrFirst ? extraWidth : extraHeight;
-                    if ($.isTopSpaceEnough(combo, popup, tH)) {
-                        top = $.getTopPosition(combo, popup, tH).top;
+                    if (BI.Element.isTopSpaceEnough(combo, popup, tH)) {
+                        top = BI.Element.getTopPosition(combo, popup, tH).top;
                         if (leftRight[0] === "right") {
-                            pos = $.getLeftAlignPosition(combo, popup, tW, needAdaptHeight);
+                            pos = BI.Element.getLeftAlignPosition(combo, popup, tW, needAdaptHeight);
                             pos.dir = "top,right";
                         } else {
-                            pos = $.getRightAlignPosition(combo, popup, tW);
+                            pos = BI.Element.getRightAlignPosition(combo, popup, tW);
                             pos.dir = "top,left";
                         }
                         if (lrFirst) {
@@ -22702,13 +23035,13 @@ BI.extend(jQuery, {
                     break;
                 case "bottom":
                     var tW = lrFirst ? extraHeight : extraWidth, tH = lrFirst ? extraWidth : extraHeight;
-                    if ($.isBottomSpaceEnough(combo, popup, tH)) {
-                        top = $.getBottomPosition(combo, popup, tH).top;
+                    if (BI.Element.isBottomSpaceEnough(combo, popup, tH)) {
+                        top = BI.Element.getBottomPosition(combo, popup, tH).top;
                         if (leftRight[0] === "right") {
-                            pos = $.getLeftAlignPosition(combo, popup, tW, needAdaptHeight);
+                            pos = BI.Element.getLeftAlignPosition(combo, popup, tW, needAdaptHeight);
                             pos.dir = "bottom,right";
                         } else {
-                            pos = $.getRightAlignPosition(combo, popup, tW);
+                            pos = BI.Element.getRightAlignPosition(combo, popup, tW);
                             pos.dir = "bottom,left";
                         }
                         if (lrFirst) {
@@ -22728,34 +23061,34 @@ BI.extend(jQuery, {
         switch (directions[0]) {
             case "left":
             case "right":
-                if ($.isRightSpaceLarger(combo)) {
-                    left = $.getRightAdaptPosition(combo, popup, extraWidth).left;
+                if (BI.Element.isRightSpaceLarger(combo)) {
+                    left = BI.Element.getRightAdaptPosition(combo, popup, extraWidth).left;
                 } else {
-                    left = $.getLeftAdaptPosition(combo, popup, extraWidth).left;
+                    left = BI.Element.getLeftAdaptPosition(combo, popup, extraWidth).left;
                 }
                 if (topBottom[0] === "bottom") {
-                    pos = $.getTopAlignPosition(combo, popup, extraHeight, needAdaptHeight);
+                    pos = BI.Element.getTopAlignPosition(combo, popup, extraHeight, needAdaptHeight);
                     pos.left = left;
                     pos.dir = directions[0] + ",bottom";
                     return pos;
                 }
-                pos = $.getBottomAlignPosition(combo, popup, extraHeight, needAdaptHeight);
+                pos = BI.Element.getBottomAlignPosition(combo, popup, extraHeight, needAdaptHeight);
                 pos.left = left;
                 pos.dir = directions[0] + ",top";
                 return pos;
             default :
-                if ($.isBottomSpaceLarger(combo)) {
-                    pos = $.getBottomAdaptPosition(combo, popup, extraHeight, needAdaptHeight);
+                if (BI.Element.isBottomSpaceLarger(combo)) {
+                    pos = BI.Element.getBottomAdaptPosition(combo, popup, extraHeight, needAdaptHeight);
                 } else {
-                    pos = $.getTopAdaptPosition(combo, popup, extraHeight, needAdaptHeight);
+                    pos = BI.Element.getTopAdaptPosition(combo, popup, extraHeight, needAdaptHeight);
                 }
                 if (leftRight[0] === "right") {
-                    left = $.getLeftAlignPosition(combo, popup, extraWidth, needAdaptHeight).left;
+                    left = BI.Element.getLeftAlignPosition(combo, popup, extraWidth, needAdaptHeight).left;
                     pos.left = left;
                     pos.dir = directions[0] + ",right";
                     return pos;
                 }
-                left = $.getRightAlignPosition(combo, popup, extraWidth).left;
+                left = BI.Element.getRightAlignPosition(combo, popup, extraWidth).left;
                 pos.left = left;
                 pos.dir = directions[0] + ",left";
                 return pos;
@@ -22766,26 +23099,26 @@ BI.extend(jQuery, {
     getComboPosition: function (combo, popup, extraWidth, extraHeight, needAdaptHeight, directions, offsetStyle) {
         extraWidth || (extraWidth = 0);
         extraHeight || (extraHeight = 0);
-        var bodyHeight = $("body").bounds().height - extraHeight;
+        var bodyHeight = BI.Element("body").bounds().height - extraHeight;
         var maxHeight = Math.min(popup.attr("maxHeight") || bodyHeight, bodyHeight);
         popup.resetHeight && popup.resetHeight(maxHeight);
-        var position = $.getComboPositionByDirections(combo, popup, extraWidth, extraHeight, needAdaptHeight, directions || ['bottom', 'top', 'right', 'left']);
+        var position = BI.Element.getComboPositionByDirections(combo, popup, extraWidth, extraHeight, needAdaptHeight, directions || ['bottom', 'top', 'right', 'left']);
         switch (offsetStyle) {
             case "center":
                 if (position.change) {
-                    var p = $.getMiddleAdaptPosition(combo, popup);
+                    var p = BI.Element.getMiddleAdaptPosition(combo, popup);
                     position.top = p.top;
                 } else {
-                    var p = $.getCenterAdaptPosition(combo, popup);
+                    var p = BI.Element.getCenterAdaptPosition(combo, popup);
                     position.left = p.left;
                 }
                 break;
             case "middle":
                 if (position.change) {
-                    var p = $.getCenterAdaptPosition(combo, popup);
+                    var p = BI.Element.getCenterAdaptPosition(combo, popup);
                     position.left = p.left;
                 } else {
-                    var p = $.getMiddleAdaptPosition(combo, popup);
+                    var p = BI.Element.getMiddleAdaptPosition(combo, popup);
                     position.top = p.top;
                 }
                 break;
@@ -22865,7 +23198,7 @@ BI.extend(BI.DOM, {
         if (BI.isEmpty(doms)) {
             return;
         }
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(doms, function (i, dom) {
             dom instanceof BI.Widget && (dom = dom.element);
             dom instanceof $ && dom[0] && frag.appendChild(dom[0]);
@@ -22874,7 +23207,7 @@ BI.extend(BI.DOM, {
     },
 
     isExist: function (obj) {
-        return $("body").find(obj.element).length > 0;
+        return BI.Element("body").find(obj.element).length > 0;
     },
 
     //预加载图片
@@ -23051,7 +23384,7 @@ BI.extend(BI.DOM, {
     },
 
     getTextSizeWidth: function (text, fontSize) {
-        var span = $("<span></span>").addClass("text-width-span").appendTo($("body"));
+        var span = BI.Element("<span></span>").addClass("text-width-span").appendTo(BI.Element("body"));
 
         if (fontSize == null) {
             fontSize = 12;
@@ -23069,11 +23402,11 @@ BI.extend(BI.DOM, {
     //获取滚动条的宽度
     getScrollWidth: function () {
         if (this._scrollWidth == null) {
-            var ul = $("<div>").width(50).height(50).css({
+            var ul = BI.Element("<div>").width(50).height(50).css({
                 position: "absolute",
                 top: "-9999px",
                 overflow: "scroll"
-            }).appendTo($("body"));
+            }).appendTo(BI.Element("body"));
             this._scrollWidth = ul[0].offsetWidth - ul[0].clientWidth;
             ul.destroy();
         }
@@ -24194,72 +24527,7 @@ Function.prototype.after = function (func) {
         func.apply(this, arguments);
         return ret;
     }
-};/*!
- * jLayout JQuery Plugin v0.11
- *
- * Licensed under the revised BSD License.
- * Copyright 2008, Bram Stein
- * All rights reserved.
- */
-if (jQuery) {
-    (function ($) {
-        // richer:容器在其各个边缘留出的空间
-        if (!$.fn.insets) {
-            $.fn.insets = function () {
-                var p = this.padding(),
-                    b = this.border();
-                return {
-                    'top': p.top,
-                    'bottom': p.bottom + b.bottom + b.top,
-                    'left': p.left,
-                    'right': p.right + b.right + b.left
-                };
-            };
-        }
-
-        // richer:获取 && 设置jQuery元素的边界
-        if (!$.fn.bounds) {
-            $.fn.bounds = function (value) {
-                var tmp = {hasIgnoredBounds: true};
-
-                if (value) {
-                    if (!isNaN(value.x)) {
-                        tmp.left = value.x;
-                    }
-                    if (!isNaN(value.y)) {
-                        tmp.top = value.y;
-                    }
-                    if (value.width != null) {
-                        tmp.width = (value.width - (this.outerWidth(true) - this.width()));
-                        tmp.width = (tmp.width >= 0) ? tmp.width : value.width;
-                        // fix chrome
-                        //tmp.width = (tmp.width >= 0) ? tmp.width : 0;
-                    }
-                    if (value.height != null) {
-                        tmp.height = value.height - (this.outerHeight(true) - this.height());
-                        tmp.height = (tmp.height >= 0) ? tmp.height : value.height;
-                        // fix chrome
-                        //tmp.height = (tmp.height >= 0) ? tmp.height : value.0;
-                    }
-                    this.css(tmp);
-                    return this;
-                }
-                else {
-                    // richer:注意此方法只对可见元素有效
-                    tmp = this.position();
-                    return {
-                        'x': tmp.left,
-                        'y': tmp.top,
-                        // richer:这里计算外部宽度和高度的时候，都不包括边框
-                        'width': this.outerWidth(),
-                        'height': this.outerHeight()
-                    };
-                }
-            };
-        }
-    })(jQuery);
-}
-;if (!Number.prototype.toFixed || (0.00008).toFixed(3) !== '0.000' ||
+};if (!Number.prototype.toFixed || (0.00008).toFixed(3) !== '0.000' ||
     (0.9).toFixed(0) === '0' || (1.255).toFixed(2) !== '1.25' ||
     (1000000000000000128).toFixed(0) !== "1000000000000000128") {
     (function () {
@@ -25308,7 +25576,7 @@ BI.CenterAdaptLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -25425,7 +25693,7 @@ BI.HorizontalAdaptLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -25712,7 +25980,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -26132,7 +26400,7 @@ BI.FlexCenterLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -26217,7 +26485,7 @@ BI.FlexHorizontalLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -26300,7 +26568,7 @@ BI.FlexVerticalCenter = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -27420,7 +27688,7 @@ BI.HorizontalLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -28027,7 +28295,7 @@ BI.TdLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function(){
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -28756,6 +29024,8 @@ $(function () {
     if (BI.isIE9Below()) {
         BI.GridTableScrollbar.SIZE = 18;
     }
+
+    BI.Element.registerModule($);
 });/*!
  * jQuery Mousewheel 3.1.13
  *
@@ -31911,49 +32181,49 @@ BI.Combo = BI.inherit(BI.Widget, {
         switch (o.direction) {
             case "bottom":
             case "bottom,right":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'right', 'left'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'right', 'left'], o.offsetStyle);
                 break;
             case "top":
             case "top,right":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'right', 'left'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'right', 'left'], o.offsetStyle);
                 break;
             case "left":
             case "left,bottom":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'bottom', 'top'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'bottom', 'top'], o.offsetStyle);
                 break;
             case "right":
             case "right,bottom":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'bottom', 'top'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'bottom', 'top'], o.offsetStyle);
                 break;
             case "top,left":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'left', 'right'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'left', 'right'], o.offsetStyle);
                 break;
             case "bottom,left":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'left', 'right'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'left', 'right'], o.offsetStyle);
                 break;
             case "left,top":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'top', 'bottom'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'top', 'bottom'], o.offsetStyle);
                 break;
             case "right,top":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'top', 'bottom'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'top', 'bottom'], o.offsetStyle);
                 break;
             case "top,custom":
             case "custom,top":
-                p = $.getTopAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
+                p = BI.Element.getTopAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
                 break;
             case "custom,bottom":
             case "bottom,custom":
-                p = $.getBottomAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
+                p = BI.Element.getBottomAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
                 break;
             case "left,custom":
             case "custom,left":
-                p = $.getLeftAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
+                p = BI.Element.getLeftAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
                 delete p.top;
                 delete p.adaptHeight;
                 break;
             case "custom,right":
             case "right,custom":
-                p = $.getRightAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
+                p = BI.Element.getRightAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
                 delete p.top;
                 delete p.adaptHeight;
                 break;
@@ -43279,7 +43549,7 @@ $.extend(BI, {
                 // BI.Msg.prompt(title, message, value, callback, min_width);
             },
             toast: function (message, level, context) {
-                context = context || $("body");
+                context = context || BI.Element("body");
                 var toast = BI.createWidget({
                     type: "bi.toast",
                     level: level,
@@ -43804,7 +44074,7 @@ BI.FloatBox = BI.inherit(BI.Widget, {
         this.element.draggable && this.element.draggable({
             handle: ".bi-message-title",
             drag: function (e, ui) {
-                var W = $("body").width(), H = $("body").height();
+                var W = BI.Element("body").width(), H = BI.Element("body").height();
                 if (ui.position.left + o.width > W) {
                     ui.position.left = W - o.width;
                 }
@@ -44464,7 +44734,7 @@ BI.VirtualList = BI.inherit(BI.Widget, {
                 this.cache[i].destroyed = true;
             }
         }
-        var firstFragment = document.createDocumentFragment(), lastFragment = document.createDocumentFragment();
+        var firstFragment = BI.Element.createDocumentFragment(), lastFragment = BI.Element.createDocumentFragment();
         var currentFragment = firstFragment;
         for (var i = (start < 0 ? 0 : start); i <= end && i <= this.renderedIndex; i++) {
             var index = this.cache[i].index;
@@ -60099,7 +60369,7 @@ BI.Table = BI.inherit(BI.Widget, {
         Ws = Ws || {};
         start = start || 0;
         rowSize || (rowSize = o.rowSize);
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(items, function (i, rows) {
             var tr = $("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
             BI.each(rows, function (j, row) {
@@ -60232,7 +60502,7 @@ BI.Table = BI.inherit(BI.Widget, {
         var self = this, o = this.options;
         columnSize = columnSize || o.columnSize;
         store = store || {};
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(columnSize, function (i, size) {
             var width = self._calculateWidth(size);
             var col = $("<col>").attr("width", width).css("width", width);

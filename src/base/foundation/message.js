@@ -19,7 +19,7 @@ $.extend(BI, {
                 // BI.Msg.prompt(title, message, value, callback, min_width);
             },
             toast: function (message, level, context) {
-                context = context || $("body");
+                context = context || BI.Element("body");
                 var toast = BI.createWidget({
                     type: "bi.toast",
                     level: level,

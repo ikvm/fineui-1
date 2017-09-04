@@ -68,7 +68,7 @@ BI.extend(BI.DOM, {
         if (BI.isEmpty(doms)) {
             return;
         }
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(doms, function (i, dom) {
             dom instanceof BI.Widget && (dom = dom.element);
             dom instanceof $ && dom[0] && frag.appendChild(dom[0]);
@@ -77,7 +77,7 @@ BI.extend(BI.DOM, {
     },
 
     isExist: function (obj) {
-        return $("body").find(obj.element).length > 0;
+        return BI.Element("body").find(obj.element).length > 0;
     },
 
     //预加载图片
@@ -254,7 +254,7 @@ BI.extend(BI.DOM, {
     },
 
     getTextSizeWidth: function (text, fontSize) {
-        var span = $("<span></span>").addClass("text-width-span").appendTo($("body"));
+        var span = BI.Element("<span></span>").addClass("text-width-span").appendTo(BI.Element("body"));
 
         if (fontSize == null) {
             fontSize = 12;
@@ -272,11 +272,11 @@ BI.extend(BI.DOM, {
     //获取滚动条的宽度
     getScrollWidth: function () {
         if (this._scrollWidth == null) {
-            var ul = $("<div>").width(50).height(50).css({
+            var ul = BI.Element("<div>").width(50).height(50).css({
                 position: "absolute",
                 top: "-9999px",
                 overflow: "scroll"
-            }).appendTo($("body"));
+            }).appendTo(BI.Element("body"));
             this._scrollWidth = ul[0].offsetWidth - ul[0].clientWidth;
             ul.destroy();
         }

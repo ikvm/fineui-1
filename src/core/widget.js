@@ -74,10 +74,10 @@ BI.Widget = BI.inherit(BI.OB, {
             // if (o.root !== true) {
             //     throw new Error("root is a required property");
             // }
-            this.element = $(o.element);
+            this.element = new BI.Element(o.element);
             this._isRoot = true;
         } else {
-            this.element = $(document.createElement(o.tagName));
+            this.element = new BI.Element(BI.Element.createElement(o.tagName));
         }
         if (o.baseCls || o.extraCls || o.cls) {
             this.element.addClass((o.baseCls || "") + " " + (o.extraCls || "") + " " + (o.cls || ""));
