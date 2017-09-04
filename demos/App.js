@@ -59,7 +59,7 @@ class App extends Component {
         const {...props} = this.props,
             {...state} = this.state;
         return <HorizontalAdaptLayout style={ { position: 'absolute', top: 0, left: 0, bottom: 0, right: 0 } }>
-                 <HorizontalAdaptLayout.Item width={ 200 } height={ '100%' } scrollx={ false } style={ { borderRight: ' 1px solid #eff1f4' } }>
+                 <HorizontalAdaptLayout.Item width={ 200 } height={ '100%' } scrollx={ false } style={ { borderRight: ' 1px solid #eff1f4', backgroundColor: '#ffffff' } }>
                    <Tree handler={ this.handleTreeEvent } nodes={ state.demos }></Tree>
                  </HorizontalAdaptLayout.Item>
                  <HorizontalAdaptLayout.Item scrolly={ true } height={ '100%' }>
