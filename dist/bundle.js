@@ -14645,6 +14645,10 @@ BI.Element.prototype = {
         this.$$el.focus.apply(this.$$el, arguments);
         return this;
     },
+    blur: function () {
+        this.$$el.blur.apply(this.$$el, arguments);
+        return this;
+    },
     focusout: function () {
         this.$$el.focusout.apply(this.$$el, arguments);
         return this;
