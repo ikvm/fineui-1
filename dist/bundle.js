@@ -13071,7 +13071,7 @@ if (!window.BI) {
     window.BI = {};
 }
 ;
-!(function ($, undefined) {
+!(function (undefined) {
     var traverse = function (func, context) {
         return function (value, key, obj) {
             return func.call(context, key, value, obj);
@@ -14217,7 +14217,7 @@ if (!window.BI) {
             });
         }
     });
-})(jQuery);/**
+})();/**
  * 客户端观察者，主要处理事件的添加、删除、执行等
  * @class BI.OB
  * @abstract
@@ -14227,11 +14227,11 @@ BI.OB = function (config) {
     if (BI.isFunction(this.props)) {
         props = this.props(config);
     }
-    this.options = $.extend(this._defaultConfig(config), props, config);
+    this.options = _.extend(this._defaultConfig(config), props, config);
     this._init();
     this._initRef();
 };
-$.extend(BI.OB.prototype, {
+_.extend(BI.OB.prototype, {
     props: {},
     init: null,
     destroyed: null,
@@ -14626,6 +14626,11 @@ BI.Element.prototype = {
         return this;
     },
 
+    mousewheel: function () {
+        this.$$el.mousewheel.apply(this.$$el, arguments);
+        return this;
+    },
+
     keydown: function () {
         this.$$el.keydown.apply(this.$$el, arguments);
         return this;
@@ -14693,7 +14698,10 @@ BI.Element.createDocumentFragment = function () {
 
 BI.Element.registerModule = function (module) {
     BI.Element.module = module;
-};/**
+};
+
+
+BI.Element.Event = jQuery.Event;/**
  * Widget超类
  * @class BI.Widget
  * @extends BI.OB
@@ -18005,9 +18013,9 @@ BI.IntegerBufferSet.prototype = {
     }
 })();window.BI = window.BI || {};
 
-$.extend(BI, {
+_.extend(BI, {
     $defaultImport: function (options) {
-        var config = $.extend({
+        var config = _.extend({
             op: 'resource',
             path: null,
             type: null,
@@ -23436,7 +23444,7 @@ BI.ShowListener = BI.inherit(BI.OB, {
     _init: function () {
         BI.ShowListener.superclass._init.apply(this, arguments);
         var self = this, o = this.options;
-        o.eventObj.on(BI.Controller.EVENT_CHANGE, function (type, v, ob) {
+        o.eventObj && o.eventObj.on(BI.Controller.EVENT_CHANGE, function (type, v, ob) {
             if (type === BI.Events.CLICK) {
                 v = v || o.eventObj.getValue();
                 v = BI.isArray(v) ? (v.length > 1 ? v.toString() : v[0]) : v;
@@ -23856,7 +23864,7 @@ BI.HorizontalFillLayoutLogic = BI.inherit(BI.Logic, {
  * 对数组对象的扩展
  * @class Array
  */
-$.extend(Array.prototype, {
+_.extend(Array.prototype, {
     contains: function (o) {
         return this.indexOf(o) > -1;
     },
@@ -24501,7 +24509,7 @@ Date.parseDateTime = function (str, fmt) {
 /*
  * 给jQuery.Event对象添加的工具方法
  */
-$.extend($.Event.prototype, {
+_.extend(BI.Element.Event.prototype, {
     // event.stopEvent
     stopEvent: function () {
         this.stopPropagation();
@@ -24799,7 +24807,7 @@ Number.prototype.div = function (arg) {
  * 对字符串对象的扩展
  * @class String
  */
-$.extend(String.prototype, {
+_.extend(String.prototype, {
 
     /**
      * 判断字符串是否已指定的字符串开始
@@ -24916,7 +24924,7 @@ $.extend(String.prototype, {
  * 对字符串对象的扩展
  * @class String
  */
-$.extend(String, {
+_.extend(String, {
 
     /**
      * 对字符串中的'和\做编码处理
@@ -43301,7 +43309,7 @@ BI.FormulaCollections = ["abs","ABS","acos","ACOS","acosh","ACOSH","add2array","
  */
 BI.FormulaEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.FormulaEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.FormulaEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-formula-editor bi-card',
             watermark: '',
             value: '',
@@ -43533,7 +43541,7 @@ BI.shortcut("bi.formula_editor", BI.FormulaEditor);
  * 弹出提示消息框，用于模拟阻塞操作（通过回调函数实现）
  * @class BI.Msg
  */
-$.extend(BI, {
+_.extend(BI, {
     Msg: function () {
 
         var messageShow, $mask, $pop;
@@ -45334,150 +45342,147 @@ BI.ImageButton = BI.inherit(BI.BasicButton, {
     }
 });
 BI.ImageButton.EVENT_CHANGE = "ImageButton.EVENT_CHANGE";
-BI.shortcut("bi.image_button", BI.ImageButton);(function ($) {
+BI.shortcut("bi.image_button", BI.ImageButton);/**
+ * 文字类型的按钮
+ * @class BI.Button
+ * @extends BI.BasicButton
+ *
+ * @cfg {JSON} options 配置属性
+ * @cfg {'common'/'success'/'warning'/'ignore'} [options.level='common'] 按钮类型，用不同颜色强调不同的场景
+ */
+BI.Button = BI.inherit(BI.BasicButton, {
 
-    /**
-     * 文字类型的按钮
-     * @class BI.Button
-     * @extends BI.BasicButton
-     *
-     * @cfg {JSON} options 配置属性
-     * @cfg {'common'/'success'/'warning'/'ignore'} [options.level='common'] 按钮类型，用不同颜色强调不同的场景
-     */
-    BI.Button = BI.inherit(BI.BasicButton, {
+    _defaultConfig: function (props) {
+        var conf = BI.Button.superclass._defaultConfig.apply(this, arguments);
+        return BI.extend(conf, {
+            baseCls: (conf.baseCls || "") + ' bi-button',
+            minWidth: (props.block === true || props.clear === true) ? 0 : 90,
+            shadow: props.clear !== true,
+            isShadowShowingOnSelected: true,
+            readonly: true,
+            iconClass: "",
+            level: 'common',
+            block: false, //是否块状显示，即不显示边框，没有最小宽度的限制
+            clear: false, //是否去掉边框和背景
+            textAlign: "center",
+            whiteSpace: "nowrap",
+            forceCenter: false,
+            textWidth: null,
+            textHeight: null,
+            hgap: props.clear ? 0 : 10,
+            vgap: 0,
+            tgap: 0,
+            bgap: 0,
+            lgap: 0,
+            rgap: 0
+        })
+    },
 
-        _defaultConfig: function (props) {
-            var conf = BI.Button.superclass._defaultConfig.apply(this, arguments);
-            return BI.extend(conf, {
-                baseCls: (conf.baseCls || "") + ' bi-button',
-                minWidth: (props.block === true || props.clear === true) ? 0 : 90,
-                shadow: props.clear !== true,
-                isShadowShowingOnSelected: true,
-                readonly: true,
-                iconClass: "",
-                level: 'common',
-                block: false, //是否块状显示，即不显示边框，没有最小宽度的限制
-                clear: false, //是否去掉边框和背景
-                textAlign: "center",
-                whiteSpace: "nowrap",
-                forceCenter: false,
-                textWidth: null,
-                textHeight: null,
-                hgap: props.clear ? 0 : 10,
-                vgap: 0,
-                tgap: 0,
-                bgap: 0,
-                lgap: 0,
-                rgap: 0
-            })
-        },
-
-        _init: function () {
-            BI.Button.superclass._init.apply(this, arguments);
-            var o = this.options, self = this;
-            if (BI.isNumber(o.height) && !o.clear && !o.block) {
-                this.element.css({height: o.height + "px", lineHeight: o.height + "px"});
-            } else {
-                this.element.css({lineHeight: o.height + "px"});
-            }
-            if (BI.isKey(o.iconClass)) {
-                this.icon = BI.createWidget({
-                    type: "bi.icon",
-                    width: 18
-                });
-                this.text = BI.createWidget({
-                    type: "bi.label",
-                    text: o.text,
-                    value: o.value
-                });
-                BI.createWidget({
-                    type: "bi.horizontal_auto",
-                    cls: "button-" + o.level + " " + o.iconClass,
-                    element: this,
-                    hgap: o.hgap,
-                    vgap: o.vgap,
-                    tgap: o.tgap,
-                    bgap: o.bgap,
-                    lgap: o.lgap,
-                    rgap: o.rgap,
-                    items: [{
-                        type: "bi.horizontal",
-                        items: [this.icon, this.text]
-                    }]
-                })
-            } else {
-                this.text = BI.createWidget({
-                    type: "bi.label",
-                    cls: "button-" + o.level,
-                    textAlign: o.textAlign,
-                    whiteSpace: o.whiteSpace,
-                    forceCenter: o.forceCenter,
-                    textWidth: o.textWidth,
-                    textHeight: o.textHeight,
-                    hgap: o.hgap,
-                    vgap: o.vgap,
-                    tgap: o.tgap,
-                    bgap: o.bgap,
-                    lgap: o.lgap,
-                    rgap: o.rgap,
-                    element: this,
-                    text: o.text,
-                    value: o.value
-                });
-            }
-            if (o.block === true) {
-                this.element.addClass("block");
-            }
-            if (o.clear === true) {
-                this.element.addClass("clear");
-            }
-            if (o.minWidth > 0) {
-                this.element.css({"min-width": o.minWidth + "px"});
-            }
-        },
-
-        doClick: function () {
-            BI.Button.superclass.doClick.apply(this, arguments);
-            if (this.isValid()) {
-                this.fireEvent(BI.Button.EVENT_CHANGE, this);
-            }
-        },
-
-        setText: function (text) {
-            BI.Button.superclass.setText.apply(this, arguments);
-            this.text.setText(text);
-        },
-
-        setValue: function (text) {
-            BI.Button.superclass.setValue.apply(this, arguments);
-            if (!this.isReadOnly()) {
-                this.text.setValue(text);
-            }
-        },
-
-        doRedMark: function () {
-            this.text.doRedMark.apply(this.text, arguments);
-        },
-
-        unRedMark: function () {
-            this.text.unRedMark.apply(this.text, arguments);
-        },
-
-        doHighLight: function () {
-            this.text.doHighLight.apply(this.text, arguments);
-        },
-
-        unHighLight: function () {
-            this.text.unHighLight.apply(this.text, arguments);
-        },
-
-        destroy: function () {
-            BI.Button.superclass.destroy.apply(this, arguments);
+    _init: function () {
+        BI.Button.superclass._init.apply(this, arguments);
+        var o = this.options, self = this;
+        if (BI.isNumber(o.height) && !o.clear && !o.block) {
+            this.element.css({height: o.height + "px", lineHeight: o.height + "px"});
+        } else {
+            this.element.css({lineHeight: o.height + "px"});
         }
-    });
-    BI.shortcut('bi.button', BI.Button);
-    BI.Button.EVENT_CHANGE = "EVENT_CHANGE";
-})(jQuery);/**
+        if (BI.isKey(o.iconClass)) {
+            this.icon = BI.createWidget({
+                type: "bi.icon",
+                width: 18
+            });
+            this.text = BI.createWidget({
+                type: "bi.label",
+                text: o.text,
+                value: o.value
+            });
+            BI.createWidget({
+                type: "bi.horizontal_auto",
+                cls: "button-" + o.level + " " + o.iconClass,
+                element: this,
+                hgap: o.hgap,
+                vgap: o.vgap,
+                tgap: o.tgap,
+                bgap: o.bgap,
+                lgap: o.lgap,
+                rgap: o.rgap,
+                items: [{
+                    type: "bi.horizontal",
+                    items: [this.icon, this.text]
+                }]
+            })
+        } else {
+            this.text = BI.createWidget({
+                type: "bi.label",
+                cls: "button-" + o.level,
+                textAlign: o.textAlign,
+                whiteSpace: o.whiteSpace,
+                forceCenter: o.forceCenter,
+                textWidth: o.textWidth,
+                textHeight: o.textHeight,
+                hgap: o.hgap,
+                vgap: o.vgap,
+                tgap: o.tgap,
+                bgap: o.bgap,
+                lgap: o.lgap,
+                rgap: o.rgap,
+                element: this,
+                text: o.text,
+                value: o.value
+            });
+        }
+        if (o.block === true) {
+            this.element.addClass("block");
+        }
+        if (o.clear === true) {
+            this.element.addClass("clear");
+        }
+        if (o.minWidth > 0) {
+            this.element.css({"min-width": o.minWidth + "px"});
+        }
+    },
+
+    doClick: function () {
+        BI.Button.superclass.doClick.apply(this, arguments);
+        if (this.isValid()) {
+            this.fireEvent(BI.Button.EVENT_CHANGE, this);
+        }
+    },
+
+    setText: function (text) {
+        BI.Button.superclass.setText.apply(this, arguments);
+        this.text.setText(text);
+    },
+
+    setValue: function (text) {
+        BI.Button.superclass.setValue.apply(this, arguments);
+        if (!this.isReadOnly()) {
+            this.text.setValue(text);
+        }
+    },
+
+    doRedMark: function () {
+        this.text.doRedMark.apply(this.text, arguments);
+    },
+
+    unRedMark: function () {
+        this.text.unRedMark.apply(this.text, arguments);
+    },
+
+    doHighLight: function () {
+        this.text.doHighLight.apply(this.text, arguments);
+    },
+
+    unHighLight: function () {
+        this.text.unHighLight.apply(this.text, arguments);
+    },
+
+    destroy: function () {
+        BI.Button.superclass.destroy.apply(this, arguments);
+    }
+});
+BI.shortcut('bi.button', BI.Button);
+BI.Button.EVENT_CHANGE = "EVENT_CHANGE";/**
  * guy
  * 可以点击的一行文字
  * @class BI.TextButton
@@ -46757,7 +46762,7 @@ BI.shortcut("bi.text_node", BI.TextNode);/**
  */
 BI.CodeEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.CodeEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.CodeEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-code-editor bi-card',
             value: '',
             watermark: "",
@@ -47355,7 +47360,7 @@ BI.shortcut("bi.multifile_editor", BI.MultifileEditor);/**
  */
 BI.TextAreaEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.TextAreaEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.TextAreaEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-textarea-editor bi-card',
             value: ''
         });

@@ -1,8 +1,8 @@
 window.BI = window.BI || {};
 
-$.extend(BI, {
+_.extend(BI, {
     $defaultImport: function (options) {
-        var config = $.extend({
+        var config = _.extend({
             op: 'resource',
             path: null,
             type: null,

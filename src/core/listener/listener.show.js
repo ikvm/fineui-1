@@ -22,7 +22,7 @@ BI.ShowListener = BI.inherit(BI.OB, {
     _init: function () {
         BI.ShowListener.superclass._init.apply(this, arguments);
         var self = this, o = this.options;
-        o.eventObj.on(BI.Controller.EVENT_CHANGE, function (type, v, ob) {
+        o.eventObj && o.eventObj.on(BI.Controller.EVENT_CHANGE, function (type, v, ob) {
             if (type === BI.Events.CLICK) {
                 v = v || o.eventObj.getValue();
                 v = BI.isArray(v) ? (v.length > 1 ? v.toString() : v[0]) : v;

@@ -264,6 +264,11 @@ BI.Element.prototype = {
         return this;
     },
 
+    mousewheel: function () {
+        this.$$el.mousewheel.apply(this.$$el, arguments);
+        return this;
+    },
+
     keydown: function () {
         this.$$el.keydown.apply(this.$$el, arguments);
         return this;
@@ -332,3 +337,6 @@ BI.Element.createDocumentFragment = function () {
 BI.Element.registerModule = function (module) {
     BI.Element.module = module;
 };
+
+
+BI.Element.Event = jQuery.Event;

@@ -13042,7 +13042,7 @@ if (!window.BI) {
     window.BI = {};
 }
 ;
-!(function ($, undefined) {
+!(function (undefined) {
     var traverse = function (func, context) {
         return function (value, key, obj) {
             return func.call(context, key, value, obj);
@@ -14188,7 +14188,7 @@ if (!window.BI) {
             });
         }
     });
-})(jQuery);/**
+})();/**
  * 客户端观察者，主要处理事件的添加、删除、执行等
  * @class BI.OB
  * @abstract
@@ -14198,11 +14198,11 @@ BI.OB = function (config) {
     if (BI.isFunction(this.props)) {
         props = this.props(config);
     }
-    this.options = $.extend(this._defaultConfig(config), props, config);
+    this.options = _.extend(this._defaultConfig(config), props, config);
     this._init();
     this._initRef();
 };
-$.extend(BI.OB.prototype, {
+_.extend(BI.OB.prototype, {
     props: {},
     init: null,
     destroyed: null,
@@ -14597,6 +14597,11 @@ BI.Element.prototype = {
         return this;
     },
 
+    mousewheel: function () {
+        this.$$el.mousewheel.apply(this.$$el, arguments);
+        return this;
+    },
+
     keydown: function () {
         this.$$el.keydown.apply(this.$$el, arguments);
         return this;
@@ -14664,7 +14669,10 @@ BI.Element.createDocumentFragment = function () {
 
 BI.Element.registerModule = function (module) {
     BI.Element.module = module;
-};/**
+};
+
+
+BI.Element.Event = jQuery.Event;/**
  * Widget超类
  * @class BI.Widget
  * @extends BI.OB
@@ -17976,9 +17984,9 @@ BI.IntegerBufferSet.prototype = {
     }
 })();window.BI = window.BI || {};
 
-$.extend(BI, {
+_.extend(BI, {
     $defaultImport: function (options) {
-        var config = $.extend({
+        var config = _.extend({
             op: 'resource',
             path: null,
             type: null,
@@ -23407,7 +23415,7 @@ BI.ShowListener = BI.inherit(BI.OB, {
     _init: function () {
         BI.ShowListener.superclass._init.apply(this, arguments);
         var self = this, o = this.options;
-        o.eventObj.on(BI.Controller.EVENT_CHANGE, function (type, v, ob) {
+        o.eventObj && o.eventObj.on(BI.Controller.EVENT_CHANGE, function (type, v, ob) {
             if (type === BI.Events.CLICK) {
                 v = v || o.eventObj.getValue();
                 v = BI.isArray(v) ? (v.length > 1 ? v.toString() : v[0]) : v;
@@ -23827,7 +23835,7 @@ BI.HorizontalFillLayoutLogic = BI.inherit(BI.Logic, {
  * 对数组对象的扩展
  * @class Array
  */
-$.extend(Array.prototype, {
+_.extend(Array.prototype, {
     contains: function (o) {
         return this.indexOf(o) > -1;
     },
@@ -24472,7 +24480,7 @@ Date.parseDateTime = function (str, fmt) {
 /*
  * 给jQuery.Event对象添加的工具方法
  */
-$.extend($.Event.prototype, {
+_.extend(BI.Element.Event.prototype, {
     // event.stopEvent
     stopEvent: function () {
         this.stopPropagation();
@@ -24770,7 +24778,7 @@ Number.prototype.div = function (arg) {
  * 对字符串对象的扩展
  * @class String
  */
-$.extend(String.prototype, {
+_.extend(String.prototype, {
 
     /**
      * 判断字符串是否已指定的字符串开始
@@ -24887,7 +24895,7 @@ $.extend(String.prototype, {
  * 对字符串对象的扩展
  * @class String
  */
-$.extend(String, {
+_.extend(String, {
 
     /**
      * 对字符串中的'和\做编码处理

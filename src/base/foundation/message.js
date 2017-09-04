@@ -3,7 +3,7 @@
  * 弹出提示消息框，用于模拟阻塞操作（通过回调函数实现）
  * @class BI.Msg
  */
-$.extend(BI, {
+_.extend(BI, {
     Msg: function () {
 
         var messageShow, $mask, $pop;
