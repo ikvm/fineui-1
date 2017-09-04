@@ -183,7 +183,7 @@ BI.TreeView = BI.inherit(BI.Pane, {
                 track(treeNode.children);
                 var treeObj = self.nodes;
                 var nodes = treeObj.getSelectedNodes();
-                $.each(nodes, function (index, node) {
+                BI.each(nodes, function (index, node) {
                     node.halfCheck = false;
                 })
             }
@@ -310,7 +310,7 @@ BI.TreeView = BI.inherit(BI.Pane, {
             n.title = n.title || n.text || n.value;
             //处理标红
             if (BI.isKey(o.paras.keyword)) {
-                n.text = $("<div>").__textKeywordMarked__(n.text, o.paras.keyword, n.py).html();
+                n.text = BI.Element("<div>").__textKeywordMarked__(n.text, o.paras.keyword, n.py).html();
             } else {
                 n.text = (n.text + "").replaceAll(" ", "　");
             }

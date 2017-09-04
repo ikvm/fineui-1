@@ -13,17 +13,23 @@ BI.ResizeController = BI.inherit(BI.Controller, {
         BI.ResizeController.superclass._init.apply(this, arguments);
         var self = this;
         this.resizerManger = {};
-        var fn = BI.debounce(function (ev) {
-            //if (BI.isWindow(ev.target)) {
-            self._resize(ev);
-            //}
-        }, 30);
-        $(window).resize(fn);
+    },
+
+    _addEventListener: function () {
+        if (!this.addedEvent) {
+            var fn = BI.debounce(function (ev) {
+                //if (BI.isWindow(ev.target)) {
+                self._resize(ev);
+                //}
+            }, 30);
+            BI.Element(window).resize(fn);
+            this.addedEvent = true;
+        }
     },
 
     _resize: function (ev) {
         BI.each(this.resizerManger, function (key, resizer) {
-            if (resizer instanceof $) {
+            if (resizer instanceof BI.Element) {
                 if (resizer.is(":visible")) {
                     resizer.trigger("__resize__");
                 }
@@ -45,6 +51,7 @@ BI.ResizeController = BI.inherit(BI.Controller, {
         if (this.has(name)) {
             return this;
         }
+        this._addEventListener();
         this.resizerManger[name] = resizer;
         return function () {
             self.remove(name);

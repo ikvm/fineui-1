@@ -121,7 +121,7 @@ BI.View = BI.inherit(BI.V, {
             });
 
             var list = [];
-            if (this[keys[0]] && (this[keys[0]] instanceof $ || this[keys[0]].element instanceof $)) {
+            if (this[keys[0]] && (this[keys[0]] instanceof BI.Element || this[keys[0]].element instanceof BI.Element)) {
                 list = [this[keys[0]]]
                 delete events[key];
             } else if (BI.isArray(this[keys[0]]) || BI.isPlainObject(this[keys[0]])) {

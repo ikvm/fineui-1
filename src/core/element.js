@@ -7,12 +7,15 @@ BI.Element = function (tag) {
     this.length = this.$$el.length;
 };
 BI.Element.prototype = {
+    clone: function () {
+        return BI.Element(this.$$el.clone());
+    },
     append: function (cls) {
         this.$$el.append.apply(this.$$el, arguments);
         return this;
     },
     appendTo: function (ele) {
-        this.$$el.appendTo(ele.$$el);
+        this.$$el.appendTo(ele.$$el || ele);
         return this;
     },
 
@@ -22,7 +25,7 @@ BI.Element.prototype = {
     },
 
     prependTo: function (ele) {
-        this.$$el.prependTo(ele.$$el);
+        this.$$el.prependTo(ele.$$el || ele);
         return this;
     },
 
@@ -46,6 +49,9 @@ BI.Element.prototype = {
     },
 
     //属性
+    hasClass: function (cls) {
+        return this.$$el.addClass.apply(this.$$el, arguments);
+    },
     addClass: function (cls) {
         this.$$el.addClass.apply(this.$$el, arguments);
         return this;
@@ -91,6 +97,13 @@ BI.Element.prototype = {
     },
     val: function () {
         var res = this.$$el.val.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    html: function () {
+        var res = this.$$el.html.apply(this.$$el, arguments);
         if (res !== this.$$el) {
             return res;
         }
@@ -328,7 +341,31 @@ BI.Element.prototype = {
         this.$$el.hide.apply(this.$$el, arguments);
         return this;
     },
+
+    resize: function () {
+        this.$$el.resize.apply(this.$$el, arguments);
+        return this;
+    },
 };
+
+BI.extend(BI.Element.prototype, {
+    draggable: function () {
+        this.$$el.draggable.apply(this.$$el, arguments);
+        return this;
+    },
+    droppable: function () {
+        this.$$el.droppable.apply(this.$$el, arguments);
+        return this;
+    },
+    resizable: function () {
+        this.$$el.resizable.apply(this.$$el, arguments);
+        return this;
+    },
+    sortable: function () {
+        this.$$el.sortable.apply(this.$$el, arguments);
+        return this;
+    }
+});
 
 BI.Element.createElement = function (tagName) {
     return document.createElement(tagName);

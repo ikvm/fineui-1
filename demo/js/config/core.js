@@ -55,10 +55,6 @@ Demo.CORE_CONFIG = [{
     value: "demo.flow"
 }, {
     pId: 101,
-    text: "bi.inline",
-    value: "demo.inline"
-}, {
-    pId: 101,
     text: "bi.htape",
     value: "demo.htape"
 }, {

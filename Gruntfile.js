@@ -132,6 +132,7 @@ module.exports = function (grunt) {
                     'src/core/events.js',
                     'src/core/var.js',
                     'src/core/ob.js',
+                    'src/core/element.js',
                     'src/core/widget.js',
                     'src/core/model.js',
                     'src/core/view.js',

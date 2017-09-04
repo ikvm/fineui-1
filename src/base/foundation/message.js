@@ -48,7 +48,7 @@ _.extend(BI, {
                 })
             },
             _show: function (hasCancel, title, message, callback) {
-                $mask = $('<div class="bi-z-index-mask">').css({
+                $mask = BI.Element('<div class="bi-z-index-mask">').css({
                     position: 'absolute',
                     'zIndex': BI.zIndex_tip - 2,
                     top: 0,
@@ -57,7 +57,7 @@ _.extend(BI, {
                     bottom: 0,
                     opacity: 0.5
                 }).appendTo('body');
-                $pop = $('<div class="bi-message-depend">').css({
+                $pop = BI.Element('<div class="bi-message-depend">').css({
                     position: 'absolute',
                     'zIndex': BI.zIndex_tip - 1,
                     top: 0,

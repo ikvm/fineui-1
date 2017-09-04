@@ -12323,10 +12323,7 @@ BI.Factory = {
         // attached to it. Exposed for subclasses using an alternative DOM
         // manipulation API.
         _removeElement: function () {
-            this.$el.remove();
-            if ($.browser.msie === true) {
-                this.el.outerHTML = '';
-            }
+            this.$el.destroy();
         },
 
         // Change the view's element (`this.el` property) and re-delegate the
@@ -12367,7 +12364,7 @@ BI.Factory = {
         // alternative DOM manipulation API and are only required to set the
         // `this.el` property.
         _setElement: function (el) {
-            this.$el = el instanceof BI.$ ? el : BI.$(el);
+            this.$el = el instanceof BI.Element ? el : BI.Element(el);
             this.element = this.$el;
             this.el = this.$el[0];
         },
@@ -14198,7 +14195,7 @@ BI.OB = function (config) {
     if (BI.isFunction(this.props)) {
         props = this.props(config);
     }
-    this.options = _.extend(this._defaultConfig(config), props, config);
+    this.options = $.extend(this._defaultConfig(config), props, config);
     this._init();
     this._initRef();
 };
@@ -14340,12 +14337,15 @@ _.extend(BI.OB.prototype, {
     this.length = this.$$el.length;
 };
 BI.Element.prototype = {
+    clone: function () {
+        return BI.Element(this.$$el.clone());
+    },
     append: function (cls) {
         this.$$el.append.apply(this.$$el, arguments);
         return this;
     },
     appendTo: function (ele) {
-        this.$$el.appendTo(ele.$$el);
+        this.$$el.appendTo(ele.$$el || ele);
         return this;
     },
 
@@ -14355,7 +14355,7 @@ BI.Element.prototype = {
     },
 
     prependTo: function (ele) {
-        this.$$el.prependTo(ele.$$el);
+        this.$$el.prependTo(ele.$$el || ele);
         return this;
     },
 
@@ -14379,6 +14379,9 @@ BI.Element.prototype = {
     },
 
     //属性
+    hasClass: function (cls) {
+        return this.$$el.addClass.apply(this.$$el, arguments);
+    },
     addClass: function (cls) {
         this.$$el.addClass.apply(this.$$el, arguments);
         return this;
@@ -14424,6 +14427,13 @@ BI.Element.prototype = {
     },
     val: function () {
         var res = this.$$el.val.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    html: function () {
+        var res = this.$$el.html.apply(this.$$el, arguments);
         if (res !== this.$$el) {
             return res;
         }
@@ -14661,7 +14671,31 @@ BI.Element.prototype = {
         this.$$el.hide.apply(this.$$el, arguments);
         return this;
     },
+
+    resize: function () {
+        this.$$el.resize.apply(this.$$el, arguments);
+        return this;
+    },
 };
+
+BI.extend(BI.Element.prototype, {
+    draggable: function () {
+        this.$$el.draggable.apply(this.$$el, arguments);
+        return this;
+    },
+    droppable: function () {
+        this.$$el.droppable.apply(this.$$el, arguments);
+        return this;
+    },
+    resizable: function () {
+        this.$$el.resizable.apply(this.$$el, arguments);
+        return this;
+    },
+    sortable: function () {
+        this.$$el.sortable.apply(this.$$el, arguments);
+        return this;
+    }
+});
 
 BI.Element.createElement = function (tagName) {
     return document.createElement(tagName);
@@ -15766,7 +15800,7 @@ BI.View = BI.inherit(BI.V, {
             });
 
             var list = [];
-            if (this[keys[0]] && (this[keys[0]] instanceof $ || this[keys[0]].element instanceof $)) {
+            if (this[keys[0]] && (this[keys[0]] instanceof BI.Element || this[keys[0]].element instanceof BI.Element)) {
                 list = [this[keys[0]]]
                 delete events[key];
             } else if (BI.isArray(this[keys[0]]) || BI.isPlainObject(this[keys[0]])) {
@@ -21228,25 +21262,25 @@ BI.BubblesController = BI.inherit(BI.Controller, {
     },
 
     _getLeftPosition: function (name, context, offsetStyle) {
-        var position = $.getLeftPosition(context, this.get(name));
+        var position = BI.Element.getLeftPosition(context, this.get(name));
         position.top = this._getOffsetTop(name, context, offsetStyle);
         return position;
     },
 
     _getBottomPosition: function (name, context, offsetStyle) {
-        var position = $.getBottomPosition(context, this.get(name));
+        var position = BI.Element.getBottomPosition(context, this.get(name));
         position.left = this._getOffsetLeft(name, context, offsetStyle);
         return position;
     },
 
     _getTopPosition: function (name, context, offsetStyle) {
-        var position = $.getTopPosition(context, this.get(name));
+        var position = BI.Element.getTopPosition(context, this.get(name));
         position.left = this._getOffsetLeft(name, context, offsetStyle);
         return position;
     },
 
     _getRightPosition: function (name, context, offsetStyle) {
-        var position = $.getRightPosition(context, this.get(name));
+        var position = BI.Element.getRightPosition(context, this.get(name));
         position.top = this._getOffsetTop(name, context, offsetStyle);
         return position;
     },
@@ -21280,7 +21314,7 @@ BI.BubblesController = BI.inherit(BI.Controller, {
         var position = this._getTopPosition(name, context, offsetStyle);
         this.get(name).element.css({left: position.left, top: position.top});
         this.get(name).invisible();
-        if (!$.isTopSpaceEnough(context, this.get(name))) {
+        if (!BI.Element.isTopSpaceEnough(context, this.get(name))) {
             if (!this.storeBubbles[name]["left"]) {
                 this.storeBubbles[name]["left"] = this._createBubble("left", text, 30);
             }
@@ -21295,7 +21329,7 @@ BI.BubblesController = BI.inherit(BI.Controller, {
             var position = this._getLeftPosition(name, context, offsetStyle);
             this.get(name).element.css({left: position.left, top: position.top});
             this.get(name).invisible();
-            if (!$.isLeftSpaceEnough(context, this.get(name))) {
+            if (!BI.Element.isLeftSpaceEnough(context, this.get(name))) {
                 if (!this.storeBubbles[name]["right"]) {
                     this.storeBubbles[name]["right"] = this._createBubble("right", text, 30);
                 }
@@ -21310,7 +21344,7 @@ BI.BubblesController = BI.inherit(BI.Controller, {
                 var position = this._getRightPosition(name, context, offsetStyle);
                 this.get(name).element.css({left: position.left, top: position.top});
                 this.get(name).invisible();
-                if (!$.isRightSpaceEnough(context, this.get(name))) {
+                if (!BI.Element.isRightSpaceEnough(context, this.get(name))) {
                     if (!this.storeBubbles[name]["bottom"]) {
                         this.storeBubbles[name]["bottom"] = this._createBubble("bottom", text);
                     }
@@ -21468,7 +21502,7 @@ BI.FloatBoxController = BI.inherit(BI.Controller, {
             this.floatContainer[name].visible();
             var floatbox = this.get(name);
             floatbox.show();
-            var W = $(this.options.render).width(), H = $(this.options.render).height();
+            var W = BI.Element(this.options.render).width(), H = BI.Element(this.options.render).height();
             var w = floatbox.element.width(), h = floatbox.element.height();
             var left = (W - w) / 2, top = (H - h) / 2;
             if (left < 0) {
@@ -21532,7 +21566,13 @@ BI.LayerController = BI.inherit(BI.Controller, {
         this.layerManager = {};
         this.layouts = {};
         this.zindex = BI.zIndex_layer;
-        BI.Resizers.add("layerController" + BI.uniqueId(), BI.bind(this._resize, this));
+    },
+
+    _addEventListener: function () {
+        if (!this.addedEvent) {
+            BI.Resizers.add("layerController" + BI.uniqueId(), BI.bind(this._resize, this));
+            this.addedEvent = true;
+        }
     },
 
     _resize: function () {
@@ -21578,7 +21618,7 @@ BI.LayerController = BI.inherit(BI.Controller, {
             w = from.element;
         }
         if (BI.isNotEmptyString(w)) {
-            w = $(w);
+            w = BI.Element(w);
         }
         if (this.has(name)) {
             return this.get(name);
@@ -21656,6 +21696,7 @@ BI.LayerController = BI.inherit(BI.Controller, {
         if (this.has(name)) {
             throw new Error("name is already exist");
         }
+        this._addEventListener();
         layout.setVisible(false);
         this.layerManager[name] = layer;
         this.layouts[name] = layout;
@@ -21715,17 +21756,23 @@ BI.ResizeController = BI.inherit(BI.Controller, {
         BI.ResizeController.superclass._init.apply(this, arguments);
         var self = this;
         this.resizerManger = {};
-        var fn = BI.debounce(function (ev) {
-            //if (BI.isWindow(ev.target)) {
-            self._resize(ev);
-            //}
-        }, 30);
-        $(window).resize(fn);
+    },
+
+    _addEventListener: function () {
+        if (!this.addedEvent) {
+            var fn = BI.debounce(function (ev) {
+                //if (BI.isWindow(ev.target)) {
+                self._resize(ev);
+                //}
+            }, 30);
+            BI.Element(window).resize(fn);
+            this.addedEvent = true;
+        }
     },
 
     _resize: function (ev) {
         BI.each(this.resizerManger, function (key, resizer) {
-            if (resizer instanceof $) {
+            if (resizer instanceof BI.Element) {
                 if (resizer.is(":visible")) {
                     resizer.trigger("__resize__");
                 }
@@ -21747,6 +21794,7 @@ BI.ResizeController = BI.inherit(BI.Controller, {
         if (this.has(name)) {
             return this;
         }
+        this._addEventListener();
         this.resizerManger[name] = resizer;
         return function () {
             self.remove(name);
@@ -22591,8 +22639,8 @@ BI.extend(BI.Element.prototype, {
     },
 
     getDomHeight: function (parent) {
-        var clone = $(this).clone();
-        clone.appendTo($(parent || "body"));
+        var clone = BI.Element(this).clone();
+        clone.appendTo(BI.Element(parent || "body"));
         var height = clone.height();
         clone.remove();
         return height;
@@ -23184,7 +23232,7 @@ BI.extend(BI.DOM, {
         var frag = BI.Element.createDocumentFragment();
         BI.each(doms, function (i, dom) {
             dom instanceof BI.Widget && (dom = dom.element);
-            dom instanceof $ && dom[0] && frag.appendChild(dom[0]);
+            dom instanceof BI.Element && dom[0] && frag.appendChild(dom[0]);
         });
         return frag;
     },
@@ -24840,7 +24888,7 @@ _.extend(String.prototype, {
         } else {
             src += "&";
         }
-        $.each(paras, function (name, value) {
+        _.each(paras, function (name, value) {
             if (typeof(name) === 'string') {
                 src += name + "=" + value + "&";
             }
@@ -25488,7 +25536,7 @@ BI.CenterAdaptLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.CenterAdaptLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "width": "100%",
             "height": "100%",
@@ -25497,7 +25545,7 @@ BI.CenterAdaptLayout = BI.inherit(BI.Layout, {
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -25607,7 +25655,7 @@ BI.HorizontalAdaptLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.HorizontalAdaptLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "width": "100%",
             "white-space": "nowrap",
@@ -25615,7 +25663,7 @@ BI.HorizontalAdaptLayout = BI.inherit(BI.Layout, {
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -25893,7 +25941,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.VerticalAdaptLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "height": "100%",
             "white-space": "nowrap",
@@ -25901,7 +25949,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -26370,7 +26418,7 @@ BI.FlexCenterLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.FlexCenterLayout.superclass.render.apply(this, arguments);
-        this.$wrapper = $("<div>").addClass("flex-wrapper-center-layout-wrapper");
+        this.$wrapper = BI.Element("<div>").addClass("flex-wrapper-center-layout-wrapper");
         this.populate(this.options.items);
     },
 
@@ -26435,7 +26483,7 @@ BI.FlexHorizontalLayout = BI.inherit(BI.Layout, {
     render: function () {
         BI.FlexHorizontalLayout.superclass.render.apply(this, arguments);
         var o = this.options;
-        this.$wrapper = $("<div>").addClass("flex-wrapper-horizontal-layout-wrapper " + o.verticalAlign);
+        this.$wrapper = BI.Element("<div>").addClass("flex-wrapper-horizontal-layout-wrapper " + o.verticalAlign);
         this.populate(this.options.items);
     },
 
@@ -26518,7 +26566,7 @@ BI.FlexVerticalCenter = BI.inherit(BI.Layout, {
     render: function () {
         BI.FlexVerticalCenter.superclass.render.apply(this, arguments);
         var o = this.options;
-        this.$wrapper = $("<div>").addClass("flex-wrapper-vertical-center-wrapper");
+        this.$wrapper = BI.Element("<div>").addClass("flex-wrapper-vertical-center-wrapper");
         this.populate(this.options.items);
     },
 
@@ -27603,14 +27651,14 @@ BI.HorizontalLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.HorizontalLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "white-space": "nowrap",
             "border-spacing": "0px",
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -28194,7 +28242,7 @@ BI.TdLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.TdLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "width": "100%",
             "height": "100%",

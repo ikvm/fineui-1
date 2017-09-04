@@ -71,7 +71,7 @@ BI.extend(BI.DOM, {
         var frag = BI.Element.createDocumentFragment();
         BI.each(doms, function (i, dom) {
             dom instanceof BI.Widget && (dom = dom.element);
-            dom instanceof $ && dom[0] && frag.appendChild(dom[0]);
+            dom instanceof BI.Element && dom[0] && frag.appendChild(dom[0]);
         });
         return frag;
     },

@@ -67,8 +67,8 @@ BI.extend(BI.Element.prototype, {
     },
 
     getDomHeight: function (parent) {
-        var clone = $(this).clone();
-        clone.appendTo($(parent || "body"));
+        var clone = BI.Element(this).clone();
+        clone.appendTo(BI.Element(parent || "body"));
         var height = clone.height();
         clone.remove();
         return height;

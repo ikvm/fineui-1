@@ -60,7 +60,7 @@ _.extend(String.prototype, {
         } else {
             src += "&";
         }
-        $.each(paras, function (name, value) {
+        _.each(paras, function (name, value) {
             if (typeof(name) === 'string') {
                 src += name + "=" + value + "&";
             }

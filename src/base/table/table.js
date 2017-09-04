@@ -389,7 +389,7 @@ BI.Table = BI.inherit(BI.Widget, {
         rowSize || (rowSize = o.rowSize);
         var frag = BI.Element.createDocumentFragment();
         BI.each(items, function (i, rows) {
-            var tr = $("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
+            var tr = BI.Element("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
             BI.each(rows, function (j, row) {
                 if (!map[i]) {
                     map[i] = {};
@@ -482,7 +482,7 @@ BI.Table = BI.inherit(BI.Widget, {
                     width--;
                 }
                 var height = self._calculateHeight(rowSize);
-                var td = $("<td>").attr("height", height)
+                var td = BI.Element("<td>").attr("height", height)
                     .attr("width", width).css({"width": width, "height": height, "position": "relative"})
                     .addClass((c & 1) === 0 ? "odd-col" : "even-col")
                     .addClass(r === 0 ? "first-row" : "")
@@ -523,7 +523,7 @@ BI.Table = BI.inherit(BI.Widget, {
         var frag = BI.Element.createDocumentFragment();
         BI.each(columnSize, function (i, size) {
             var width = self._calculateWidth(size);
-            var col = $("<col>").attr("width", width).css("width", width);
+            var col = BI.Element("<col>").attr("width", width).css("width", width);
             store[i] = col;
             frag.appendChild(col[0]);
         });

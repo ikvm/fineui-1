@@ -1691,7 +1691,7 @@ BI.TreeView = BI.inherit(BI.Pane, {
                 track(treeNode.children);
                 var treeObj = self.nodes;
                 var nodes = treeObj.getSelectedNodes();
-                $.each(nodes, function (index, node) {
+                BI.each(nodes, function (index, node) {
                     node.halfCheck = false;
                 })
             }
@@ -1818,7 +1818,7 @@ BI.TreeView = BI.inherit(BI.Pane, {
             n.title = n.title || n.text || n.value;
             //处理标红
             if (BI.isKey(o.paras.keyword)) {
-                n.text = $("<div>").__textKeywordMarked__(n.text, o.paras.keyword, n.py).html();
+                n.text = BI.Element("<div>").__textKeywordMarked__(n.text, o.paras.keyword, n.py).html();
             } else {
                 n.text = (n.text + "").replaceAll(" ", "　");
             }
@@ -2417,8 +2417,8 @@ BI.Canvas = BI.inherit(BI.Widget, {
         this.element.append(canvas);
         canvas.width = o.width;
         canvas.height = o.height;
-        $(canvas).width("100%");
-        $(canvas).height("100%");
+        BI.Element(canvas).width("100%");
+        BI.Element(canvas).height("100%");
         this.canvas = canvas;
         this._queue = [];
     },
@@ -14550,7 +14550,7 @@ _.extend(BI, {
                 })
             },
             _show: function (hasCancel, title, message, callback) {
-                $mask = $('<div class="bi-z-index-mask">').css({
+                $mask = BI.Element('<div class="bi-z-index-mask">').css({
                     position: 'absolute',
                     'zIndex': BI.zIndex_tip - 2,
                     top: 0,
@@ -14559,7 +14559,7 @@ _.extend(BI, {
                     bottom: 0,
                     opacity: 0.5
                 }).appendTo('body');
-                $pop = $('<div class="bi-message-depend">').css({
+                $pop = BI.Element('<div class="bi-message-depend">').css({
                     position: 'absolute',
                     'zIndex': BI.zIndex_tip - 1,
                     top: 0,
@@ -18517,7 +18517,7 @@ BI.Iframe = BI.inherit(BI.Single, {
 
     _init: function () {
         var o = this.options;
-        this.options.element = $("<iframe frameborder='0' src='" + o.src + "'>");
+        this.options.element = BI.Element("<iframe frameborder='0' src='" + o.src + "'>");
         BI.Iframe.superclass._init.apply(this, arguments);
     },
 
@@ -31340,7 +31340,7 @@ BI.Table = BI.inherit(BI.Widget, {
         rowSize || (rowSize = o.rowSize);
         var frag = BI.Element.createDocumentFragment();
         BI.each(items, function (i, rows) {
-            var tr = $("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
+            var tr = BI.Element("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
             BI.each(rows, function (j, row) {
                 if (!map[i]) {
                     map[i] = {};
@@ -31433,7 +31433,7 @@ BI.Table = BI.inherit(BI.Widget, {
                     width--;
                 }
                 var height = self._calculateHeight(rowSize);
-                var td = $("<td>").attr("height", height)
+                var td = BI.Element("<td>").attr("height", height)
                     .attr("width", width).css({"width": width, "height": height, "position": "relative"})
                     .addClass((c & 1) === 0 ? "odd-col" : "even-col")
                     .addClass(r === 0 ? "first-row" : "")
@@ -31474,7 +31474,7 @@ BI.Table = BI.inherit(BI.Widget, {
         var frag = BI.Element.createDocumentFragment();
         BI.each(columnSize, function (i, size) {
             var width = self._calculateWidth(size);
-            var col = $("<col>").attr("width", width).css("width", width);
+            var col = BI.Element("<col>").attr("width", width).css("width", width);
             store[i] = col;
             frag.appendChild(col[0]);
         });
