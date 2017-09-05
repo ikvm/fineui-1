@@ -86,6 +86,7 @@ export default class Popup extends Component {
 		switch (direction) {
 			//bottom
 			case DIRECTION.BOTTOM_LEFT:
+				newPosition.y = targetPos.y + targetPos.height;
 				break;
 			case DIRECTION.BOTTOM:
 				newPosition.x = targetPos.x + (targetPos.width - wrapperPos.width) / 2;
@@ -190,6 +191,7 @@ export default class Popup extends Component {
 			tabs,
 			...props
 		} = this.props;
+
 		const toolbar =
 			buttons.length !== 0 ? (
 				<HorizontalLayout>
@@ -209,32 +211,31 @@ export default class Popup extends Component {
 					})}
 				</Layout>
 			) : null;
-		if (isVisiable) {
-			const child = React.Children.only(children);
 
-			const styleObj = {
-				...child.props.style,
-				position: "fixed",
-				zIndex: 9999999,
-				left: this.state.positionX,
-				top: this.state.positionY
-			};
-			return (
-				<VtapeLayout
-					ref={c => {
-						this.wrapper = c;
-					}}
-					className={cn(className, CLASS_NAME)}
-					style={styleObj}
-					{...props}
-				>
-					<VtapeLayout.Item height={30}>{tab}</VtapeLayout.Item>
-					<VtapeLayout.Item>{child}</VtapeLayout.Item>
-					<VtapeLayout.Item height={20}>{toolbar}</VtapeLayout.Item>
-				</VtapeLayout>
-			);
-		} else {
-			return null;
-		}
+		const child = React.Children.only(children);
+
+		const styleObj = {
+			...child.props.style,
+			position: "fixed",
+			zIndex: 9999999,
+			left: this.state.positionX,
+			top: this.state.positionY,
+			display: isVisiable ? "flex" : "none"
+		};
+
+		return (
+			<VtapeLayout
+				ref={c => {
+					this.wrapper = c;
+				}}
+				className={cn(className, CLASS_NAME)}
+				style={styleObj}
+				{...props}
+			>
+				{/* <VtapeLayout.Item height={30}>{tab}</VtapeLayout.Item> */}
+				<VtapeLayout.Item>{child}</VtapeLayout.Item>
+				{/* <VtapeLayout.Item height={20}>{toolbar}</VtapeLayout.Item> */}
+			</VtapeLayout>
+		);
 	}
 }

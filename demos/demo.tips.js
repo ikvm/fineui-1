@@ -25,7 +25,7 @@ export default class TipsDemo extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			showPopup: false,
+			showPopup: true,
 			direction: directions[0]
 		};
 	}
