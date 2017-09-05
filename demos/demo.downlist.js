@@ -65,7 +65,7 @@ class DownListDemo extends Component {
 				</CenterLayout>
 				<CenterLayout hgap={20}>
 					<Button ref={c => (this.button2 = c)} handler={this.handleClick2}>
-						由 Items 生成的 downlist
+						直接写标签生成的 downlist
 					</Button>
 					<DownList
 						show={this.state.show2}
