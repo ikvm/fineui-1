@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Layout } from '../../../core/layout'
+import React, {Component} from 'react';
+import {Layout} from '../../../core/layout'
 import cn from 'classnames'
 
 const CLASS_NAME = 'bi-icon'
@@ -17,18 +17,17 @@ class Icon extends Component {
     }
 
     render() {
-        const {iconCls, width, height, ...props} = this.props
+        const {iconCls, width, height, style, ...props} = this.props
 
         const styleObj = {
-            display: 'block',
-            width: width + 'px',
-            height: height + 'px'
+            width,
+            height,
+            ...style
         }
 
 
-        return <i className={ cn(CLASS_NAME, iconCls) } style={ styleObj }></i>
+        return <i className={ cn(CLASS_NAME, iconCls) } style={ styleObj } {...props}/>
     }
 }
-
 
 export default Icon

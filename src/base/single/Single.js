@@ -22,9 +22,9 @@ export default class Single extends Component {
         const {readonly, title, warningTitle, tipType, value, ...props} = this.props
 
         return (
-            <Widget {...props}>
+            <Layout {...props}>
               { this.props.children }
-            </Widget>
+            </Layout>
         )
     }
 }

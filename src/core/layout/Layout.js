@@ -9,7 +9,7 @@ class Layout extends Component {
 
     render() {
         const {children, scrollable, scrollx, scrolly, width, height, lgap, rgap, tgap, bgap, hgap, vgap, style, ...props} = this.props;
-        
+
         return <div {...props}
                     style={{
                         ...{
