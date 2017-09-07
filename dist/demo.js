@@ -28,7 +28,9 @@ BI.i18n = {
     "BI-Quarter_4": "第4季度",
     "BI-Basic_Value": "值",
     "BI-Load_More": "加载更多",
-    "BI-Select_All": "全选"
+    "BI-Select_All": "全选",
+    "BI-No_More_Data": "无更多数据",
+    "BI-No_Selected_Value": "没有可选项"
 };$(function () {
     var ref;
     BI.createWidget({
@@ -3724,6 +3726,14 @@ Demo.COMPONENT_CONFIG = [{
     pId: 419,
     text: "bi.file_manager",
     value: "demo.file_manager"
+}, {
+    pId: 4,
+    id: 421,
+    text: "滚动调节"
+}, {
+    pId: 421,
+    text: "bi.slider",
+    value: "demo.slider"
 }
 ];Demo.Func = BI.inherit(BI.Widget, {
     props: {
@@ -7598,21 +7608,26 @@ Demo.FileManager = BI.inherit(BI.Widget, {
             lastModify: 1454316355142
         }];
         var filemanager = BI.createWidget({
-            type: "bi.file_manager",
-            items: items
+            type: "bi.fine_tuning_number_editor",
+            validationChecker: function (v) {
+                return BI.parseFloat(v) <= 100 && BI.parseFloat(v) >= 0
+            },
+            height: 24,
+            width: 150,
+            errorText: "hahah"
+        });
+        filemanager.on(BI.FineTuningNumberEditor.EVENT_CHANGE, function () {
+            if(BI.parseFloat(this.getValue()) < 1){
+                filemanager.setBottomEnable(false);
+            }else{
+                filemanager.setBottomEnable(true);
+            }
         });
         return {
-            type: "bi.vtape",
+            type: "bi.vertical",
             items: [{
                 el: filemanager,
-                height: "fill"
-            }, {
-                type: "bi.button",
-                text: "getValue",
-                handler: function () {
-                    BI.Msg.alert("", JSON.stringify(filemanager.getValue()));
-                },
-                height: 25
+                height: 24
             }]
         }
     }
@@ -8341,6 +8356,47 @@ Demo.SingleTreeCombo = BI.inherit(BI.Widget, {
 })
 
 BI.shortcut("demo.single_tree_combo", Demo.SingleTreeCombo);/**
+ * Created by Urthur on 2017/9/4.
+ */
+Demo.Slider = BI.inherit(BI.Widget, {
+    _defaultConfig: function () {
+        return BI.extend(Demo.Slider.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: "demo-slider",
+            min: 10,
+            max: 50
+        })
+    },
+    _init: function () {
+        Demo.Slider.superclass._init.apply(this, arguments);
+        var self = this;
+        BI.createWidget({
+            type: "bi.vertical_adapt",
+            element: this,
+            width: 100,
+            items: [{
+                type: "bi.htape",
+                items: [{
+                    el: {
+                        type: "bi.slider",
+                        min: 16,
+                        max: 50,
+                        ref: function (_ref) {
+                            self.slider = _ref;
+                        }
+                    }
+                }],
+                height: 30,
+                width: 100
+            }]
+        });
+        this.slider.setValue("30");
+
+        this.slider.on(BI.SliderNormal.EVENT_CHANGE, function () {
+            console.log(this.getValue());
+        })
+    }
+});
+BI.shortcut("demo.slider", Demo.Slider);/**
  * Created by Dailer on 2017/7/12.
  */
 Demo.ExcelTable = BI.inherit(BI.Widget, {

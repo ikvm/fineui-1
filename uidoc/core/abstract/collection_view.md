@@ -1,6 +1,6 @@
 # bi.collection_view
 
-## CollectionView,基类[BI.Widget](/core/widget.md)
+## CollectionView,指定行列可以删除看不见的元素 基类[BI.Widget](/core/widget.md)
 
 {% method %}
 [source](https://jsfiddle.net/fineui/cmq0b3v0/)
@@ -34,14 +34,14 @@ BI.createWidget({
 ##### 基础属性
 | 参数    | 说明           | 类型  | 可选值 | 默认值
 | :------ |:-------------  | :-----| :----|:----
-| items | 子组件数组 | array |   | [ ] |
+| items | 子组件数组 | array |  — | [ ] |
 | overflowX | 是否显示横向滚动条| boolean | true,false | true |
 | overflowY | 是否显示纵向滚动条 | boolean | true,false | true |
-| cellSizeAndPositionGetter |设置每个单元格的位置坐标和宽高 | function| | — |
-| horizontalOverscanSize | | number |  | 0 |
-| verticalOverscanSize | | number |  | 0 |
-| width | 行宽，必设 |number| | —  |
-| height | 列宽，必设 | number | | — |
+| cellSizeAndPositionGetter | 设置每个单元格的位置坐标和宽高 | function|— | — |
+| horizontalOverscanSize | 横向超出可视范围区域预加载的数量 | number | — | 0 |
+| verticalOverscanSize | 纵向超出可视范围区域预加载的数量 | number | — | 0 |
+| width | 行宽，必设 |number| — | —  |
+| height | 列宽，必设 | number | —| — |
 | scrollLeft | 滚动条相对于左边的偏移 | number | — | 0 |
 | scrollTop |  滚动条相对于顶部的偏移 | number | — | 0 |
 
@@ -61,6 +61,10 @@ BI.createWidget({
 | populate | 刷新列表 | items |
 
 
+## 事件
+| 事件     | 说明                           |  回调参数 |
+| :------ |:------------- |:------------------------|
+|BI.GridView.EVENT_SCROLL|    滚动时触发的事件 | {scrollLeft: scrollLeft, scrollTop: scrollTop} |
 
 ---
 

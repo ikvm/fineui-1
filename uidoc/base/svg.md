@@ -13,25 +13,9 @@ var svg = BI.createWidget({
     width: 500,
     height: 600
 });
-	
-var circle = svg.circle(100, 100, 10);
-circle.animate({fill: "#223fa3", stroke: "#000", "stroke-width": 80, "stroke-opacity": 0.5}, 2000);
-
-var el = svg.rect(10, 200, 300, 200);
-el.transform("t100,100r45t-100,0");
 
 svg.path("M10,10L50,50M50,10L10,50")
     .attr({stroke: "red"});
-
-BI.createWidget({
-    type: "bi.absolute",
-    element: this,
-    items: [{
-        el: svg,
-        left: 100,
-        top: 50
-    }]
-})
 
 
 ```
@@ -50,15 +34,15 @@ BI.createWidget({
 | ellipse | 绘制椭圆 |(x,y,rx,ry)分别表示原点的横、纵坐标，以及水平半径和垂直半径|
 | text | 绘制文本 | (x,y,text)分别表示绘制的原点横、纵坐标以及要绘制的文本内容|
 | print | 根据制定参数打印出路径 | (x, y, string, font, size, origin, letter_spacing, line_spacing) |
-| setStart | 开始绘制 |  |
-| setFinish | 结束绘制 |  |
+| setStart | 开始绘制 | — |
+| setFinish | 结束绘制 | — |
 | setSize | 设置画布尺寸 | (width,height)分别表示画布宽高|
 | setViewBox |  设置画布可视区域 |  (x,y,width,height,fit)分别表示可视区域原点坐标以及可视区域宽高，以及是否根据可视区域进行调整 |
 | getById |  根据id返回元素 | id |
 | getElementByPoint | 获根据给定的点坐标返回元素 | (x,y)|
 | getElementsByPoint | 获根据给定的点坐标返回元素 | (x,y) |
 | getFont | 通过给定的参数在已注册的字体中找到字体对象 | (family, weight, style, stretch) |
-| set | 绘制形状的集合 |  |
+| set | 绘制形状的集合 | — |
 | remove | 设置总页数 | pages |
 | clear | 判断是否有上一页 |  v |
 

@@ -46,12 +46,15 @@ BI.createWidget({
 | itemsCreator | 子项创建函数        | function | function() {} |
 
 ## 方法
-| 方法名      | 说明      | 用法              |
+| 方法名      | 说明      | 参数              |
 | -------- | ------- | --------------- |
-| setValue | 设置文本框值  | setValue(v)     |
-| getValue | 获取文本框值  | getValue()      |
-| populate | 更改树结构内容 | populate(items) |
+| setValue | 设置文本框值  | v     |
+| getValue | 获取文本框值  | —      |
+| populate | 更改树结构内容 | items |
 
-##
-BI.MultiTreeCombo.EVENT_CONFIRM
+## 事件
+| 事件    | 说明           |
+| :------ |:------------- |
+|BI.MultiTreeCombo.EVENT_CONFIRM| 点击一级节点触发 |
+---
 

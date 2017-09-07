@@ -100,10 +100,9 @@
     * [text_trigger](case/trigger/text_trigger.md)
 * 下拉框
     * [bubble_combo](case/combo/bubble_combo.md)
-    * [formula_combo](case/combo/formula_combo.md)
     * [icon_combo](case/combo/icon_combo.md)
     * [static_combo](case/combo/static_combo.md)
-    * [text_value_combo](case/combo/static_combo.md)
+    * [text_value_combo](case/combo/text_value_combo.md)
     * [text_value_downlist_combo](case/combo/text_value_downlist_combo.md)
 * 树
     * [branch_tree](case/tree/branch_tree.md)
@@ -123,6 +122,7 @@
 * [clipboard](case/shelter_editor.md)
 * [complex_canvas](case/complex_canvas.md)
 * [color_chooser](case/color_chooser.md)
+* [color_chooser_popup](case/color_chooser_popup.md)
 * [segment](case/segment.md)
 
 ## 详细控件
@@ -168,4 +168,5 @@
 * [relation_view](detailed/relation_view.md)
 * [dialog](detailed/dialog.md)
 * [file_manager](detailed/file_manager.md)
+* [slider](detailed/slider.md)
 

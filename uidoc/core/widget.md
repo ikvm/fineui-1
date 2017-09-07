@@ -6,16 +6,16 @@
 ##### 基础属性
 | 参数    | 说明           | 类型  | 可选值 | 默认值
 | :------ |:-------------  | :-----| :----|:----
-| root | | boolean | true,false | false |
-| tagName | | string| | "div" |
-| attributes | | | | null |
-| data | | | | null |
+| root | 根组件 | boolean | true,false | false |
+| tagName |  html标签 | string| —| "div" |
+| attributes |  属性| object | —| null |
+| data | 数据 | object | — | null |
 | disabled | 是否可用 |  boolean |true,false | false |
-| invisible | | boolean | true,false | false|
+| invisible | 是否可见 | boolean | true,false | false|
 | invalid | 是否有效 | boolean | true,false |false |
-| baseCls | 基础class类 | string | | " "|
-| extraCls | 扩展class类 | string|  | " "|
-| cls | class类名 | string | | " "|
+| baseCls | 基础class类 | string | —| " "|
+| extraCls | 扩展class类 | string| — | " "|
+| cls | class类名 | string |— | " "|
 
 ## 生命周期函数
 | 名称     | 说明                           |  回调参数     
@@ -41,7 +41,7 @@
 | setEnable | 设置组件是否可用 | enable |
 | setVisible | 设置组件是否可见 | visible |
 | setValid | 设置组件是否有效 | valid|
-| doBehavior | | —|
+| doBehavior | 自定义下拉列表中item项的行为，如高亮，标红等 | —|
 | getWidth | 获取组件宽度 | —|
 | getHeight| 获取组件高度| —|
 | isValid | 判断是否有效 | —|
@@ -49,7 +49,7 @@
 | getWidgetByName | 根据组件名称获取组件| name |
 | removeWidget | 移除组件 | nameOrWidget |
 | hasWidget | 判断是否有该组件 | name |
-| getName | 获取组件名称 | | 
+| getName | 获取组件名称 | —| 
 | setTag | 设置tag | tag |
 | getTag | 获取tag | —|
 | attr | 设置组件属性 | key,value |
@@ -65,7 +65,7 @@
 |invalid | 设置组件无效 | —|
 | invisible | 设置组件不可见 | —|
 | visible | 设置组件可见 | —|
-| isolate | | —|
+| isolate | 组件不在页面展示，组件事件和内容都在 | —|
 | empty | 清空组件 | —|
 | destroy | 销毁组件| —|
 

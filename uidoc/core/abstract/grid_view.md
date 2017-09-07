@@ -1,6 +1,6 @@
 # bi.grid_view
 
-## GridView,基类[BI.Widget](/core/widget.md)
+## 可以合并单元格，指定行列可以删除看不见的元素,基类[BI.Widget](/core/widget.md)
 
 {% method %}
 [source](https://jsfiddle.net/fineui/fkntzLq5/)
@@ -34,17 +34,17 @@ BI.createWidget({
 ##### 基础属性
 | 参数    | 说明           | 类型  | 可选值 | 默认值
 | :------ |:-------------  | :-----| :----|:----
-| items | 子组件数组 | array |   | [ ] |
+| items | 子组件数组 | array | —  | [ ] |
 | overflowX | 是否显示横向滚动条| boolean | true,false | true |
 | overflowY | 是否显示纵向滚动条 | boolean | true,false | true |
-| overscanColumnCount| | number| | 0 |
-| overscanRowCount| | number |  | 0 |
-| width | 行宽，必设 |number| | —  |
-| height | 列宽，必设 | number | | — |
-| rowHeightGetter| 每格行宽 |number,function | | function  |
-| columnWidthGetter| 每格列宽 | number,function | | function |
-| estimatedColumnSize| 每格行宽，columnWidthGetter为function时必设 |number,function | | function  |
-| estimatedRowSize | 每格列宽，rowHeightGetter为function时必设 | number,function | | function |
+| overscanColumnCount| 超出可视范围区域预加载多少列 | number|— | 0 |
+| overscanRowCount| 超出可视范围区域预加载多少行 | number | — | 0 |
+| width | 行宽，必设 |number| — | —  |
+| height | 列宽，必设 | number | —| — |
+| rowHeightGetter| 每格行宽 |number,function | —| function  |
+| columnWidthGetter| 每格列宽 | number,function |— | function |
+| estimatedColumnSize| 预估行宽，columnWidthGetter为function时必设 |number,function |— | function  |
+| estimatedRowSize | 预估列宽，rowHeightGetter为function时必设 | number,function | —| function |
 | scrollLeft | 滚动条相对于左边的偏移 | number | — | 0 |
 | scrollTop |  滚动条相对于顶部的偏移 | number |  —|0 |
 
@@ -67,6 +67,10 @@ BI.createWidget({
 | restore | 还原列表设置 | — |
 | populate | 刷新列表 | items |
 
+## 事件
+| 事件     | 说明                           |  回调参数
+| :------ |:------------- |:----------|
+|BI.CollectionView.EVENT_SCROLL|    滚动时触发的事件 | {scrollLeft: scrollLeft, scrollTop: scrollTop} |
 
 
 ---
