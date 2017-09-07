@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Button from '../src/base/single/button'
 import TreeDemo from './demo.tree'
 import ComboDemo from './demo.combo'
@@ -22,8 +23,9 @@ import RightLayoutDemo from './layout/demo.rightLayout'
 import TipsDemo from './demo.tips.js'
 import InputDemo from './demo.input'
 import TabsDemo from './demo.tabs'
-//eslint warning 和react warning太多了,先注释了
-import TableDemo from './demo.table'
+import CollectionTableDemo from './demo.collectionTable'
+import ResizableTableDemo from './demo.resizableTable'
+import AdaptiveTableDemo from './demo.adaptiveTable'
 import range from 'lodash/range'
 import './example.less'
 
@@ -86,7 +88,9 @@ class App extends Component {
                      <TipsDemo key='TipsDemo'></TipsDemo>
                      <InputDemo key='InputDemo'></InputDemo>
                      <TabsDemo key='TabsDemo'></TabsDemo>
-                     <TableDemo key='TableDemo'></TableDemo>
+                     <CollectionTableDemo key='CollectionTableDemo'></CollectionTableDemo>
+                     <ResizableTableDemo key='ResizableTableDemo'></ResizableTableDemo>
+                     <AdaptiveTableDemo key='AdaptiveTableDemo'></AdaptiveTableDemo> 
                    </CardLayout>
                  </HorizontalAdaptLayout.Item>
                </HorizontalAdaptLayout>

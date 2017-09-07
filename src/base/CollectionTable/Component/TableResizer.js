@@ -66,3 +66,21 @@ class TableResizer extends Component {
 }
 
 export default TableResizer
+
+/**
+ *  _renderTableResizer(tableHeight, leftLayoutWidth) {
+        let onTableResize = this._handleTableResize;
+        let left = leftLayoutWidth - 2;
+
+        return <TableResizer
+                    height={tableHeight}
+                    width={1}
+                    left={left}
+                    top={0}
+                    onTableResize={onTableResize}
+                    tableWidth={this.props.tableWidth} />;
+    }
+ */
+    
+
+
