@@ -2,8 +2,9 @@
  * Created by dailer on 2017/9/4.
  */
 
-import React, { Component } from "react";
-import { Layout } from "../../../core/layout";
+import React, { Component, cloneElement } from "react";
+import ReactDOM from "react-dom";
+import { Layout, HorizontalCenterLayout } from "../../../core/layout";
 import waring from "fbjs/lib/warning";
 
 let _portalRef;
@@ -27,6 +28,10 @@ class Portal extends Component {
      * See `showModal` and `closeModal`.
      */
 	static allocateTag() {
+		return "__modal_" + ++lastUsedTag;
+	}
+
+	_allocateTag() {
 		return "__modal_" + ++lastUsedTag;
 	}
 
@@ -70,7 +75,9 @@ class Portal extends Component {
 
 	constructor(props, context) {
 		super(props, context);
-		this.state = { modals: {} };
+		this.state = {
+			modals: {}
+		};
 	}
 
 	_showModal(tag, component) {
@@ -86,7 +93,8 @@ class Portal extends Component {
 		// _showModal, _closeModal correctly.
 		this.setState(state => {
 			var modals = state.modals;
-			modals[tag] = component;
+
+			modals[tag] = this._addKey2Component(tag, component);
 			return { modals };
 		});
 	}
@@ -116,6 +124,12 @@ class Portal extends Component {
 		return Object.keys(this.state.modals);
 	}
 
+	_addKey2Component = (tag, component) => {
+		return cloneElement(component, {
+			key: tag
+		});
+	};
+
 	render() {
 		_portalRef = this;
 		if (!this.state.modals) {
@@ -128,7 +142,11 @@ class Portal extends Component {
 		if (modals.length === 0) {
 			return null;
 		}
-		return <Layout style={styles.modalsContainer}>{modals}</Layout>;
+		return (
+			<HorizontalCenterLayout style={styles.modalsContainer}>
+				{modals}
+			</HorizontalCenterLayout>
+		);
 	}
 }
 
@@ -140,6 +158,13 @@ const styles = {
 		right: 0,
 		overflow: "visible"
 	}
+};
+
+Portal.PortalReference = container => {
+	let div = document.createElement("div");
+	document.body.appendChild(div);
+	const PortalReference = ReactDOM.render(<Portal />, div);
+	return PortalReference;
 };
 
 export default Portal;

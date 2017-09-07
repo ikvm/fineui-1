@@ -61,6 +61,7 @@ class DownListDemo extends Component {
 						show={this.state.show1}
 						target={() => findDOMNode(this.button1)}
 						items={mockData}
+						adjustLength={3}
 					/>
 				</CenterLayout>
 				<CenterLayout hgap={20}>
@@ -70,6 +71,7 @@ class DownListDemo extends Component {
 					<DownList
 						show={this.state.show2}
 						target={() => findDOMNode(this.button2)}
+						adjustLength={3}
 					>
 						<SubItem key="1" title="第一级1">
 							<SubItem title="第二级1">

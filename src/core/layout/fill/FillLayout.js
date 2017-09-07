@@ -1,37 +1,37 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import cn from 'classnames'
-import Layout from '../Layout'
-import './FillLayout.less'
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import cn from "classnames";
+import Layout from "../Layout";
+import "./FillLayout.less";
 
-const CLASS_NAME = 'flex-fill-layout'
+const CLASS_NAME = "flex-fill-layout";
 const VERTICAL_ALIGN = {
-    TOP: '_top',
-    MIDDLE: '_middle',
-    BOTTOM: '_bottom',
-    STRETCH: '_stretch'
-}
-
+	TOP: "_top",
+	MIDDLE: "_middle",
+	BOTTOM: "_bottom",
+	STRETCH: "_stretch"
+};
 
 //子元素自动撑满父元素的布局
 
 class FillLayout extends Component {
-    constructor(props, context) {
-        super(props, context);
-    }
+	constructor(props, context) {
+		super(props, context);
+	}
 
-    static defaultProps = {
-        scrollable: false,
-        verticalAlign: VERTICAL_ALIGN.TOP
-    }
+	static defaultProps = {
+		scrollable: false
+	};
 
-    render() {
-        const {children, verticalAlign, className, ...props} = this.props;
-        return <Layout className={ cn(CLASS_NAME, verticalAlign, className) } {...props}>
-                 { children }
-               </Layout>
-    }
+	render() {
+		const { children, className, ...props } = this.props;
+		return (
+			<Layout className={cn(CLASS_NAME, className)} {...props}>
+				{children}
+			</Layout>
+		);
+	}
 }
 
-FillLayout.VERTICAL_ALIGN = VERTICAL_ALIGN
-export default FillLayout
+FillLayout.VERTICAL_ALIGN = VERTICAL_ALIGN;
+export default FillLayout;

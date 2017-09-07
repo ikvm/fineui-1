@@ -45,6 +45,7 @@ export default class ButtonView extends React.Component {
 					break;
 				case "mousedown":
 					bindEvent.onMouseDown = this.handleMouseDown;
+
 					break;
 				case "mouseup":
 					bindEvent.onMouseUp = this.handleMouseUp;
@@ -78,6 +79,7 @@ export default class ButtonView extends React.Component {
 		if (this.props.stopPropagation) {
 			e.stopPropagation();
 		}
+
 		this.props.handler();
 		console.log("mousedown");
 	};

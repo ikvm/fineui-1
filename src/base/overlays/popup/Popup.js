@@ -4,6 +4,7 @@
 
 import React, { Component, cloneElement } from "react";
 import { findDOMNode } from "react-dom";
+import PropTypes from "prop-types";
 import cn from "classnames";
 import {
 	VerticalLayout,
@@ -158,6 +159,32 @@ export default class Popup extends Component {
 		}
 	};
 
+	calculateAdjustGap = () => {
+		const { direction } = this.props;
+
+		const adjustLength = this.props.adjustLength
+			? this.props.adjustLength
+			: this.context.popupProps ? this.context.popupProps.adjustLength : 0;
+		switch (direction) {
+			case DIRECTION.BOTTOM:
+			case DIRECTION.BOTTOM_LEFT:
+			case DIRECTION.BOTTOM_RIGHT:
+			case DIRECTION.TOP:
+			case DIRECTION.TOP_LEFT:
+			case DIRECTION.TOP_RIGHT:
+				return { vgap: adjustLength };
+			case DIRECTION.LEFT:
+			case DIRECTION.LEFT_BOTTOM:
+			case DIRECTION.LEFT_TOP:
+			case DIRECTION.RIGHT:
+			case DIRECTION.RIGHT_BOTTOM:
+			case DIRECTION.RIGHT_TOP:
+				return { hgap: adjustLength };
+			default:
+				return {};
+		}
+	};
+
 	shouldUpdatePosition = newPosition => {
 		return (
 			this.state.positionX !== newPosition.x ||
@@ -224,18 +251,26 @@ export default class Popup extends Component {
 		};
 
 		return (
-			<VtapeLayout
+			<Layout
 				ref={c => {
 					this.wrapper = c;
 				}}
-				className={cn(className, CLASS_NAME)}
 				style={styleObj}
 				{...props}
 			>
-				{/* <VtapeLayout.Item height={30}>{tab}</VtapeLayout.Item> */}
-				<VtapeLayout.Item>{child}</VtapeLayout.Item>
-				{/* <VtapeLayout.Item height={20}>{toolbar}</VtapeLayout.Item> */}
-			</VtapeLayout>
+				<VtapeLayout
+					className={cn(className, CLASS_NAME)}
+					{...this.calculateAdjustGap()}
+				>
+					{/* <VtapeLayout.Item height={30}>{tab}</VtapeLayout.Item> */}
+					<VtapeLayout.Item>{child}</VtapeLayout.Item>
+					{/* <VtapeLayout.Item height={20}>{toolbar}</VtapeLayout.Item> */}
+				</VtapeLayout>
+			</Layout>
 		);
 	}
 }
+
+Popup.contextTypes = {
+	popupProps: PropTypes.object
+};

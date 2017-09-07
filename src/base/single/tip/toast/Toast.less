@@ -1,7 +1,21 @@
 .bi-toast {
-    position: fixed !important;
-    top: 0;
-    left: 50%;
-    z-index: 1000000;
-    min-width: 200px;
+	min-width: 200px;
+	text-align: center;
+	background-color: #000;
+	border-radius: 5px;
+	&-success {
+		color: #34c240;
+		background-color: rgba(52, 194, 64, 0.1);
+		border-color: rgba(52, 194, 64, 0.05);
+	}
+	&-warning {
+		color: #d64242;
+		background-color: rgba(214, 66, 66, 0.1);
+		border-color: rgba(214, 66, 66, 0.05);
+	}
+	&-common {
+		color: #0090e0;
+		background-color: rgba(0, 144, 224, 0.1);
+		border-color: rgba(0, 144, 224, 0.05);
+	}
 }

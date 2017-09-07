@@ -5,7 +5,7 @@ import DownListItem from "./Item.DownList";
 
 export default class DownListPopup extends Component {
 	render() {
-		const { target, children, subItems, ...props } = this.props;
+		const { target, children, ...props } = this.props;
 
 		return (
 			<Popup target={target} {...props}>

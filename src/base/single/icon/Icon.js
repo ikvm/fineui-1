@@ -1,34 +1,30 @@
-import React, { Component } from 'react';
-import { Layout } from '../../../core/layout'
-import cn from 'classnames'
+import React, { Component } from "react";
+import { Layout } from "../../../core/layout";
+import cn from "classnames";
 
-const CLASS_NAME = 'bi-icon'
-
+const CLASS_NAME = "bi-icon";
 
 class Icon extends Component {
-    constructor(props) {
-        super(props);
-    }
+	constructor(props) {
+		super(props);
+	}
 
-    static defaultProps = {
-        iconCls: '',
-        width: 25,
-        height: 25
-    }
+	static defaultProps = {
+		width: 25,
+		height: 25
+	};
 
-    render() {
-        const {iconCls, width, height, ...props} = this.props
+	render() {
+		const { iconCls, width, height, ...props } = this.props;
 
-        const styleObj = {
-            display: 'block',
-            width: width + 'px',
-            height: height + 'px'
-        }
+		const styleObj = {
+			display: "block",
+			width: width + "px",
+			height: height + "px"
+		};
 
-
-        return <i className={ cn(CLASS_NAME, iconCls) } style={ styleObj }></i>
-    }
+		return <i className={cn(CLASS_NAME)} style={styleObj} />;
+	}
 }
 
-
-export default Icon
+export default Icon;

@@ -21,7 +21,7 @@ export default class DownListItem extends Component {
 		return (
 			<ButtonView
 				className={cn(className, CLASS_NAME)}
-				width={178}
+				width={180}
 				handler={this.handler}
 				{...props}
 			>

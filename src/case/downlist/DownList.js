@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { findDOMNode } from "react-dom";
+import PropTypes from "prop-types";
 import Popup from "../../base/overlays/popup";
 import Button from "../../base/single/button";
 import { Layout, VerticalLayout } from "../../core/layout";
@@ -26,6 +27,12 @@ export default class DownList extends Component {
 		items: []
 	};
 
+	getChildContext() {
+		return {
+			popupProps: { adjustLength: this.props.adjustLength }
+		};
+	}
+
 	initList = (el, children) => {};
 
 	_creatDownListByItems = items => {
@@ -41,7 +48,11 @@ export default class DownList extends Component {
 				if (value.children) {
 					//有 children 的话用 <SubItem/> 包起来,继续递归儿子
 					listArr.push(
-						<SubItem key={uniqueId()} title={value.text}>
+						<SubItem
+							key={uniqueId()}
+							title={value.text}
+							adjustLength={this.props.adjustLength}
+						>
 							{this._creatDownListByItems(value.children)}
 						</SubItem>
 					);
@@ -55,10 +66,24 @@ export default class DownList extends Component {
 	};
 
 	render() {
-		const { className, children, target, items, show, ...props } = this.props;
+		const {
+			className,
+			children,
+			target,
+			items,
+			show,
+			adjustLength,
+			...props
+		} = this.props;
 
 		return (
-			<Popup target={target} direction="bottom,left" isVisiable={show}>
+			<Popup
+				target={target}
+				direction="bottom,left"
+				isVisiable={show}
+				adjustLength={adjustLength}
+				{...props}
+			>
 				<VerticalLayout className={cn(CLASS_NAME, className)}>
 					{isEmpty(items) ? children : this._creatDownListByItems(items)}
 				</VerticalLayout>
@@ -66,6 +91,10 @@ export default class DownList extends Component {
 		);
 	}
 }
+
+DownList.childContextTypes = {
+	popupProps: PropTypes.object
+};
 
 DownList.Item = Item;
 DownList.SubItem = SubItem;

@@ -35,7 +35,7 @@ export default class SubItem extends Component {
 	}
 
 	render() {
-		const { children, title } = this.props;
+		const { children, title, adjustLength } = this.props;
 
 		return (
 			<Layout
@@ -47,6 +47,7 @@ export default class SubItem extends Component {
 					target={() => findDOMNode(this.target)}
 					isVisiable={this.state.showChildren}
 					direction="right,top"
+					adjustLength={adjustLength}
 				>
 					{children}
 				</DownListPopup>
