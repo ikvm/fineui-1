@@ -19,6 +19,7 @@ import VtapeLayoutDemo from "./layout/demo.vtapelayout";
 import HtapeLayoutDemo from "./layout/demo.htapelayout";
 import LeftLayoutDemo from "./layout/demo.leftLayout";
 import RightLayoutDemo from "./layout/demo.rightLayout";
+import FillLayoutDemo from "./layout/demo.fillLayout";
 import TipsDemo from "./demo.tips.js";
 import InputDemo from "./demo.input";
 import TabsDemo from "./demo.tabs";
@@ -42,7 +43,7 @@ import {
 	CardLayout,
 	VerticalLayout,
 	HorizontalAdaptLayout,
-	VerticalAdaptLayout
+	VerticalAdaptLayout,
 } from "../src/core/layout";
 
 class App extends Component {
@@ -107,6 +108,7 @@ class App extends Component {
 						<HtapeLayoutDemo key="HtapeLayoutDemo" />
 						<LeftLayoutDemo key="LeftLayoutDemo" />
 						<RightLayoutDemo key="RightLayoutDemo" />
+                        <FillLayoutDemo key="FillLayoutDemo" />
 						<TipsDemo key="TipsDemo" />
 						<InputDemo key="InputDemo" />
 						<TabsDemo key="TabsDemo" />

@@ -5,10 +5,9 @@
 
 import React from "react";
 import cn from "classnames";
-import Icon from "../icon";
-import Text from "../text";
+import emptyFunction from 'fbjs/lib/emptyFunction'
 import Single from "../Single";
-import { CenterLayout } from "../../../core/layout";
+import { FillLayout } from "../../../core/layout";
 
 const CLASS_NAME = "bi-button-view";
 
@@ -28,7 +27,7 @@ export default class ButtonView extends React.Component {
 	static defaultProps = {
 		stopPropagation: false,
 		trigger: TRIGGER.CLICK,
-		handler: () => {}
+		handler: emptyFunction
 	};
 
 	//设置触发方式
@@ -106,7 +105,7 @@ export default class ButtonView extends React.Component {
 				{...this._bindEvent(trigger)}
 				{...props}
 			>
-				<CenterLayout>{this.props.children}</CenterLayout>
+				{this.props.children}
 			</Single>
 		);
 	}

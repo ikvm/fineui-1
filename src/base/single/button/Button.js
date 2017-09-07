@@ -37,7 +37,7 @@ export default class Button extends React.Component {
     static defaultProps = {
         level: LEVEL.COMMON,
         iconWidth: 18,
-        iconheight: 18,
+        iconHeight: 18,
         block: false, //是否块状显示，即不显示边框，没有最小宽度的限制
         clear: false, //是否去掉边框和背景
         textAlign: "center",
@@ -50,7 +50,7 @@ export default class Button extends React.Component {
 
     render() {
 
-        const {level, iconCls, iconWidth, iconheight, clear, block, className, textAlign, whiteSpace, forceCenter, textWidth, textHeight, disabled, ...props} = this.props
+        const {level, iconCls, iconWidth, iconHeight, clear, block, className, textAlign, whiteSpace, forceCenter, textWidth, textHeight, disabled, ...props} = this.props
         //控制样式
         let classes = classNames(className, CLASS_NAME, {
             [`${CLASS_NAME}-${level}`]: level,
@@ -61,8 +61,8 @@ export default class Button extends React.Component {
 
         let icon = null
         if (iconCls) {
-            icon = <CenterLayout width={ iconWidth } height={ iconheight }>
-                     <Icon iconCls={ iconCls }></Icon>
+            icon = <CenterLayout width={ iconWidth } height={ iconHeight }>
+                     <Icon iconCls={ iconCls }/>
                    </CenterLayout>
         }
         return <ButtonView className={ classes } { ...props }>
