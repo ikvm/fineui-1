@@ -20378,7 +20378,7 @@ BI.ShowAction = BI.inherit(BI.Action, {
  * @abstract
  */
 BI.FloatSection = BI.inherit(BI.View, {
-    _init : function() {
+    _init: function () {
         BI.FloatSection.superclass._init.apply(this, arguments);
         var self = this;
         var flatten = ["_init", "_defaultConfig", "_vessel", "_render", "getName", "listenEnd", "local", "refresh", "load", "change"];
@@ -20400,18 +20400,19 @@ BI.FloatSection = BI.inherit(BI.View, {
         })
     },
 
-    rebuildNorth : function(north) {
+    rebuildNorth: function (north) {
         return true;
     },
-    rebuildCenter : function(center) {},
-    rebuildSouth : function(south) {
+    rebuildCenter: function (center) {
+    },
+    rebuildSouth: function (south) {
         return false;
     },
-    close: function(){
+    close: function () {
         this.notifyParentEnd();
         this.trigger(BI.PopoverSection.EVENT_CLOSE);
     },
-    end: function(){
+    end: function () {
 
     }
 });
@@ -20423,21 +20424,22 @@ BI.FloatSection = BI.inherit(BI.View, {
  * @abstract
  */
 BI.PopoverSection = BI.inherit(BI.Widget, {
-    _init : function() {
+    _init: function () {
         BI.PopoverSection.superclass._init.apply(this, arguments);
     },
 
-    rebuildNorth : function(north) {
+    rebuildNorth: function (north) {
         return true;
     },
-    rebuildCenter : function(center) {},
-    rebuildSouth : function(south) {
+    rebuildCenter: function (center) {
+    },
+    rebuildSouth: function (south) {
         return false;
     },
-    close: function(){
+    close: function () {
         this.fireEvent(BI.PopoverSection.EVENT_CLOSE);
     },
-    end: function(){
+    end: function () {
 
     }
 });
@@ -21783,11 +21785,11 @@ BI.ResizeController = BI.inherit(BI.Controller, {
 
     _init: function () {
         BI.ResizeController.superclass._init.apply(this, arguments);
-        var self = this;
         this.resizerManger = {};
     },
 
     _addEventListener: function () {
+        var self = this;
         if (!this.addedEvent) {
             var fn = BI.debounce(function (ev) {
                 //if (BI.isWindow(ev.target)) {
