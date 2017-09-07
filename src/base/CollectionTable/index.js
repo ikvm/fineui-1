@@ -1,0 +1,2 @@
+export CollectionTable from './CollectionTable'
+

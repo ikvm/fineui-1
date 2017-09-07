@@ -117,8 +117,8 @@ const demos = [{
     }, {
         id: 28,
         pid: 2,
-        text: 'table',
-        value: 'TableDemo'
+        text: 'CollectionTable',
+        value: 'CollectionTableDemo'
     }, {
         id: 29,
         pid: 2,
@@ -138,6 +138,16 @@ const demos = [{
         pid: 3,
         text: "tabs",
         value: 'TabsDemo'
+    }, {
+        id: 33,
+        pid: 2,
+        text: 'ResizableTable',
+        value: 'ResizableTableDemo'
+    }, {
+        id: 34,
+        pid: 2,
+        text: 'AdaptiveTable',
+        value: 'AdaptiveTableDemo'
     }
 ]
 

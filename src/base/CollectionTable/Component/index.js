@@ -17,7 +17,3 @@ export HeadCell from './HeadCell.js'
 export TableCellResizer from './TableCellResizer.js'
 
 export ResizerBar from './ResizerBar'
-
-export translateDOMPositionXY from './translateDOMPositionXY'
-export BrowserSupportCore from './BrowserSupportCore'
-export getVendorPrefixedName from './getVendorPrefixedName'
