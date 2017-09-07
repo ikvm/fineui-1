@@ -69,6 +69,11 @@ const demos = [{
         pid: 11,
         text: "GridLayout",
         value: 'GridLayoutDemo'
+    }, {
+        id: 122,
+        pid: 11,
+        text: "FillLayout",
+        value: 'FillLayoutDemo'
     },
     {
         id: 2,
