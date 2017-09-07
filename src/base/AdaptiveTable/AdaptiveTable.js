@@ -43,7 +43,6 @@ class AdaptiveTable extends Component {
         const totalColumnSize = math.sum(columnSize);
         const freezeTotalColumnSize = math.sum(freezeColumnSize);
         
-        window.console.log("before: " + freezeTotalColumnSize + ' ' + regionColumnSize + ' ' + freezeColumnSize);
         if (isNeedFreeze && freezeCols.length > 0) {
             columnSize[freezeCols.length - 1] += regionColumnSize[0] - freezeTotalColumnSize; // 冻结列最后一列自适应
             columnSize[freezeCols.length - 1] = clamp(columnSize[freezeCols.length - 1], minColumnSize[freezeCols.length - 1] || 0, maxColumnSize[freezeCols.length - 1] || Number.MAX_VALUE);
@@ -51,7 +50,6 @@ class AdaptiveTable extends Component {
         columnSize[columnSize.length - 1] += tableWidth - (regionColumnSize[0] || 0) - (totalColumnSize - freezeTotalColumnSize); // 列宽小于窗口宽度时最后一列自适应
         columnSize[columnSize.length - 1] = clamp(columnSize[columnSize.length - 1], minColumnSize[columnSize.length - 1] || 0, maxColumnSize[columnSize.length - 1] || Number.MAX_VALUE);
         
-        window.console.log("after: " + freezeTotalColumnSize + ' ' + regionColumnSize + ' ' + freezeColumnSize);
         return {
             columnSize,
             regionColumnSize
