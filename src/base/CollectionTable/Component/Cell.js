@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { HorizontalLayout, VerticalLayout, AbsoluteLayout } from '../../../core/layout'
-import { translateDOMPositionXY } from '../Component'
+import { translateDOMPositionXY } from '../../../utils'
 
 class Cell extends Component {
 
@@ -9,7 +9,6 @@ class Cell extends Component {
         if (isNaN(window.cellCount))
             window.cellCount = 0;
     }
-
 
     render() {
         window.cellCount++;

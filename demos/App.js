@@ -23,12 +23,12 @@ import FillLayoutDemo from "./layout/demo.fillLayout";
 import TipsDemo from "./demo.tips.js";
 import InputDemo from "./demo.input";
 import TabsDemo from "./demo.tabs";
-//eslint warning 和react warning太多了,先注释了
-import TableDemo from "./demo.table";
+import CollectionTableDemo from './demo.collectionTable'
+import ResizableTableDemo from './demo.resizableTable'
+import AdaptiveTableDemo from './demo.adaptiveTable'
 import DownListDemo from "./demo.downlist";
 import range from "lodash/range";
 import "./example.less";
-
 import demos from "./config/config";
 
 import {
@@ -112,8 +112,10 @@ class App extends Component {
 						<TipsDemo key="TipsDemo" />
 						<InputDemo key="InputDemo" />
 						<TabsDemo key="TabsDemo" />
-						<TableDemo key="TableDemo" />
 						<DownListDemo key="DownListDemo" />
+						<CollectionTableDemo key='CollectionTableDemo'></CollectionTableDemo>
+						<ResizableTableDemo key='ResizableTableDemo'></ResizableTableDemo>
+						<AdaptiveTableDemo key='AdaptiveTableDemo'></AdaptiveTableDemo> 
 					</CardLayout>
 				</HorizontalAdaptLayout.Item>
 			</HorizontalAdaptLayout>
