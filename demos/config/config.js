@@ -69,6 +69,11 @@ const demos = [{
         pid: 11,
         text: "GridLayout",
         value: 'GridLayoutDemo'
+    }, {
+        id: 122,
+        pid: 11,
+        text: "FillLayout",
+        value: 'FillLayoutDemo'
     },
     {
         id: 2,
@@ -112,8 +117,8 @@ const demos = [{
     }, {
         id: 28,
         pid: 2,
-        text: 'table',
-        value: 'TableDemo'
+        text: 'CollectionTable',
+        value: 'CollectionTableDemo'
     }, {
         id: 29,
         pid: 2,
@@ -138,6 +143,15 @@ const demos = [{
         pid: 3,
         text: "calendar",
         value: 'CalendarDemo'
+    },{
+        pid: 2,
+        text: 'ResizableTable',
+        value: 'ResizableTableDemo'
+    }, {
+        id: 34,
+        pid: 2,
+        text: 'AdaptiveTable',
+        value: 'AdaptiveTableDemo'
     }
 ]
 
