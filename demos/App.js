@@ -23,8 +23,9 @@ import TipsDemo from './demo.tips.js'
 import InputDemo from './demo.input'
 import TabsDemo from './demo.tabs'
 import CalendarDemo from './demo.calendar'
-//eslint warning 和react warning太多了,先注释了
-//import TableDemo from './demo.table'
+import AdaptiveTableDemo from './demo.adaptiveTable'
+import ResizableTableDemo from './demo.resizableTable'
+import CollectionTableDemo from './demo.collectionTable'
 import range from 'lodash/range'
 import './example.less'
 
@@ -87,7 +88,10 @@ class App extends Component {
                      <TipsDemo key='TipsDemo'></TipsDemo>
                      <InputDemo key='InputDemo'></InputDemo>
                      <TabsDemo key='TabsDemo'></TabsDemo>
-                     <CalendarDemo key='CalendarDemo'></CalendarDemo>
+					 <CalendarDemo key='CalendarDemo'></CalendarDemo>
+					 <CollectionTableDemo key='CollectionTableDemo'></CollectionTableDemo>
+					 <ResizableTableDemo key='ResizableTableDemo'></ResizableTableDemo>
+					 <AdaptiveTableDemo key='AdaptiveTableDemo'></AdaptiveTableDemo> 
                    </CardLayout>
                  </HorizontalAdaptLayout.Item>
                </HorizontalAdaptLayout>

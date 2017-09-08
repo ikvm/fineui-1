@@ -3,14 +3,13 @@
  * Modified by NieShichao on 2017/09/06
  */
 
-import React, {Component} from 'react';
-import mixin from 'react-mixin'
-import {cn, emptyFunction, each, math, clamp, map, ReactComponentWithPureRenderMixin} from 'utils'
+import React, { PureComponent } from 'react';
+import {cn, emptyFunction, each, math, clamp, map } from 'utils'
 import {Layout, VerticalLayout} from '../../core/layout'
-import ScrollBar from '../Table/Scrollbar'
+import ScrollBar from '../CollectionTable/Scrollbar'
 import ResizableTable from '../ResizableTable/ResizableTable'
 
-class AdaptiveTable extends Component {
+class AdaptiveTable extends PureComponent {
     constructor(props, context) {
         super(props, context);
         this.state = this._digestColumnSize(props);
@@ -136,6 +135,5 @@ class AdaptiveTable extends Component {
         return props.width - ScrollBar.SIZE;
     }
 }
-mixin.onClass(AdaptiveTable, ReactComponentWithPureRenderMixin);
 
 export default AdaptiveTable;
