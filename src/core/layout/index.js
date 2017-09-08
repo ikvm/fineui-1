@@ -28,3 +28,6 @@ export RightLaout from './flow/RightLayout'
 
 //fill
 export FillLayout from './fill/FillLayout'
+
+//grid
+export GridLayout from './grid/GridLayout'

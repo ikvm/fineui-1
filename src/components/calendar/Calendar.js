@@ -7,11 +7,11 @@ import cn from 'classnames'
 import {
     Layout,
     CenterLayout,
-    VerticalLayout
+    VerticalLayout,
+    GridLayout
 } from '../../core/layout'
 import Label from '../../base/single/label'
 import ButtonView from '../../base/single/buttonView'
-import {Table} from '../table';
 import '../../core/proto/date'
 import './Calendar.less'
 
@@ -83,9 +83,12 @@ class  Calendar extends Component {
         let {year, month, day, handler} = this.props;
         let days = this._dateCreator(year, month, day);
         let items = [], header = [], body = [];
-        header[0] = [];
         Date._SDN.slice(0, 7).map((value, i)=> {
-                 header[0][i] = <Label>{value}</Label>
+                 header.push({
+                     row: 0,
+                     column: i,
+                     el: <Label>{value}</Label>
+                 });
             }
         );
         items.push(days.slice(0, 7));
@@ -96,7 +99,6 @@ class  Calendar extends Component {
         items.push(days.slice(35, 42));
 
         items.map((item, i) => {
-            body[i] = [];
             item.map((td, j) => {
                 let date = {
                     year: year,
@@ -105,16 +107,22 @@ class  Calendar extends Component {
                 };
                 let disabled = td.lastMonth || td.nextMonth || td.disabled;
                 let selected = (day === td.text) && !disabled;
-                body[i][j] = <ButtonView className= { cn ([`${CLASS_NAME}-item`],{[`${CLASS_NAME}-item-active`] : selected})} disabled={disabled} handler={handler.bind(this, date)}>
-                                <Label hgap={10} vgap={5}>
-                                    {td.text}
-                                </Label>
-                            </ButtonView>
+                body.push({
+                    row: i + 1,
+                    column: j,
+                    el: <ButtonView className= { cn ([`${CLASS_NAME}-item`],{[`${CLASS_NAME}-item-active`] : selected})} disabled={disabled} handler={handler.bind(this, date)}>
+                            <Label hgap={10} vgap={5}>
+                                {td.text}
+                            </Label>
+                    </ButtonView>
+                });
             });
         });
 
+        let DateData = header.concat(body);
+
         return <VerticalLayout className={cn(CLASS_NAME)}>
-                <Table header={header} items ={body} />
+                <GridLayout  rows={7} columns={7} items={DateData} />
             </VerticalLayout>
     }
 }
