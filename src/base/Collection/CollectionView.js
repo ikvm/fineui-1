@@ -1,8 +1,6 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import mixin from 'react-mixin'
-import ReactComponentWithPureRenderMixin from 'react-addons-pure-render-mixin'
 import cn from 'classnames'
 import createCallbackMemoizer from './utils/createCallbackMemoizer'
 import getScrollbarSize from 'dom-helpers/util/scrollbarSize'
@@ -29,7 +27,7 @@ const SCROLL_POSITION_CHANGE_REASONS = {
  * Monitors changes in properties (eg. cellCount) and state (eg. scroll offsets) to determine when rendering needs to occur.
  * This component does not render any visible content itself; it defers to the specified :cellLayoutManager.
  */
-class CollectionView extends Component {
+class CollectionView extends PureComponent {
     static propTypes = {
         /**
          * Number of cells in collection.
@@ -263,6 +261,11 @@ class CollectionView extends Component {
         const scrolly = (totalHeight + horizontalScrollBarSize <= height) ? false : true
         //window.console.log(this.props.flag + ' ' + totalHeight + ' ' + totalWidth + ' ' + height + ' ' + width)
         //window.console.log(this.props.flag + ' ' + collectionStyle.overflowX + ' ' + collectionStyle.overflowY)
+        /*
+        if (this._scrollingContainer && (this.props.flag === "bottomRightCollection" || this.props.flag === "bottomLeftCollection")) {
+            window.console.log(this.props.flag + ' ' + this._scrollingContainer.scrollTop + ' ' + this._scrollingContainer.scrollLeft)
+        }
+        */
 
         return (
             /*
@@ -604,6 +607,5 @@ class CollectionView extends Component {
         })
     }
 }
-mixin.onClass(CollectionView, ReactComponentWithPureRenderMixin);
 
 export default CollectionView

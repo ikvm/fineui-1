@@ -140,6 +140,10 @@ const demos = [{
         value: 'TabsDemo'
     }, {
         id: 33,
+        pid: 3,
+        text: "calendar",
+        value: 'CalendarDemo'
+    },{
         pid: 2,
         text: 'ResizableTable',
         value: 'ResizableTableDemo'
