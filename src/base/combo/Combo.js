@@ -11,7 +11,7 @@ import {
     Layout,
     CenterLayout,
     VerticalLayout
-} from '../../layout'
+} from '../../core/layout'
 
 const CLASS_NAME = 'bi-react-combo';
 

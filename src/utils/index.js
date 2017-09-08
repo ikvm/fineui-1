@@ -137,6 +137,7 @@ export deepClone from 'lodash/cloneDeep'
 export math from 'lodash/math'
 
 export formatAddress from './utils/formatAddress'
+export isKhtml from './utils/isKhtml'
 
 
 export ReactComponentWithImmutableRenderMixin from './mixin/ReactComponentWithImmutableRenderMixin'

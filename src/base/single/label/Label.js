@@ -67,7 +67,7 @@ class Label extends Component {
                     lineHeight: textHeight ? `${textHeight}px` : 'normal'
                 }
                 return <Single className={ cn(CLASS_NAME, className) } {...props}>
-                         <CenterLayout whdth={ '100%' } height={ '100%' }>
+                         <CenterLayout width={ '100%' } height={ '100%' }>
                            <Text width={ textWidth } keyword={ keyword } py={ py } highLight={ highLight } style={ styleObj }>
                              { this.props.children !== undefined ? this.props.children : text }
                            </Text>

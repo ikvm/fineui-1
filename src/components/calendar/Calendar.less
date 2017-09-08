@@ -1,0 +1,15 @@
+@import '../../less/BI.base.less';
+.bi-react-calendar-item {
+    &:hover {
+        background-color: fade(@color-bi-background-disabled, 30%);
+        border-color: @color-bi-border-disabled;
+    }
+
+    &-active {
+        color: @color-bi-text-highlight;
+        background-color: fade(@color-bi-background-disabled, 30%);
+    }
+    &.active, &:active {
+        background-color: fade(@color-bi-background-disabled, 30%);
+    }
+}

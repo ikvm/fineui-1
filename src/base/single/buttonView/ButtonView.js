@@ -29,6 +29,7 @@ export default class ButtonView extends React.Component {
     static defaultProps = {
         stopPropagation: false,
         trigger: TRIGGER.CLICK,
+        disabled: false,
         handler: () => {
         }
     }
@@ -96,9 +97,9 @@ export default class ButtonView extends React.Component {
 
     render() {
 
-        const {handler, trigger, className, stopPropagation, ...props} = this.props
+        const {handler, trigger, className, stopPropagation, disabled, ...props} = this.props
 
-        return <Single className={ cn(CLASS_NAME, className) } {...this._bindEvent(trigger) } { ...props }>
+        return <Single className={ cn(CLASS_NAME, className, {[`${CLASS_NAME}-disabled`]: disabled}) } {...this._bindEvent(trigger) } { ...props }>
                  <CenterLayout>
                    { this.props.children }
                  </CenterLayout>
