@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types'
-import mixin from 'react-mixin';
-import {cn, clamp, MouseMoveTracker, ReactComponentWithPureRenderMixin} from 'utils'
+import {cn, clamp, MouseMoveTracker } from 'utils'
 import { AbsoluteLayout } from '../../core/layout'
 
 const RESIZER_WIDTH = 1
 
-class ColumnResizeHandle extends Component {
+class ColumnResizeHandle extends PureComponent {
     static propTypes = {
         visible: PropTypes.bool.isRequired,
 
@@ -124,6 +123,5 @@ class ColumnResizeHandle extends Component {
         );
     }
 }
-mixin.onClass(ColumnResizeHandle, ReactComponentWithPureRenderMixin);
 
 export default ColumnResizeHandle;

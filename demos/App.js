@@ -91,7 +91,6 @@ class App extends Component {
 						<ButtonDemo key="ButtonDemo" />
 						<LabelDemo key="LabelDemo" />
 						<TreeDemo key="TreeDemo" />
-						{/* <TableDemo key='TableDemo'></TableDemo> */}
 						<GridDemo key="GridLayoutDemo" />
 						<EditorDemo key="EditorDemo" />
 						<ComboDemo key="ComboDemo" />

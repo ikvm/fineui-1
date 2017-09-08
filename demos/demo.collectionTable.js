@@ -10,7 +10,7 @@ class CollectionTableDemo extends Component {
 
     render() {
 
-        let rowCount = 100,
+        let rowCount = 1000,
             columnCount = 100;
 
         const header = [], items = [], columnSize = [];

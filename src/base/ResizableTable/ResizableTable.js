@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
-import mixin from 'react-mixin'
-import {cn, emptyFunction, each, math, map, ReactComponentWithPureRenderMixin} from '../../utils'
+import React, { PureComponent } from 'react';
+import {cn, emptyFunction, each, math, map } from '../../utils'
 import {Layout, VerticalLayout, AbsoluteLayout} from '../../core/layout'
 import { CollectionTable } from '../CollectionTable'
 import ColumnResizeHandle from './ColumnResizeHandle'
 import './ResizableTable.less'
 
-class ResizableTable extends Component {
+class ResizableTable extends PureComponent {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -206,6 +205,5 @@ class ResizableTable extends Component {
         });
     }
 }
-mixin.onClass(ResizableTable, ReactComponentWithPureRenderMixin);
 
 export default ResizableTable;

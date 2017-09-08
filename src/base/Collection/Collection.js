@@ -1,12 +1,10 @@
-import React, {Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import mixin from 'react-mixin'
-import ReactComponentWithPureRenderMixin from 'react-addons-pure-render-mixin'
 import CollectionView from './CollectionView'
 import calculateSizeAndPositionData from './utils/calculateSizeAndPositionData'
 import getUpdatedOffsetForIndex from './utils/getUpdatedOffsetForIndex'
 
-class Collection extends Component {
+class Collection extends PureComponent {
 
     static propTypes = {
 
@@ -179,6 +177,5 @@ function defaultCellGroupRenderer({
         })
         .filter((renderedCell) => !!renderedCell)
 }
-mixin.onClass(Collection, ReactComponentWithPureRenderMixin);
 
 export default Collection
