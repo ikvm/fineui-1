@@ -1,5 +1,5 @@
 import Text from './text.js'
-import './index.less'
+import './Text.less'
 
 
 export default Text

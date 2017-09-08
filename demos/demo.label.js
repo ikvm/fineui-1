@@ -32,7 +32,7 @@ class LabelDemo extends Component {
 
 
     render() {
-        return <HorizontalCenterLayout ref={ (wraper) => this.wraper = wraper } width={ 800 } style={ { color: '#ffffff' } }>
+        return <HorizontalCenterLayout ref={ (wraper) => this.wraper = wraper } width={ 800 } scrollx={false} style={ { color: '#ffffff' } }>
                  <Text>文本组件</Text>
                  <CenterLayout>
                    <Button hgap={ 20 } handler={ this.redMarkHandler }>切换标红</Button>
@@ -64,10 +64,10 @@ class LabelDemo extends Component {
                  <Label className='label-bg' width={ 600 } height={ 60 } vgap={ 20 }>whiteSpace为nowrap,默认居中,设置了宽度高度,textHeight=30 的效果,多写几个字就出现三个点了, more more more more more more more moremore more more more more more more</Label>
                  <Label className='label-bg' width={ 600 } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设高度的效果</Label>
                  <Label className='label-bg' height={ 60 } width={ 250 } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设宽度度的效果填满父组件,设置宽度的话如果文字太长就出现3个点了</Label>
-                 <Label className='label-bg' height={ 60 } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设宽度度的效果填满父组件,设置宽度的话如果文字太长就出现3个点,多添加点文字,more more more</Label>
+                 <Label className='label-bg' height={ 60 } vgap={ 20 }>whiteSpace为nowrap,默认居中,不设宽度度的效果填满父组件,设置宽度的话如果文字太长就出现3个点,多添加点文字,more more more more more moremore more more more more mo</Label>
                  <Label className='label-bg' whiteSpace='normal' height={ 60 } textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中,whiteSpace为 normal,设置了高度,但没有宽度,文字高度30,如果文字太长了的话,那么滚动条是很有必要的.不信你看,多加点字效果更明显一点,在多加点.more more more more more more more more more more more more
                    more more more more more more more more more more more more more more more more more more more more more more more more more more more more more more</Label>
-                 <Label className='label-bg' height={ 60 } text='也可以通过text属性来设置label文字:text=" "' textHeight={ 30 } vgap={ 20 }></Label>
+                 <Label className='label-bg' height={ 60 } text='也可以通过text属性来设置label文字:text=" "' textHeight={ 30 } vgap={ 20 }/>
                </HorizontalCenterLayout>
 
     }

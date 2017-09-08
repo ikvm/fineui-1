@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { Layout } from '../../../core/layout'
 import Single from '../Single'
 import cn from 'classnames'
-import { isNotEmptyString } from '../../../utils'
+import  isNumber from  'lodash/isNumber'
 import makeFirstPy from './chinesePY'
 
 
-const CLASS_NAME = 'bi-text'
+const CLASS_NAME = 'fct-text'
 
 class Text extends Component {
     constructor(props) {
@@ -17,16 +17,17 @@ class Text extends Component {
     }
 
     static defaultProps = {
-        text: '',
-        py: '',
-        keyword: '',
-        highLight: false
+        textAlign: "left",
+        whiteSpace: "normal",
+        lineHeight: null,
+        handler: null,//如果传入handler,表示处理文字的点击事件，不是区域的
+        text: "",
+        py: "",
+        highLight:false
     }
 
-
-    //need todo:多音字问题
-    //done
-    render() {
+    //need todo:标红和高亮
+    _redMark=()=>{
         const {className, text, py, keyword, highLight, ...props} = this.props
         let temp = null
         let makeTag = (res) => {
@@ -63,16 +64,31 @@ class Text extends Component {
                 }
             }
             temp = <Single { ...props }>
-                     { [...result] }
-                   </Single>
+                { [...result] }
+            </Single>
         } else {
             temp = <Single className={ cn(CLASS_NAME, className, {
-                        'high-light': highLight
-                    }) } { ...props }>
-                     { this.props.children }
-                   </Single>
+                'high-light': highLight
+            }) } { ...props }>
+                { this.props.children }
+            </Single>
         }
         return temp
+    }
+
+
+    render() {
+        const {className,textAlign,whiteSpace,lineHeight,text,py,keyword,highLight,handler,...props}=this.props
+
+        const styleObj={
+            textAlign:textAlign,
+            whiteSpace:whiteSpace,
+            lineHeight:isNumber(lineHeight)?(lineHeight+'px'):'normal',
+            display: 'block' //flex里面做文本超出截取真是mmp,浪费了我一上午时间.,
+        }
+        return <Single className={cn(className,CLASS_NAME)} style={styleObj} {...props}>
+            {this.props.children}
+        </Single>
     }
 }
 

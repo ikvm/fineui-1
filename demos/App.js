@@ -50,7 +50,7 @@ class App extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			defaultShowKey: "ButtonDemo",
+			defaultShowKey: "LabelDemo",
 			demos: demos
 		};
 	}
@@ -115,7 +115,7 @@ class App extends Component {
 						<DownListDemo key="DownListDemo" />
 						<CollectionTableDemo key='CollectionTableDemo'></CollectionTableDemo>
 						<ResizableTableDemo key='ResizableTableDemo'></ResizableTableDemo>
-						<AdaptiveTableDemo key='AdaptiveTableDemo'></AdaptiveTableDemo> 
+						<AdaptiveTableDemo key='AdaptiveTableDemo'></AdaptiveTableDemo>
 					</CardLayout>
 				</HorizontalAdaptLayout.Item>
 			</HorizontalAdaptLayout>

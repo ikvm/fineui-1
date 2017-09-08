@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import { Layout, FillLayout, CenterLayout } from "../../core/layout";
+import  cn from  'classnames'
+import { Layout, FillLayout, VerticalCenterLayout,CenterLayout } from "../../core/layout";
+
+
+const CLASS_NAME='fct-single'
 
 export default class Single extends Component {
 	constructor(props, context) {
 		super(props, context);
 	}
 
-	static defaultPtops = {
+	static defaultProps = {
 		readonly: false,
 		title: null,
 		warningTitle: null,
@@ -16,6 +20,7 @@ export default class Single extends Component {
 
 	render() {
 		const {
+		    className,
 			readonly,
 			title,
 			warningTitle,
@@ -24,6 +29,6 @@ export default class Single extends Component {
 			...props
 		} = this.props;
 
-		return <FillLayout {...props}>{this.props.children}</FillLayout>;
+		return <CenterLayout className={cn(className,CLASS_NAME)} {...props}>{this.props.children}</CenterLayout>;
 	}
 }
