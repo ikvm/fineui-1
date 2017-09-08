@@ -113,12 +113,15 @@ class MouseMoveTracker {
     this._deltaX += (x - this._x);
     this._deltaY += (y - this._y);
 
+    /*
     if (this._animationFrameID === null) {
       // The mouse may move faster then the animation frame does.
       // Use `requestAnimationFrame` to avoid over-updating.
       this._animationFrameID =
         requestAnimationFrame(this._didMouseMove);
     }
+    */
+    this._didMouseMove();
 
     this._x = x;
     this._y = y;

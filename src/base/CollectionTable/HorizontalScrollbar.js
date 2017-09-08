@@ -6,9 +6,8 @@ import React, {Component } from 'react';
 import PropTypes from 'prop-types'
 import mixin from 'react-mixin';
 import ReactComponentWithPureRenderMixin from 'react-addons-pure-render-mixin';
-
+import Scrollbar from '../CollectionTable/Scrollbar'
 import {translateDOMPositionXY, cn} from 'utils';
-import Scrollbar from '../Table/Scrollbar'
 import './Scrollbar.less'
 
 class HorizontalScrollbar extends Component {
@@ -24,7 +23,8 @@ class HorizontalScrollbar extends Component {
 
         const outerContainerStyle = {
             height: Scrollbar.SIZE,
-            width: this.props.size
+            width: this.props.size,
+            visibility: this.props.visible ? 'visible' : 'hidden'
         };
         const innerContainerStyle = {
             height: Scrollbar.SIZE,
@@ -45,7 +45,7 @@ class HorizontalScrollbar extends Component {
                 <div style={innerContainerStyle}>
                     <Scrollbar
                         {...this.props}
-                        isOpaque={true}
+                        //isOpaque={true}
                         orientation="horizontal"
                         offset={undefined}
                     />
