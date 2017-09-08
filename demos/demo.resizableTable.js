@@ -3,6 +3,7 @@ import { CollectionTable } from '../src/base/CollectionTable';
 import { ResizableTable } from '../src/base/ResizableTable';
 import { AbsoluteLayout, CenterLayout } from '../src/core/layout';
 
+
 class ResizableTableDemo extends Component {
 
     constructor(props, context) {
@@ -11,7 +12,7 @@ class ResizableTableDemo extends Component {
 
     render() {
 
-        let rowCount = 100,
+        let rowCount = 1000,
             columnCount = 100;
 
         const header = [], items = [], columnSize = [];
