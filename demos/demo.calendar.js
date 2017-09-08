@@ -5,7 +5,8 @@ import React, { Component, PropTypes } from 'react'
 import Calendar from '../src/components/calendar'
 import Label from '../src/base/single/label'
 import ButtonView from '../src/base/single/buttonView'
-import { Layout, CenterLayout, VerticalLayout } from '../src/core/layout'
+import { Layout, CenterLayout, VerticalLayout, HorizontalLayout } from '../src/core/layout'
+import './example.less'
 
 const TODAY = {
     year: new Date().getFullYear(),
@@ -70,21 +71,23 @@ class CalendarDemo extends Component{
         let {year, month, day} = this.state;
 
         return <VerticalLayout>
-                <CenterLayout>
-                    <Label>{this.storeValue.year}年</Label>
-                    <Label>{this.storeValue.month + 1}月</Label>
-                    <Label>{this.storeValue.day}日</Label>
-                </CenterLayout>
-                <CenterLayout>
+            <HorizontalLayout>
+                <Label>{this.storeValue.year}年</Label>
+                <Label>{this.storeValue.month + 1}月</Label>
+                <Label>{this.storeValue.day}日</Label>
+            </HorizontalLayout>
+            <VerticalLayout className="demo-calendar" height={210} width={250}>
+                <CenterLayout className="demo-calendar-head" height={25}>
                     <ButtonView handler={this._prevMonth.bind(this)}>{"<"}</ButtonView>
-                    <Label lgap={50}>{year}年</Label>
-                    <Label rgap={50}>{month + 1}月</Label>
+                    <Label lgap={70}>{year}年</Label>
+                    <Label rgap={70}>{month + 1}月</Label>
                     <ButtonView handler={this._nextMonth.bind(this)}>{">"}</ButtonView>
                 </CenterLayout>
                 <CenterLayout>
                     <Calendar year={year} month={month} day={day} handler={this.setValue} />
                 </CenterLayout>
             </VerticalLayout>
+        </VerticalLayout>
 
     }
 }

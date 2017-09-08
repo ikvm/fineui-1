@@ -87,7 +87,7 @@ class  Calendar extends Component {
                  header.push({
                      row: 0,
                      column: i,
-                     el: <Label>{value}</Label>
+                     el: <Label hgap={10} vgap={5}>{value}</Label>
                  });
             }
         );
