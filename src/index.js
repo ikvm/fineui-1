@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import App from './example/App';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import App from "../demos/App";
+import TestApp from "../demos/testapp";
 
-import 'reset.css';
-import './layout'
-
-ReactDOM.render(<App/>,
-    document.getElementById('app')
-);
+ReactDOM.render(<App />, document.getElementById("app"));

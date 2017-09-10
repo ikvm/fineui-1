@@ -1,0 +1,24 @@
+@import '../index';
+.flex-grid-layout {
+    .display-flex();
+    .direction-vertical();
+    .justify-content(flex-start);
+    .align-items(stretch);
+    .flex-grow();
+    &-row {
+        .display-flex();
+        .direction-horizontal();
+        .flex-grow();
+        .justify-content(flex-start);
+        .align-items(stretch);
+    }
+    &-col {
+        .display-flex();
+        .flex-grow();
+        .justify-content(center);
+        .align-items(stretch);
+        & > *{
+            .flex-grow();
+        }
+    }
+}

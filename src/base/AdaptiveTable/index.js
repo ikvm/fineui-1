@@ -1,0 +1,1 @@
+export AdaptiveTable from './AdaptiveTable'

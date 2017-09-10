@@ -1,0 +1,27 @@
+@import "../index";
+
+.flex-right-layout {
+    .display-flex();
+
+    .direction-horizontal-reverse();
+
+    .justify-content(flex-start);
+
+    .align-items(flex-start);
+
+    .flex-wrap(wrap);
+
+    &.layout-wrapper {
+        min-height: 100%;
+    }
+
+    &._stretch {
+        .align-items(stretch);
+    }
+    &._middle {
+        .align-items(center);
+    }
+    &._bottom {
+        .align-items(flex-end);
+    }
+}
