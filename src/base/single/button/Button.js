@@ -18,7 +18,7 @@ import Icon from '../icon'
 import { CenterLayout } from '../../../core/layout'
 
 
-const CLASS_NAME = 'bi-button'
+const CLASS_NAME = 'fct-button'
 
 const LEVEL = {
     COMMON: 'common',
@@ -56,13 +56,14 @@ export default class Button extends React.Component {
             [`${CLASS_NAME}-${level}`]: level,
             [`${CLASS_NAME}-${level}-clear`]: clear,
             [`${CLASS_NAME}-block`]: block,
-            [`${CLASS_NAME}-${level}-disabled`]: disabled
+            [`${CLASS_NAME}-${level}-disabled`]: disabled,
+            [`${iconCls}`]: iconCls
         })
 
         let icon = null
         if (iconCls) {
             icon = <CenterLayout width={ iconWidth } height={ iconHeight }>
-                     <Icon iconCls={ iconCls }/>
+                     <Icon/>
                    </CenterLayout>
         }
         return <ButtonView className={ classes } { ...props }>

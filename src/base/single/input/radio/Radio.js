@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import IconButton from '../../iconbutton'
 import { HorizontalAdaptLayout, HorizontalLayout } from '../../../../core/layout'
 import Label from '../../label'
+import emptyFunction from 'fbjs/lib/emptyFunction'
 
-const CLASS_NAME = 'bi-radio'
+
+const CLASS_NAME = 'fct-radio'
 
 export default class Radio extends Component {
     constructor(props, context) {
@@ -14,8 +16,7 @@ export default class Radio extends Component {
     static defaultProps = {
         selected: false,
         disabled: false,
-        handler: () => {
-        }
+        handler: emptyFunction
     }
 
     handleChange = () => {

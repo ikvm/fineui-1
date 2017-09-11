@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import cn from 'classnames'
 import trim from 'lodash/trim'
+import emptyFunction from 'fbjs/lib/emptyFunction'
 
-const CLASS_NAME = 'bi-input'
+const CLASS_NAME = 'fct-input'
 
 export default class Input extends Component {
     constructor(props, context) {
@@ -10,7 +11,7 @@ export default class Input extends Component {
     }
     static defaultProps = {
         validationChecker: () => true,
-        quitChecker: () => { }, //按确定键能否退出编辑
+        quitChecker: emptyFunction, //按确定键能否退出编辑
         allowBlank: false,
         placeholder: ''
     }

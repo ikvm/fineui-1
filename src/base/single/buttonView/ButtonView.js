@@ -9,7 +9,7 @@ import emptyFunction from 'fbjs/lib/emptyFunction'
 import Single from "../Single";
 import { FillLayout } from "../../../core/layout";
 
-const CLASS_NAME = "bi-button-view";
+const CLASS_NAME = "fct-button-view";
 
 const TRIGGER = {
 	CLICK: "click",

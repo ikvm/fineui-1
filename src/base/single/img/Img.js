@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import cn from 'classnames'
 
 
-const CLASS_NAME = 'bi-img'
+const CLASS_NAME = 'fct-img'
 
 export default class Img extends Component {
     constructor(props, context) {
@@ -18,7 +18,7 @@ export default class Img extends Component {
     render() {
         const { src, width, height, className, ...props } = this.props
 
-        return <img style={cn(className, CLASS_NAME)} src={src} width={width} height={height} />
+        return <img style={cn(className, CLASS_NAME)} src={src} width={width} height={height} {...props} />
 
     }
 }

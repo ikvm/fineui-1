@@ -39,7 +39,7 @@ class LabelDemo extends Component {
                    <Button handler={ this.highLightHandler }>切换高亮</Button>
                  </CenterLayout>
                  关键点就是几个重要因素, 是否有宽高, 是否设定了文字区域宽, whiteSpace 是什么,为了看着方便,暂时先给文本区域加个小边框
-                 <Label className='label-bg' whiteSpace='normal' keyword={ this.state.keyword } highLight={ this.state.isHighLight } textAlign='left' height={ 100 } width={ 600 }
+                 <Label className='label-bg' invisible={false} whiteSpace='normal' keyword={ this.state.keyword } highLight={ this.state.isHighLight } textAlign='left' height={ 100 } width={ 600 }
                    textWidth={ 300 } textHeight={ 30 } vgap={ 20 }>这是一个 label 组件,默认居中河北省,whiteSpace为 normal,设置了宽度,高度,文字高度30,文字宽度,textAlign为left</Label>
                  <Label className='label-bg' whiteSpace='normal' width={ 100 } textWidth={ 50 } vgap={ 20 }>label</Label>
                  <Label className='label-bg' whiteSpace='normal' height={ 60 } width={ 600 } textWidth={ 300 } textHeight={ 30 }

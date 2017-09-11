@@ -72,6 +72,7 @@ class Label extends Component {
 								py={py}
 								highLight={highLight}
                                 textAlign={textAlign}
+                                lineHeight={textHeight}
                                 whiteSpace={whiteSpace}
 							>
 								{this.props.children !== undefined ? this.props.children : text}
@@ -108,7 +109,6 @@ class Label extends Component {
 					>
 							{/*这里有一个需要注意,因为有不设置宽度,但是又设置了高度的情况,那么肯定需要滚动,但是不知道宽度怎么滚动啊,所以这里width 设为 '100%'*/}
 							<Text
-								width={"100%"}
 								keyword={keyword}
 								py={py}
                                 highLight={highLight}

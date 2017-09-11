@@ -29,6 +29,6 @@ export default class Single extends Component {
 			...props
 		} = this.props;
 
-		return <CenterLayout className={cn(className,CLASS_NAME)} {...props}>{this.props.children}</CenterLayout>;
+		return <CenterLayout className={cn(className,CLASS_NAME)} {...props}>{this.props.children !== undefined ? this.props.children : value}</CenterLayout>;
 	}
 }
