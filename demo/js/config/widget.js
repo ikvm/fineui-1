@@ -5,7 +5,7 @@ Demo.WIDGET_CONFIG = [{
 }, {
     pId: 4,
     id: 420,
-    text: '各种小控件',
+    text: '各种小控件'
 }, {
     pId: 420,
     text: "各种通用按钮",
@@ -252,5 +252,16 @@ Demo.WIDGET_CONFIG = [{
     pId: 419,
     text: "bi.file_manager",
     value: "demo.file_manager"
-}
-];
+}, {
+    pId: 4,
+    id: 421,
+    text: "滚动调节"
+}, {
+    pId: 421,
+    text: "bi.slider",
+    value: "demo.slider"
+}, {
+    pId: 4,
+    text: '时间间隔',
+    value: 'demo.time_interval'
+}];

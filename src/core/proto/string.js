@@ -2,7 +2,7 @@
  * 对字符串对象的扩展
  * @class String
  */
-$.extend(String.prototype, {
+_.extend(String.prototype, {
 
     /**
      * 判断字符串是否已指定的字符串开始
@@ -60,7 +60,7 @@ $.extend(String.prototype, {
         } else {
             src += "&";
         }
-        $.each(paras, function (name, value) {
+        _.each(paras, function (name, value) {
             if (typeof(name) === 'string') {
                 src += name + "=" + value + "&";
             }
@@ -119,7 +119,7 @@ $.extend(String.prototype, {
  * 对字符串对象的扩展
  * @class String
  */
-$.extend(String, {
+_.extend(String, {
 
     /**
      * 对字符串中的'和\做编码处理

@@ -16,7 +16,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.VerticalAdaptLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "height": "100%",
             "white-space": "nowrap",
@@ -24,7 +24,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -86,7 +86,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {

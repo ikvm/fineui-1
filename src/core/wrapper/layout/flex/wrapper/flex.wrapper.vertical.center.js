@@ -21,7 +21,7 @@ BI.FlexVerticalCenter = BI.inherit(BI.Layout, {
     render: function () {
         BI.FlexVerticalCenter.superclass.render.apply(this, arguments);
         var o = this.options;
-        this.$wrapper = $("<div>").addClass("flex-wrapper-vertical-center-wrapper");
+        this.$wrapper = BI.Element("<div>").addClass("flex-wrapper-vertical-center-wrapper");
         this.populate(this.options.items);
     },
 
@@ -54,7 +54,7 @@ BI.FlexVerticalCenter = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {

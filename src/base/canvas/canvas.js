@@ -23,8 +23,8 @@ BI.Canvas = BI.inherit(BI.Widget, {
         this.element.append(canvas);
         canvas.width = o.width;
         canvas.height = o.height;
-        $(canvas).width("100%");
-        $(canvas).height("100%");
+        BI.Element(canvas).width("100%");
+        BI.Element(canvas).height("100%");
         this.canvas = canvas;
         this._queue = [];
     },

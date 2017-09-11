@@ -19,6 +19,7 @@ module.exports = function (grunt) {
                     'src/core/mvc/**/*.js',
                     'src/core/base.js',
                     'src/core/ob.js',
+                    'src/core/element.js',
                     'src/core/widget.js',
                     'src/core/model.js',
                     'src/core/view.js',
@@ -70,7 +71,7 @@ module.exports = function (grunt) {
                     'src/widget/**/*.js',
                     'src/component/**/*.js'
                 ],
-                dest: "dist/widget.js"
+                dest: 'dist/widget.js'
             },
             chartJs: {
                 src: [
@@ -79,7 +80,27 @@ module.exports = function (grunt) {
                     'src/addons/chart/factory.charts.js',
                     'src/addons/chart/**/*.js'
                 ],
-                dest: "dist/chart.js"
+                dest: 'dist/chart.js'
+            },
+            sliderJs: {
+                src: [
+                    'src/addons/slider/slider/**/*.js'
+                ],
+                dest: 'dist/slider.js'
+            },
+            jqueryuiJs: {
+                src: [
+                    'src/addons/slider/lib/jquery.ui.core.js',
+                    'src/addons/slider/lib/jquery.ui.core.js',
+                    'src/addons/slider/lib/jquery.ui.widget.js',
+                    'src/addons/slider/lib/jquery.ui.mouse.js',
+                    'src/addons/slider/lib/jquery.ui.position.js',
+                    'src/addons/slider/lib/jquery.ui.resizable.js',
+                    'src/addons/slider/lib/jquery.ui.draggable.js',
+                    'src/addons/slider/lib/jquery.ui.droppable.js',
+                    'src/addons/slider/lib/jquery.ui.sortable.js'
+                ],
+                dest: 'dist/jqueryui.js'
             },
             coreCss: {
                 src: ['src/css/core/**/*.css', 'src/css/theme/**/*.css'],
@@ -99,7 +120,7 @@ module.exports = function (grunt) {
             },
 
             bundleJs: {
-                src: ['dist/core.js', 'dist/base.js', 'dist/case.js', 'dist/widget.js', 'public/js/**/*.js'],
+                src: ['public/js/index.js', 'dist/core.js', 'dist/base.js', 'dist/case.js', 'dist/widget.js', 'public/js/**/*.js'],
                 dest: 'dist/bundle.js'
             },
 
@@ -131,6 +152,7 @@ module.exports = function (grunt) {
                     'src/core/events.js',
                     'src/core/var.js',
                     'src/core/ob.js',
+                    'src/core/element.js',
                     'src/core/widget.js',
                     'src/core/model.js',
                     'src/core/view.js',
@@ -193,7 +215,7 @@ module.exports = function (grunt) {
                     'src/widget/**/*.js',
                     'src/component/**/*.js'
                 ],
-                dest: "bi/widget.js"
+                dest: 'bi/widget.js'
             },
             bi_chartJs: {
                 src: [
@@ -202,7 +224,27 @@ module.exports = function (grunt) {
                     'src/addons/chart/factory.charts.js',
                     'src/addons/chart/**/*.js'
                 ],
-                dest: "bi/chart.js"
+                dest: 'bi/chart.js'
+            },
+            bi_sliderJs: {
+                src: [
+                    'src/addons/slider/slider/**/*.js'
+                ],
+                dest: 'bi/slider.js'
+            },
+            bi_jqueryuiJs: {
+                src: [
+                    'src/addons/slider/lib/jquery.ui.core.js',
+                    'src/addons/slider/lib/jquery.ui.core.js',
+                    'src/addons/slider/lib/jquery.ui.widget.js',
+                    'src/addons/slider/lib/jquery.ui.mouse.js',
+                    'src/addons/slider/lib/jquery.ui.position.js',
+                    'src/addons/slider/lib/jquery.ui.resizable.js',
+                    'src/addons/slider/lib/jquery.ui.draggable.js',
+                    'src/addons/slider/lib/jquery.ui.droppable.js',
+                    'src/addons/slider/lib/jquery.ui.sortable.js'
+                ],
+                dest: 'bi/jqueryui.js'
             },
             bi_coreCss: {
                 src: ['src/css/core/**/*.css', 'src/css/theme/**/*.css'],
@@ -269,7 +311,7 @@ module.exports = function (grunt) {
         },
         watch: {
             scripts: {
-                files: ['src/**/*.js', 'demo/js/**/*.js', 'demo/config.js', 'demo/less/**/*.less'],
+                files: ['src/**/*.js', 'demo/js/**/*.js', 'demo/version.js', 'demo/config.js', 'demo/less/**/*.less'],
                 tasks: ['less', 'concat'],
                 options: {
                     spanw: true,

@@ -6,7 +6,7 @@
  */
 BI.TextAreaEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.TextAreaEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.TextAreaEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-textarea-editor bi-card',
             value: ''
         });
@@ -142,7 +142,9 @@ BI.TextAreaEditor = BI.inherit(BI.Single, {
     setStyle: function (style) {
         this.style = style;
         this.element.css(style);
-        this.content.element.css(style)
+        this.content.element.css(BI.extend({}, style, {
+            color: style.color || BI.DOM.getContrastColor(BI.DOM.isRGBColor(style.backgroundColor) ? BI.DOM.rgb2hex(style.backgroundColor) : style.backgroundColor)
+        }))
     },
 
     getStyle: function () {

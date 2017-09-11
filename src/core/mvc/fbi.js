@@ -1130,10 +1130,7 @@
         // attached to it. Exposed for subclasses using an alternative DOM
         // manipulation API.
         _removeElement: function () {
-            this.$el.remove();
-            if ($.browser.msie === true) {
-                this.el.outerHTML = '';
-            }
+            this.$el.destroy();
         },
 
         // Change the view's element (`this.el` property) and re-delegate the
@@ -1174,7 +1171,7 @@
         // alternative DOM manipulation API and are only required to set the
         // `this.el` property.
         _setElement: function (el) {
-            this.$el = el instanceof BI.$ ? el : BI.$(el);
+            this.$el = el instanceof BI.Element ? el : BI.Element(el);
             this.element = this.$el;
             this.el = this.$el[0];
         },

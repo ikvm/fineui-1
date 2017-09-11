@@ -6661,7 +6661,6 @@ BI.ShelterEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: true,
             watermark: "",
             errorText: "",
@@ -6685,7 +6684,6 @@ BI.ShelterEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -6918,7 +6916,6 @@ BI.SignInitialEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: true,
             watermark: "",
             errorText: "",
@@ -6943,7 +6940,6 @@ BI.SignInitialEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -7189,7 +7185,6 @@ BI.SignEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: true,
             watermark: "",
             errorText: "",
@@ -7212,7 +7207,6 @@ BI.SignEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -7449,7 +7443,6 @@ BI.StateEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: true,
             watermark: "",
             errorText: "",
@@ -7472,7 +7465,6 @@ BI.StateEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -7747,7 +7739,6 @@ BI.SimpleStateEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -7978,7 +7969,6 @@ BI.TextEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: false,
             watermark: "",
             errorText: "",
@@ -8007,7 +7997,6 @@ BI.TextEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -11064,6 +11053,37 @@ BI.extend(BI.DynamicSummaryTreeTable, {
 });
 
 BI.shortcut("bi.dynamic_summary_tree_table", BI.DynamicSummaryTreeTable);/**
+ * Created by GUY on 2016/5/7.
+ * @class BI.LayerTreeTableCell
+ * @extends BI.Single
+ */
+BI.LayerTreeTableCell = BI.inherit(BI.Widget, {
+    _defaultConfig: function () {
+        return BI.extend(BI.LayerTreeTableCell.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: "bi-layer-tree-table-cell",
+            layer: 0,
+            text: ""
+        })
+    },
+
+    _init: function () {
+        BI.LayerTreeTableCell.superclass._init.apply(this, arguments);
+        var o = this.options;
+        BI.createWidget({
+            type: "bi.label",
+            element: this.element,
+            textAlign: "left",
+            whiteSpace: "nowrap",
+            height: o.height,
+            text: o.text,
+            value: o.value,
+            lgap: 5 + 30 * o.layer,
+            rgap: 5
+        })
+    }
+});
+
+BI.shortcut("bi.layer_tree_table_cell", BI.LayerTreeTableCell);/**
  *
  * 层级树状结构的表格
  *
@@ -12455,7 +12475,6 @@ BI.EditorTrigger = BI.inherit(BI.Trigger, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: false,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText

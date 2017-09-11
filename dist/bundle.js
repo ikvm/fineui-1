@@ -1,4 +1,55 @@
-/*!
+if (!window.BI) {
+    window.BI = {};
+}
+BI.servletURL = "https://fanruan.coding.me/fineui/dist/";
+BI.resourceURL = "https://fanruan.coding.me/fineui/dist/resource/";
+BI.i18n = {
+    "BI-Basic_OK": "确定",
+    "BI-Basic_Sure": "确定",
+    "BI-Basic_Clears": "清空",
+    "BI-Basic_Cancel": "取消",
+    "BI-Basic_Time": "时间",
+    "BI-Basic_Simple_Sunday": "日",
+    "BI-Basic_Simple_Monday": "一",
+    "BI-Basic_Simple_Tuesday": "二",
+    "BI-Basic_Simple_Wednesday": "三",
+    "BI-Basic_Simple_Thursday": "四",
+    "BI-Basic_Simple_Friday": "五",
+    "BI-Basic_Simple_Saturday": "六",
+    "BI-Multi_Date_Year": "年",
+    "BI-Multi_Date_Month": "月",
+    "BI-Multi_Date_Quarter": "季度",
+    "BI-Basic_Unrestricted": "无限制",
+    "BI-Quarter_1": "第1季度",
+    "BI-Quarter_2": "第2季度",
+    "BI-Quarter_3": "第3季度",
+    "BI-Quarter_4": "第4季度",
+    "BI-Basic_Value": "值",
+    "BI-Load_More": "加载更多",
+    "BI-Select_All": "全选",
+    "BI-Basic_Auto": "自动",
+    "BI-No_More_Data": "无更多数据",
+    "BI-No_Selected_Value": "没有可选项",
+    "BI-Basic_Clear": "清除",
+    "BI-Multi_Date_Relative_Current_Time": "相对当前时间",
+    "BI-Multi_Date_Year_Prev": "年前",
+    "BI-Multi_Date_Year_Next": "年后",
+    "BI-Multi_Date_Year_Begin": "年初",
+    "BI-Multi_Date_Year_End": "年末",
+    "BI-Multi_Date_Quarter_Prev": "个季度前",
+    "BI-Multi_Date_Quarter_Next": "个季度后",
+    "BI-Multi_Date_Quarter_Begin": "季度初",
+    "BI-Multi_Date_Quarter_End": "季度末",
+    "BI-Multi_Date_Month_Prev": "个月前",
+    "BI-Multi_Date_Month_Next": "个月后",
+    "BI-Multi_Date_Month_Begin": "月初",
+    "BI-Multi_Date_Month_End": "月末",
+    "BI-Multi_Date_Week_Prev": "周前",
+    "BI-Multi_Date_Week_Next": "周后",
+    "BI-Multi_Date_Day_Prev": "天前",
+    "BI-Multi_Date_Day_Next": "天后",
+    "BI-Multi_Date_Today": "今天"
+};/*!
  * jQuery JavaScript Library v1.9.1
  * http://jquery.com/
  *
@@ -12323,10 +12374,7 @@ BI.Factory = {
         // attached to it. Exposed for subclasses using an alternative DOM
         // manipulation API.
         _removeElement: function () {
-            this.$el.remove();
-            if ($.browser.msie === true) {
-                this.el.outerHTML = '';
-            }
+            this.$el.destroy();
         },
 
         // Change the view's element (`this.el` property) and re-delegate the
@@ -12367,7 +12415,7 @@ BI.Factory = {
         // alternative DOM manipulation API and are only required to set the
         // `this.el` property.
         _setElement: function (el) {
-            this.$el = el instanceof BI.$ ? el : BI.$(el);
+            this.$el = el instanceof BI.Element ? el : BI.Element(el);
             this.element = this.$el;
             this.el = this.$el[0];
         },
@@ -13042,7 +13090,7 @@ if (!window.BI) {
     window.BI = {};
 }
 ;
-!(function ($, undefined) {
+!(function (undefined) {
     var traverse = function (func, context) {
         return function (value, key, obj) {
             return func.call(context, key, value, obj);
@@ -14188,7 +14236,7 @@ if (!window.BI) {
             });
         }
     });
-})(jQuery);/**
+})();/**
  * 客户端观察者，主要处理事件的添加、删除、执行等
  * @class BI.OB
  * @abstract
@@ -14202,7 +14250,7 @@ BI.OB = function (config) {
     this._init();
     this._initRef();
 };
-$.extend(BI.OB.prototype, {
+_.extend(BI.OB.prototype, {
     props: {},
     init: null,
     destroyed: null,
@@ -14331,7 +14379,389 @@ $.extend(BI.OB.prototype, {
         this.destroyed && this.destroyed();
         this.purgeListeners();
     }
-});/**
+});BI.Element = function (tag) {
+    if (!(this instanceof BI.Element)) {
+        return new BI.Element(tag);
+    }
+    this.$$el = BI.Element.module.apply(null, arguments);
+    this[0] = this.$$el[0];
+    this.length = this.$$el.length;
+};
+BI.Element.prototype = {
+    clone: function () {
+        return BI.Element(this.$$el.clone());
+    },
+    append: function (cls) {
+        this.$$el.append.apply(this.$$el, arguments);
+        return this;
+    },
+    appendTo: function (ele) {
+        this.$$el.appendTo(ele.$$el || ele);
+        return this;
+    },
+
+    prepend: function (cls) {
+        this.$$el.prepend.apply(this.$$el, arguments);
+        return this;
+    },
+
+    prependTo: function (ele) {
+        this.$$el.prependTo(ele.$$el || ele);
+        return this;
+    },
+
+    before: function (ele) {
+        this.$$el.before(ele.$$el);
+        return this;
+    },
+    after: function (ele) {
+        this.$$el.after(ele.$$el);
+        return this;
+    },
+
+    empty: function (cls) {
+        this.$$el.empty.apply(this.$$el, arguments);
+        return this;
+    },
+
+    remove: function () {
+        this.$$el.remove.apply(this.$$el, arguments);
+        return this;
+    },
+
+    //属性
+    hasClass: function (cls) {
+        return this.$$el.addClass.apply(this.$$el, arguments);
+    },
+    addClass: function (cls) {
+        this.$$el.addClass.apply(this.$$el, arguments);
+        return this;
+    },
+    removeClass: function (cls) {
+        this.$$el.removeClass.apply(this.$$el, arguments);
+        return this;
+    },
+    is: function (cls) {
+        var res = this.$$el.is.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    attr: function (cls) {
+        var res = this.$$el.attr.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    data: function (cls) {
+        var res = this.$$el.data.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    css: function (cls) {
+        var res = this.$$el.css.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    text: function (cls) {
+        var res = this.$$el.text.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    val: function () {
+        var res = this.$$el.val.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    html: function () {
+        var res = this.$$el.html.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    width: function (cls) {
+        var res = this.$$el.width.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    height: function (cls) {
+        var res = this.$$el.height.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    outerWidth: function (cls) {
+        var res = this.$$el.outerWidth.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    outerHeight: function (cls) {
+        var res = this.$$el.outerHeight.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    find: function (ele) {
+        var res = this.$$el.find(ele.$$el || ele);
+        return BI.Element(res);
+    },
+    scrollTop: function () {
+        var res = this.$$el.scrollTop.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    scrollLeft: function () {
+        var res = this.$$el.scrollLeft.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    position: function () {
+        var res = this.$$el.position.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    offset: function () {
+        var res = this.$$el.offset.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    padding: function () {
+        var res = this.$$el.padding.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+
+    border: function () {
+        var res = this.$$el.border.apply(this.$$el, arguments);
+        if (res !== this.$$el) {
+            return res;
+        }
+        return this;
+    },
+    insets: function () {
+        var p = this.padding(),
+            b = this.border();
+        return {
+            'top': p.top,
+            'bottom': p.bottom + b.bottom + b.top,
+            'left': p.left,
+            'right': p.right + b.right + b.left
+        };
+    },
+
+    bounds: function (value) {
+        var tmp = {hasIgnoredBounds: true};
+
+        if (value) {
+            if (!isNaN(value.x)) {
+                tmp.left = value.x;
+            }
+            if (!isNaN(value.y)) {
+                tmp.top = value.y;
+            }
+            if (value.width != null) {
+                tmp.width = (value.width - (this.outerWidth(true) - this.width()));
+                tmp.width = (tmp.width >= 0) ? tmp.width : value.width;
+                // fix chrome
+                //tmp.width = (tmp.width >= 0) ? tmp.width : 0;
+            }
+            if (value.height != null) {
+                tmp.height = value.height - (this.outerHeight(true) - this.height());
+                tmp.height = (tmp.height >= 0) ? tmp.height : value.height;
+                // fix chrome
+                //tmp.height = (tmp.height >= 0) ? tmp.height : value.0;
+            }
+            this.css(tmp);
+            return this;
+        }
+        else {
+            // richer:注意此方法只对可见元素有效
+            tmp = this.position();
+            return {
+                'x': tmp.left,
+                'y': tmp.top,
+                // richer:这里计算外部宽度和高度的时候，都不包括边框
+                'width': this.outerWidth(),
+                'height': this.outerHeight()
+            };
+        }
+    },
+
+    //事件
+    on: function () {
+        this.$$el.on.apply(this.$$el, arguments);
+        return this;
+    },
+    bind: function () {
+        this.$$el.bind.apply(this.$$el, arguments);
+        return this;
+    },
+
+    off: function () {
+        this.$$el.off.apply(this.$$el, arguments);
+        return this;
+    },
+    trigger: function () {
+        this.$$el.trigger.apply(this.$$el, arguments);
+        return this;
+    },
+
+    click: function () {
+        this.$$el.click.apply(this.$$el, arguments);
+        return this;
+    },
+
+    hover: function () {
+        this.$$el.hover.apply(this.$$el, arguments);
+        return this;
+    },
+
+    mousedown: function () {
+        this.$$el.mousedown.apply(this.$$el, arguments);
+        return this;
+    },
+
+    mouseup: function () {
+        this.$$el.mouseup.apply(this.$$el, arguments);
+        return this;
+    },
+
+    mouseover: function () {
+        this.$$el.mouseover.apply(this.$$el, arguments);
+        return this;
+    },
+
+    mousewheel: function () {
+        this.$$el.mousewheel.apply(this.$$el, arguments);
+        return this;
+    },
+
+    keydown: function () {
+        this.$$el.keydown.apply(this.$$el, arguments);
+        return this;
+    },
+
+    keyup: function () {
+        this.$$el.keyup.apply(this.$$el, arguments);
+        return this;
+    },
+
+    focus: function () {
+        this.$$el.focus.apply(this.$$el, arguments);
+        return this;
+    },
+    blur: function () {
+        this.$$el.blur.apply(this.$$el, arguments);
+        return this;
+    },
+    focusout: function () {
+        this.$$el.focusout.apply(this.$$el, arguments);
+        return this;
+    },
+    select: function () {
+        this.$$el.select.apply(this.$$el, arguments);
+        return this;
+    },
+
+    scroll: function () {
+        this.$$el.scroll.apply(this.$$el, arguments);
+        return this;
+    },
+
+    slideDown: function () {
+        this.$$el.slideDown.apply(this.$$el, arguments);
+        return this;
+    },
+    slideUp: function () {
+        this.$$el.slideUp.apply(this.$$el, arguments);
+        return this;
+    },
+
+    fadeIn: function () {
+        this.$$el.fadeIn.apply(this.$$el, arguments);
+        return this;
+    },
+
+    fadeOut: function () {
+        this.$$el.fadeOut.apply(this.$$el, arguments);
+        return this;
+    },
+
+    show: function () {
+        this.$$el.show.apply(this.$$el, arguments);
+        return this;
+    },
+    hide: function () {
+        this.$$el.hide.apply(this.$$el, arguments);
+        return this;
+    },
+
+    resize: function () {
+        this.$$el.resize.apply(this.$$el, arguments);
+        return this;
+    },
+};
+
+BI.extend(BI.Element.prototype, {
+    draggable: function () {
+        this.$$el.draggable.apply(this.$$el, arguments);
+        return this;
+    },
+    droppable: function () {
+        this.$$el.droppable.apply(this.$$el, arguments);
+        return this;
+    },
+    resizable: function () {
+        this.$$el.resizable.apply(this.$$el, arguments);
+        return this;
+    },
+    sortable: function () {
+        this.$$el.sortable.apply(this.$$el, arguments);
+        return this;
+    }
+});
+
+BI.Element.createElement = function (tagName) {
+    return document.createElement(tagName);
+};
+
+BI.Element.createDocumentFragment = function () {
+    return document.createDocumentFragment();
+};
+
+BI.Element.registerModule = function (module) {
+    BI.Element.module = module;
+};
+
+
+BI.Element.Event = jQuery.Event;/**
  * Widget超类
  * @class BI.Widget
  * @extends BI.OB
@@ -14363,14 +14793,14 @@ BI.Widget = BI.inherit(BI.OB, {
 
     render: null,
 
-    beforeMounted: null,
+    beforeMount: null,
 
     mounted: null,
 
     update: function () {
     },
 
-    beforeDestroyed: null,
+    beforeDestroy: null,
 
     destroyed: null,
 
@@ -14407,10 +14837,10 @@ BI.Widget = BI.inherit(BI.OB, {
             // if (o.root !== true) {
             //     throw new Error("root is a required property");
             // }
-            this.element = $(o.element);
+            this.element = new BI.Element(o.element);
             this._isRoot = true;
         } else {
-            this.element = $(document.createElement(o.tagName));
+            this.element = new BI.Element(BI.Element.createElement(o.tagName));
         }
         if (o.baseCls || o.extraCls || o.cls) {
             this.element.addClass((o.baseCls || "") + " " + (o.extraCls || "") + " " + (o.cls || ""));
@@ -14498,7 +14928,7 @@ BI.Widget = BI.inherit(BI.OB, {
         if (!isMounted) {
             return;
         }
-        this.beforeMounted && this.beforeMounted();
+        this.beforeMount && this.beforeMount();
         this._isMounted = true;
         this._mountChildren && this._mountChildren();
         BI.each(this._children, function (i, widget) {
@@ -14738,7 +15168,7 @@ BI.Widget = BI.inherit(BI.OB, {
     },
 
     __d: function () {
-        this.beforeDestroyed && this.beforeDestroyed();
+        this.beforeDestroy && this.beforeDestroy();
         BI.each(this._children, function (i, widget) {
             widget._unMount && widget._unMount();
         });
@@ -15310,7 +15740,7 @@ BI.View = BI.inherit(BI.V, {
 
     created: null,
 
-    beforeDestroyed: null,
+    beforeDestroy: null,
 
     destroyed: null,
 
@@ -15421,7 +15851,7 @@ BI.View = BI.inherit(BI.V, {
             });
 
             var list = [];
-            if (this[keys[0]] && (this[keys[0]] instanceof $ || this[keys[0]].element instanceof $)) {
+            if (this[keys[0]] && (this[keys[0]] instanceof BI.Element || this[keys[0]].element instanceof BI.Element)) {
                 list = [this[keys[0]]]
                 delete events[key];
             } else if (BI.isArray(this[keys[0]]) || BI.isPlainObject(this[keys[0]])) {
@@ -15801,7 +16231,7 @@ BI.View = BI.inherit(BI.V, {
     },
 
     _unMount: function () {
-        this.beforeDestroyed && this.beforeDestroyed();
+        this.beforeDestroy && this.beforeDestroy();
         BI.each(this._cardLayouts, function (name, card) {
             card && card._unMount();
         });
@@ -17643,9 +18073,9 @@ BI.IntegerBufferSet.prototype = {
     }
 })();window.BI = window.BI || {};
 
-$.extend(BI, {
+_.extend(BI, {
     $defaultImport: function (options) {
-        var config = $.extend({
+        var config = _.extend({
             op: 'resource',
             path: null,
             type: null,
@@ -19541,7 +19971,7 @@ BI.Layout = BI.inherit(BI.Widget, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -19759,7 +20189,7 @@ BI.Layout = BI.inherit(BI.Widget, {
 
     addItems: function (items) {
         var self = this, o = this.options;
-        var fragment = document.createDocumentFragment();
+        var fragment = BI.Element.createDocumentFragment();
         var added = [];
         BI.each(items, function (i, item) {
             var w = self._addElement(o.items.length, item);
@@ -19777,7 +20207,7 @@ BI.Layout = BI.inherit(BI.Widget, {
     prependItems: function (items) {
         var self = this;
         items = items || [];
-        var fragment = document.createDocumentFragment();
+        var fragment = BI.Element.createDocumentFragment();
         var added = [];
         for (var i = items.length - 1; i >= 0; i--) {
             this._addItemAt(0, items[i]);
@@ -19970,7 +20400,7 @@ BI.ShowAction = BI.inherit(BI.Action, {
  * @abstract
  */
 BI.FloatSection = BI.inherit(BI.View, {
-    _init : function() {
+    _init: function () {
         BI.FloatSection.superclass._init.apply(this, arguments);
         var self = this;
         var flatten = ["_init", "_defaultConfig", "_vessel", "_render", "getName", "listenEnd", "local", "refresh", "load", "change"];
@@ -19992,18 +20422,19 @@ BI.FloatSection = BI.inherit(BI.View, {
         })
     },
 
-    rebuildNorth : function(north) {
+    rebuildNorth: function (north) {
         return true;
     },
-    rebuildCenter : function(center) {},
-    rebuildSouth : function(south) {
+    rebuildCenter: function (center) {
+    },
+    rebuildSouth: function (south) {
         return false;
     },
-    close: function(){
+    close: function () {
         this.notifyParentEnd();
         this.trigger(BI.PopoverSection.EVENT_CLOSE);
     },
-    end: function(){
+    end: function () {
 
     }
 });
@@ -20015,21 +20446,22 @@ BI.FloatSection = BI.inherit(BI.View, {
  * @abstract
  */
 BI.PopoverSection = BI.inherit(BI.Widget, {
-    _init : function() {
+    _init: function () {
         BI.PopoverSection.superclass._init.apply(this, arguments);
     },
 
-    rebuildNorth : function(north) {
+    rebuildNorth: function (north) {
         return true;
     },
-    rebuildCenter : function(center) {},
-    rebuildSouth : function(south) {
+    rebuildCenter: function (center) {
+    },
+    rebuildSouth: function (south) {
         return false;
     },
-    close: function(){
+    close: function () {
         this.fireEvent(BI.PopoverSection.EVENT_CLOSE);
     },
-    end: function(){
+    end: function () {
 
     }
 });
@@ -20883,25 +21315,25 @@ BI.BubblesController = BI.inherit(BI.Controller, {
     },
 
     _getLeftPosition: function (name, context, offsetStyle) {
-        var position = $.getLeftPosition(context, this.get(name));
+        var position = BI.Element.getLeftPosition(context, this.get(name));
         position.top = this._getOffsetTop(name, context, offsetStyle);
         return position;
     },
 
     _getBottomPosition: function (name, context, offsetStyle) {
-        var position = $.getBottomPosition(context, this.get(name));
+        var position = BI.Element.getBottomPosition(context, this.get(name));
         position.left = this._getOffsetLeft(name, context, offsetStyle);
         return position;
     },
 
     _getTopPosition: function (name, context, offsetStyle) {
-        var position = $.getTopPosition(context, this.get(name));
+        var position = BI.Element.getTopPosition(context, this.get(name));
         position.left = this._getOffsetLeft(name, context, offsetStyle);
         return position;
     },
 
     _getRightPosition: function (name, context, offsetStyle) {
-        var position = $.getRightPosition(context, this.get(name));
+        var position = BI.Element.getRightPosition(context, this.get(name));
         position.top = this._getOffsetTop(name, context, offsetStyle);
         return position;
     },
@@ -20935,7 +21367,7 @@ BI.BubblesController = BI.inherit(BI.Controller, {
         var position = this._getTopPosition(name, context, offsetStyle);
         this.get(name).element.css({left: position.left, top: position.top});
         this.get(name).invisible();
-        if (!$.isTopSpaceEnough(context, this.get(name))) {
+        if (!BI.Element.isTopSpaceEnough(context, this.get(name))) {
             if (!this.storeBubbles[name]["left"]) {
                 this.storeBubbles[name]["left"] = this._createBubble("left", text, 30);
             }
@@ -20950,7 +21382,7 @@ BI.BubblesController = BI.inherit(BI.Controller, {
             var position = this._getLeftPosition(name, context, offsetStyle);
             this.get(name).element.css({left: position.left, top: position.top});
             this.get(name).invisible();
-            if (!$.isLeftSpaceEnough(context, this.get(name))) {
+            if (!BI.Element.isLeftSpaceEnough(context, this.get(name))) {
                 if (!this.storeBubbles[name]["right"]) {
                     this.storeBubbles[name]["right"] = this._createBubble("right", text, 30);
                 }
@@ -20965,7 +21397,7 @@ BI.BubblesController = BI.inherit(BI.Controller, {
                 var position = this._getRightPosition(name, context, offsetStyle);
                 this.get(name).element.css({left: position.left, top: position.top});
                 this.get(name).invisible();
-                if (!$.isRightSpaceEnough(context, this.get(name))) {
+                if (!BI.Element.isRightSpaceEnough(context, this.get(name))) {
                     if (!this.storeBubbles[name]["bottom"]) {
                         this.storeBubbles[name]["bottom"] = this._createBubble("bottom", text);
                     }
@@ -21123,7 +21555,7 @@ BI.FloatBoxController = BI.inherit(BI.Controller, {
             this.floatContainer[name].visible();
             var floatbox = this.get(name);
             floatbox.show();
-            var W = $(this.options.render).width(), H = $(this.options.render).height();
+            var W = BI.Element(this.options.render).width(), H = BI.Element(this.options.render).height();
             var w = floatbox.element.width(), h = floatbox.element.height();
             var left = (W - w) / 2, top = (H - h) / 2;
             if (left < 0) {
@@ -21187,7 +21619,13 @@ BI.LayerController = BI.inherit(BI.Controller, {
         this.layerManager = {};
         this.layouts = {};
         this.zindex = BI.zIndex_layer;
-        BI.Resizers.add("layerController" + BI.uniqueId(), BI.bind(this._resize, this));
+    },
+
+    _addEventListener: function () {
+        if (!this.addedEvent) {
+            BI.Resizers.add("layerController" + BI.uniqueId(), BI.bind(this._resize, this));
+            this.addedEvent = true;
+        }
     },
 
     _resize: function () {
@@ -21233,7 +21671,7 @@ BI.LayerController = BI.inherit(BI.Controller, {
             w = from.element;
         }
         if (BI.isNotEmptyString(w)) {
-            w = $(w);
+            w = BI.Element(w);
         }
         if (this.has(name)) {
             return this.get(name);
@@ -21311,6 +21749,7 @@ BI.LayerController = BI.inherit(BI.Controller, {
         if (this.has(name)) {
             throw new Error("name is already exist");
         }
+        this._addEventListener();
         layout.setVisible(false);
         this.layerManager[name] = layer;
         this.layouts[name] = layout;
@@ -21368,19 +21807,25 @@ BI.ResizeController = BI.inherit(BI.Controller, {
 
     _init: function () {
         BI.ResizeController.superclass._init.apply(this, arguments);
-        var self = this;
         this.resizerManger = {};
-        var fn = BI.debounce(function (ev) {
-            //if (BI.isWindow(ev.target)) {
-            self._resize(ev);
-            //}
-        }, 30);
-        $(window).resize(fn);
+    },
+
+    _addEventListener: function () {
+        var self = this;
+        if (!this.addedEvent) {
+            var fn = BI.debounce(function (ev) {
+                //if (BI.isWindow(ev.target)) {
+                self._resize(ev);
+                //}
+            }, 30);
+            BI.Element(window).resize(fn);
+            this.addedEvent = true;
+        }
     },
 
     _resize: function (ev) {
         BI.each(this.resizerManger, function (key, resizer) {
-            if (resizer instanceof $) {
+            if (resizer instanceof BI.Element) {
                 if (resizer.is(":visible")) {
                     resizer.trigger("__resize__");
                 }
@@ -21402,6 +21847,7 @@ BI.ResizeController = BI.inherit(BI.Controller, {
         if (this.has(name)) {
             return this;
         }
+        this._addEventListener();
         this.resizerManger[name] = resizer;
         return function () {
             self.remove(name);
@@ -21508,10 +21954,10 @@ BI.TooltipsController = BI.inherit(BI.Controller, {
         tooltip.element.height(tooltip.element[0].scrollHeight);
         this.showingTips[name] = true;
         var x = e.pageX || e.clientX, y = (e.pageY || e.clientY) + 15;
-        if (x + tooltip.element.outerWidth() > $("body").outerWidth()) {
+        if (x + tooltip.element.outerWidth() > BI.Element("body").outerWidth()) {
             x -= tooltip.element.outerWidth();
         }
-        if (y + tooltip.element.outerHeight() > $("body").outerHeight()) {
+        if (y + tooltip.element.outerHeight() > BI.Element("body").outerHeight()) {
             y -= tooltip.element.outerHeight() + 15;
             top = offset.top - tooltip.element.outerHeight() - 5;
             !opt.belowMouse && (y = Math.min(y, top));
@@ -22181,7 +22627,7 @@ _.extend(BI, {
  * guy
  * 最基础的dom操作
  */
-BI.extend(jQuery.fn, {
+BI.extend(BI.Element.prototype, {
 
     destroy: function () {
         this.remove();
@@ -22221,7 +22667,7 @@ BI.extend(jQuery.fn, {
 
             if (tidx >= 0) {
                 this.append(textLeft.substr(0, tidx));
-                this.append($("<span>").addClass("bi-keyword-red-mark")
+                this.append(BI.Element("<span>").addClass("bi-keyword-red-mark")
                     .text(textLeft.substr(tidx, keyword.length).replaceAll(" ", "　")));
 
                 textLeft = textLeft.substr(tidx + keyword.length);
@@ -22230,7 +22676,7 @@ BI.extend(jQuery.fn, {
                 }
             } else if (pidx != null && pidx >= 0 && Math.floor(pidx / text.length) === Math.floor((pidx + keyword.length - 1) / text.length)) {
                 this.append(textLeft.substr(0, pidx));
-                this.append($("<span>").addClass("bi-keyword-red-mark")
+                this.append(BI.Element("<span>").addClass("bi-keyword-red-mark")
                     .text(textLeft.substr(pidx, keyword.length).replaceAll(" ", "　")));
                 if (py != null) {
                     py = py.substr(pidx + keyword.length);
@@ -22246,8 +22692,8 @@ BI.extend(jQuery.fn, {
     },
 
     getDomHeight: function (parent) {
-        var clone = $(this).clone();
-        clone.appendTo($(parent || "body"));
+        var clone = BI.Element(this).clone();
+        clone.appendTo(BI.Element(parent || "body"));
         var height = clone.height();
         clone.remove();
         return height;
@@ -22345,7 +22791,7 @@ BI.extend(jQuery.fn, {
     }
 });
 
-BI.extend(jQuery, {
+BI.extend(BI.Element, {
 
     getLeftPosition: function (combo, popup, extraWidth) {
         return {
@@ -22374,35 +22820,35 @@ BI.extend(jQuery, {
     },
 
     isLeftSpaceEnough: function (combo, popup, extraWidth) {
-        return $.getLeftPosition(combo, popup, extraWidth).left >= 0;
+        return BI.Element.getLeftPosition(combo, popup, extraWidth).left >= 0;
     },
 
     isRightSpaceEnough: function (combo, popup, extraWidth) {
-        var viewBounds = popup.element.bounds(), windowBounds = $("body").bounds();
-        return $.getRightPosition(combo, popup, extraWidth).left + viewBounds.width <= windowBounds.width;
+        var viewBounds = popup.element.bounds(), windowBounds = BI.Element("body").bounds();
+        return BI.Element.getRightPosition(combo, popup, extraWidth).left + viewBounds.width <= windowBounds.width;
     },
 
     isTopSpaceEnough: function (combo, popup, extraHeight) {
-        return $.getTopPosition(combo, popup, extraHeight).top >= 0;
+        return BI.Element.getTopPosition(combo, popup, extraHeight).top >= 0;
     },
 
     isBottomSpaceEnough: function (combo, popup, extraHeight) {
-        var viewBounds = popup.element.bounds(), windowBounds = $("body").bounds();
-        return $.getBottomPosition(combo, popup, extraHeight).top + viewBounds.height <= windowBounds.height;
+        var viewBounds = popup.element.bounds(), windowBounds = BI.Element("body").bounds();
+        return BI.Element.getBottomPosition(combo, popup, extraHeight).top + viewBounds.height <= windowBounds.height;
     },
 
     isRightSpaceLarger: function (combo) {
-        var windowBounds = $("body").bounds();
+        var windowBounds = BI.Element("body").bounds();
         return windowBounds.width - combo.element.offset().left - combo.element.bounds().width >= combo.element.offset().left;
     },
 
     isBottomSpaceLarger: function (combo) {
-        var windowBounds = $("body").bounds();
+        var windowBounds = BI.Element("body").bounds();
         return windowBounds.height - combo.element.offset().top - combo.element.bounds().height >= combo.element.offset().top;
     },
 
     getLeftAlignPosition: function (combo, popup, extraWidth) {
-        var viewBounds = popup.element.bounds(), windowBounds = $("body").bounds();
+        var viewBounds = popup.element.bounds(), windowBounds = BI.Element("body").bounds();
         var left = combo.element.offset().left + extraWidth;
         if (left + viewBounds.width > windowBounds.width) {
             left = windowBounds.width - viewBounds.width;
@@ -22416,8 +22862,8 @@ BI.extend(jQuery, {
     },
 
     getLeftAdaptPosition: function (combo, popup, extraWidth) {
-        if ($.isLeftSpaceEnough(combo, popup, extraWidth)) {
-            return $.getLeftPosition(combo, popup, extraWidth);
+        if (BI.Element.isLeftSpaceEnough(combo, popup, extraWidth)) {
+            return BI.Element.getLeftPosition(combo, popup, extraWidth);
         }
         return {
             left: 0
@@ -22436,20 +22882,20 @@ BI.extend(jQuery, {
     },
 
     getRightAdaptPosition: function (combo, popup, extraWidth) {
-        if ($.isRightSpaceEnough(combo, popup, extraWidth)) {
-            return $.getRightPosition(combo, popup, extraWidth);
+        if (BI.Element.isRightSpaceEnough(combo, popup, extraWidth)) {
+            return BI.Element.getRightPosition(combo, popup, extraWidth);
         }
         return {
-            left: $("body").bounds().width - popup.element.bounds().width
+            left: BI.Element("body").bounds().width - popup.element.bounds().width
         }
     },
 
     getTopAlignPosition: function (combo, popup, extraHeight, needAdaptHeight) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
+            windowBounds = BI.Element("body").bounds();
         var top, adaptHeight;
-        if ($.isBottomSpaceEnough(combo, popup, -1 * comboBounds.height + extraHeight)) {
+        if (BI.Element.isBottomSpaceEnough(combo, popup, -1 * comboBounds.height + extraHeight)) {
             top = comboOffset.top + extraHeight;
         } else if (needAdaptHeight) {
             top = comboOffset.top + extraHeight;
@@ -22472,9 +22918,9 @@ BI.extend(jQuery, {
     },
 
     getTopAdaptPosition: function (combo, popup, extraHeight, needAdaptHeight) {
-        var popupBounds = popup.element.bounds(), windowBounds = $("body").bounds();
-        if ($.isTopSpaceEnough(combo, popup, extraHeight)) {
-            return $.getTopPosition(combo, popup, extraHeight);
+        var popupBounds = popup.element.bounds(), windowBounds = BI.Element("body").bounds();
+        if (BI.Element.isTopSpaceEnough(combo, popup, extraHeight)) {
+            return BI.Element.getTopPosition(combo, popup, extraHeight);
         }
         if (needAdaptHeight) {
             return {
@@ -22496,9 +22942,9 @@ BI.extend(jQuery, {
     getBottomAlignPosition: function (combo, popup, extraHeight, needAdaptHeight) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
+            windowBounds = BI.Element("body").bounds();
         var top, adaptHeight;
-        if ($.isTopSpaceEnough(combo, popup, -1 * comboBounds.height + extraHeight)) {
+        if (BI.Element.isTopSpaceEnough(combo, popup, -1 * comboBounds.height + extraHeight)) {
             top = comboOffset.top + comboBounds.height - popupBounds.height - extraHeight;
         } else if (needAdaptHeight) {
             top = 0;
@@ -22523,9 +22969,9 @@ BI.extend(jQuery, {
     getBottomAdaptPosition: function (combo, popup, extraHeight, needAdaptHeight) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
-        if ($.isBottomSpaceEnough(combo, popup, extraHeight)) {
-            return $.getBottomPosition(combo, popup, extraHeight);
+            windowBounds = BI.Element("body").bounds();
+        if (BI.Element.isBottomSpaceEnough(combo, popup, extraHeight)) {
+            return BI.Element.getBottomPosition(combo, popup, extraHeight);
         }
         if (needAdaptHeight) {
             return {
@@ -22547,7 +22993,7 @@ BI.extend(jQuery, {
     getCenterAdaptPosition: function (combo, popup) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
+            windowBounds = BI.Element("body").bounds();
         var left;
         if (comboOffset.left + comboBounds.width / 2 + popupBounds.width / 2 > windowBounds.width) {
             left = windowBounds.width - popupBounds.width;
@@ -22565,7 +23011,7 @@ BI.extend(jQuery, {
     getMiddleAdaptPosition: function (combo, popup) {
         var comboOffset = combo.element.offset();
         var comboBounds = combo.element.bounds(), popupBounds = popup.element.bounds(),
-            windowBounds = $("body").bounds();
+            windowBounds = BI.Element("body").bounds();
         var top;
         if (comboOffset.top + comboBounds.height / 2 + popupBounds.height / 2 > windowBounds.height) {
             top = windowBounds.height - popupBounds.height;
@@ -22610,13 +23056,13 @@ BI.extend(jQuery, {
                 case "left":
                     if (!isNeedAdaptHeight) {
                         var tW = tbFirst ? extraHeight : extraWidth, tH = tbFirst ? 0 : extraHeight;
-                        if ($.isLeftSpaceEnough(combo, popup, tW)) {
-                            left = $.getLeftPosition(combo, popup, tW).left;
+                        if (BI.Element.isLeftSpaceEnough(combo, popup, tW)) {
+                            left = BI.Element.getLeftPosition(combo, popup, tW).left;
                             if (topBottom[0] === "bottom") {
-                                pos = $.getTopAlignPosition(combo, popup, tH, needAdaptHeight);
+                                pos = BI.Element.getTopAlignPosition(combo, popup, tH, needAdaptHeight);
                                 pos.dir = "left,bottom";
                             } else {
-                                pos = $.getBottomAlignPosition(combo, popup, tH, needAdaptHeight);
+                                pos = BI.Element.getBottomAlignPosition(combo, popup, tH, needAdaptHeight);
                                 pos.dir = "left,top";
                             }
                             if (tbFirst) {
@@ -22631,13 +23077,13 @@ BI.extend(jQuery, {
                 case "right":
                     if (!isNeedAdaptHeight) {
                         var tW = tbFirst ? extraHeight : extraWidth, tH = tbFirst ? extraWidth : extraHeight;
-                        if ($.isRightSpaceEnough(combo, popup, tW)) {
-                            left = $.getRightPosition(combo, popup, tW).left;
+                        if (BI.Element.isRightSpaceEnough(combo, popup, tW)) {
+                            left = BI.Element.getRightPosition(combo, popup, tW).left;
                             if (topBottom[0] === "bottom") {
-                                pos = $.getTopAlignPosition(combo, popup, tH, needAdaptHeight);
+                                pos = BI.Element.getTopAlignPosition(combo, popup, tH, needAdaptHeight);
                                 pos.dir = "right,bottom";
                             } else {
-                                pos = $.getBottomAlignPosition(combo, popup, tH, needAdaptHeight);
+                                pos = BI.Element.getBottomAlignPosition(combo, popup, tH, needAdaptHeight);
                                 pos.dir = "right,top";
                             }
                             if (tbFirst) {
@@ -22651,13 +23097,13 @@ BI.extend(jQuery, {
                     break;
                 case "top":
                     var tW = lrFirst ? extraHeight : extraWidth, tH = lrFirst ? extraWidth : extraHeight;
-                    if ($.isTopSpaceEnough(combo, popup, tH)) {
-                        top = $.getTopPosition(combo, popup, tH).top;
+                    if (BI.Element.isTopSpaceEnough(combo, popup, tH)) {
+                        top = BI.Element.getTopPosition(combo, popup, tH).top;
                         if (leftRight[0] === "right") {
-                            pos = $.getLeftAlignPosition(combo, popup, tW, needAdaptHeight);
+                            pos = BI.Element.getLeftAlignPosition(combo, popup, tW, needAdaptHeight);
                             pos.dir = "top,right";
                         } else {
-                            pos = $.getRightAlignPosition(combo, popup, tW);
+                            pos = BI.Element.getRightAlignPosition(combo, popup, tW);
                             pos.dir = "top,left";
                         }
                         if (lrFirst) {
@@ -22673,13 +23119,13 @@ BI.extend(jQuery, {
                     break;
                 case "bottom":
                     var tW = lrFirst ? extraHeight : extraWidth, tH = lrFirst ? extraWidth : extraHeight;
-                    if ($.isBottomSpaceEnough(combo, popup, tH)) {
-                        top = $.getBottomPosition(combo, popup, tH).top;
+                    if (BI.Element.isBottomSpaceEnough(combo, popup, tH)) {
+                        top = BI.Element.getBottomPosition(combo, popup, tH).top;
                         if (leftRight[0] === "right") {
-                            pos = $.getLeftAlignPosition(combo, popup, tW, needAdaptHeight);
+                            pos = BI.Element.getLeftAlignPosition(combo, popup, tW, needAdaptHeight);
                             pos.dir = "bottom,right";
                         } else {
-                            pos = $.getRightAlignPosition(combo, popup, tW);
+                            pos = BI.Element.getRightAlignPosition(combo, popup, tW);
                             pos.dir = "bottom,left";
                         }
                         if (lrFirst) {
@@ -22699,34 +23145,34 @@ BI.extend(jQuery, {
         switch (directions[0]) {
             case "left":
             case "right":
-                if ($.isRightSpaceLarger(combo)) {
-                    left = $.getRightAdaptPosition(combo, popup, extraWidth).left;
+                if (BI.Element.isRightSpaceLarger(combo)) {
+                    left = BI.Element.getRightAdaptPosition(combo, popup, extraWidth).left;
                 } else {
-                    left = $.getLeftAdaptPosition(combo, popup, extraWidth).left;
+                    left = BI.Element.getLeftAdaptPosition(combo, popup, extraWidth).left;
                 }
                 if (topBottom[0] === "bottom") {
-                    pos = $.getTopAlignPosition(combo, popup, extraHeight, needAdaptHeight);
+                    pos = BI.Element.getTopAlignPosition(combo, popup, extraHeight, needAdaptHeight);
                     pos.left = left;
                     pos.dir = directions[0] + ",bottom";
                     return pos;
                 }
-                pos = $.getBottomAlignPosition(combo, popup, extraHeight, needAdaptHeight);
+                pos = BI.Element.getBottomAlignPosition(combo, popup, extraHeight, needAdaptHeight);
                 pos.left = left;
                 pos.dir = directions[0] + ",top";
                 return pos;
             default :
-                if ($.isBottomSpaceLarger(combo)) {
-                    pos = $.getBottomAdaptPosition(combo, popup, extraHeight, needAdaptHeight);
+                if (BI.Element.isBottomSpaceLarger(combo)) {
+                    pos = BI.Element.getBottomAdaptPosition(combo, popup, extraHeight, needAdaptHeight);
                 } else {
-                    pos = $.getTopAdaptPosition(combo, popup, extraHeight, needAdaptHeight);
+                    pos = BI.Element.getTopAdaptPosition(combo, popup, extraHeight, needAdaptHeight);
                 }
                 if (leftRight[0] === "right") {
-                    left = $.getLeftAlignPosition(combo, popup, extraWidth, needAdaptHeight).left;
+                    left = BI.Element.getLeftAlignPosition(combo, popup, extraWidth, needAdaptHeight).left;
                     pos.left = left;
                     pos.dir = directions[0] + ",right";
                     return pos;
                 }
-                left = $.getRightAlignPosition(combo, popup, extraWidth).left;
+                left = BI.Element.getRightAlignPosition(combo, popup, extraWidth).left;
                 pos.left = left;
                 pos.dir = directions[0] + ",left";
                 return pos;
@@ -22737,26 +23183,26 @@ BI.extend(jQuery, {
     getComboPosition: function (combo, popup, extraWidth, extraHeight, needAdaptHeight, directions, offsetStyle) {
         extraWidth || (extraWidth = 0);
         extraHeight || (extraHeight = 0);
-        var bodyHeight = $("body").bounds().height - extraHeight;
+        var bodyHeight = BI.Element("body").bounds().height - extraHeight;
         var maxHeight = Math.min(popup.attr("maxHeight") || bodyHeight, bodyHeight);
         popup.resetHeight && popup.resetHeight(maxHeight);
-        var position = $.getComboPositionByDirections(combo, popup, extraWidth, extraHeight, needAdaptHeight, directions || ['bottom', 'top', 'right', 'left']);
+        var position = BI.Element.getComboPositionByDirections(combo, popup, extraWidth, extraHeight, needAdaptHeight, directions || ['bottom', 'top', 'right', 'left']);
         switch (offsetStyle) {
             case "center":
                 if (position.change) {
-                    var p = $.getMiddleAdaptPosition(combo, popup);
+                    var p = BI.Element.getMiddleAdaptPosition(combo, popup);
                     position.top = p.top;
                 } else {
-                    var p = $.getCenterAdaptPosition(combo, popup);
+                    var p = BI.Element.getCenterAdaptPosition(combo, popup);
                     position.left = p.left;
                 }
                 break;
             case "middle":
                 if (position.change) {
-                    var p = $.getCenterAdaptPosition(combo, popup);
+                    var p = BI.Element.getCenterAdaptPosition(combo, popup);
                     position.left = p.left;
                 } else {
-                    var p = $.getMiddleAdaptPosition(combo, popup);
+                    var p = BI.Element.getMiddleAdaptPosition(combo, popup);
                     position.top = p.top;
                 }
                 break;
@@ -22836,16 +23282,16 @@ BI.extend(BI.DOM, {
         if (BI.isEmpty(doms)) {
             return;
         }
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(doms, function (i, dom) {
             dom instanceof BI.Widget && (dom = dom.element);
-            dom instanceof $ && dom[0] && frag.appendChild(dom[0]);
+            dom instanceof BI.Element && dom[0] && frag.appendChild(dom[0]);
         });
         return frag;
     },
 
     isExist: function (obj) {
-        return $("body").find(obj.element).length > 0;
+        return BI.Element("body").find(obj.element).length > 0;
     },
 
     //预加载图片
@@ -23022,7 +23468,7 @@ BI.extend(BI.DOM, {
     },
 
     getTextSizeWidth: function (text, fontSize) {
-        var span = $("<span></span>").addClass("text-width-span").appendTo($("body"));
+        var span = BI.Element("<span></span>").addClass("text-width-span").appendTo(BI.Element("body"));
 
         if (fontSize == null) {
             fontSize = 12;
@@ -23040,11 +23486,11 @@ BI.extend(BI.DOM, {
     //获取滚动条的宽度
     getScrollWidth: function () {
         if (this._scrollWidth == null) {
-            var ul = $("<div>").width(50).height(50).css({
+            var ul = BI.Element("<div>").width(50).height(50).css({
                 position: "absolute",
                 top: "-9999px",
                 overflow: "scroll"
-            }).appendTo($("body"));
+            }).appendTo(BI.Element("body"));
             this._scrollWidth = ul[0].offsetWidth - ul[0].clientWidth;
             ul.destroy();
         }
@@ -23074,7 +23520,7 @@ BI.ShowListener = BI.inherit(BI.OB, {
     _init: function () {
         BI.ShowListener.superclass._init.apply(this, arguments);
         var self = this, o = this.options;
-        o.eventObj.on(BI.Controller.EVENT_CHANGE, function (type, v, ob) {
+        o.eventObj && o.eventObj.on(BI.Controller.EVENT_CHANGE, function (type, v, ob) {
             if (type === BI.Events.CLICK) {
                 v = v || o.eventObj.getValue();
                 v = BI.isArray(v) ? (v.length > 1 ? v.toString() : v[0]) : v;
@@ -23494,7 +23940,7 @@ BI.HorizontalFillLayoutLogic = BI.inherit(BI.Logic, {
  * 对数组对象的扩展
  * @class Array
  */
-$.extend(Array.prototype, {
+_.extend(Array.prototype, {
     contains: function (o) {
         return this.indexOf(o) > -1;
     },
@@ -24139,7 +24585,7 @@ Date.parseDateTime = function (str, fmt) {
 /*
  * 给jQuery.Event对象添加的工具方法
  */
-$.extend($.Event.prototype, {
+_.extend(BI.Element.Event.prototype, {
     // event.stopEvent
     stopEvent: function () {
         this.stopPropagation();
@@ -24165,72 +24611,7 @@ Function.prototype.after = function (func) {
         func.apply(this, arguments);
         return ret;
     }
-};/*!
- * jLayout JQuery Plugin v0.11
- *
- * Licensed under the revised BSD License.
- * Copyright 2008, Bram Stein
- * All rights reserved.
- */
-if (jQuery) {
-    (function ($) {
-        // richer:容器在其各个边缘留出的空间
-        if (!$.fn.insets) {
-            $.fn.insets = function () {
-                var p = this.padding(),
-                    b = this.border();
-                return {
-                    'top': p.top,
-                    'bottom': p.bottom + b.bottom + b.top,
-                    'left': p.left,
-                    'right': p.right + b.right + b.left
-                };
-            };
-        }
-
-        // richer:获取 && 设置jQuery元素的边界
-        if (!$.fn.bounds) {
-            $.fn.bounds = function (value) {
-                var tmp = {hasIgnoredBounds: true};
-
-                if (value) {
-                    if (!isNaN(value.x)) {
-                        tmp.left = value.x;
-                    }
-                    if (!isNaN(value.y)) {
-                        tmp.top = value.y;
-                    }
-                    if (value.width != null) {
-                        tmp.width = (value.width - (this.outerWidth(true) - this.width()));
-                        tmp.width = (tmp.width >= 0) ? tmp.width : value.width;
-                        // fix chrome
-                        //tmp.width = (tmp.width >= 0) ? tmp.width : 0;
-                    }
-                    if (value.height != null) {
-                        tmp.height = value.height - (this.outerHeight(true) - this.height());
-                        tmp.height = (tmp.height >= 0) ? tmp.height : value.height;
-                        // fix chrome
-                        //tmp.height = (tmp.height >= 0) ? tmp.height : value.0;
-                    }
-                    this.css(tmp);
-                    return this;
-                }
-                else {
-                    // richer:注意此方法只对可见元素有效
-                    tmp = this.position();
-                    return {
-                        'x': tmp.left,
-                        'y': tmp.top,
-                        // richer:这里计算外部宽度和高度的时候，都不包括边框
-                        'width': this.outerWidth(),
-                        'height': this.outerHeight()
-                    };
-                }
-            };
-        }
-    })(jQuery);
-}
-;if (!Number.prototype.toFixed || (0.00008).toFixed(3) !== '0.000' ||
+};if (!Number.prototype.toFixed || (0.00008).toFixed(3) !== '0.000' ||
     (0.9).toFixed(0) === '0' || (1.255).toFixed(2) !== '1.25' ||
     (1000000000000000128).toFixed(0) !== "1000000000000000128") {
     (function () {
@@ -24502,7 +24883,7 @@ Number.prototype.div = function (arg) {
  * 对字符串对象的扩展
  * @class String
  */
-$.extend(String.prototype, {
+_.extend(String.prototype, {
 
     /**
      * 判断字符串是否已指定的字符串开始
@@ -24560,7 +24941,7 @@ $.extend(String.prototype, {
         } else {
             src += "&";
         }
-        $.each(paras, function (name, value) {
+        _.each(paras, function (name, value) {
             if (typeof(name) === 'string') {
                 src += name + "=" + value + "&";
             }
@@ -24619,7 +25000,7 @@ $.extend(String.prototype, {
  * 对字符串对象的扩展
  * @class String
  */
-$.extend(String, {
+_.extend(String, {
 
     /**
      * 对字符串中的'和\做编码处理
@@ -25208,7 +25589,7 @@ BI.CenterAdaptLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.CenterAdaptLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "width": "100%",
             "height": "100%",
@@ -25217,7 +25598,7 @@ BI.CenterAdaptLayout = BI.inherit(BI.Layout, {
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -25279,7 +25660,7 @@ BI.CenterAdaptLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -25327,7 +25708,7 @@ BI.HorizontalAdaptLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.HorizontalAdaptLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "width": "100%",
             "white-space": "nowrap",
@@ -25335,7 +25716,7 @@ BI.HorizontalAdaptLayout = BI.inherit(BI.Layout, {
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -25396,7 +25777,7 @@ BI.HorizontalAdaptLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -25613,7 +25994,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.VerticalAdaptLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "height": "100%",
             "white-space": "nowrap",
@@ -25621,7 +26002,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -25683,7 +26064,7 @@ BI.VerticalAdaptLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -26090,7 +26471,7 @@ BI.FlexCenterLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.FlexCenterLayout.superclass.render.apply(this, arguments);
-        this.$wrapper = $("<div>").addClass("flex-wrapper-center-layout-wrapper");
+        this.$wrapper = BI.Element("<div>").addClass("flex-wrapper-center-layout-wrapper");
         this.populate(this.options.items);
     },
 
@@ -26103,7 +26484,7 @@ BI.FlexCenterLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -26155,7 +26536,7 @@ BI.FlexHorizontalLayout = BI.inherit(BI.Layout, {
     render: function () {
         BI.FlexHorizontalLayout.superclass.render.apply(this, arguments);
         var o = this.options;
-        this.$wrapper = $("<div>").addClass("flex-wrapper-horizontal-layout-wrapper " + o.verticalAlign);
+        this.$wrapper = BI.Element("<div>").addClass("flex-wrapper-horizontal-layout-wrapper " + o.verticalAlign);
         this.populate(this.options.items);
     },
 
@@ -26188,7 +26569,7 @@ BI.FlexHorizontalLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -26238,7 +26619,7 @@ BI.FlexVerticalCenter = BI.inherit(BI.Layout, {
     render: function () {
         BI.FlexVerticalCenter.superclass.render.apply(this, arguments);
         var o = this.options;
-        this.$wrapper = $("<div>").addClass("flex-wrapper-vertical-center-wrapper");
+        this.$wrapper = BI.Element("<div>").addClass("flex-wrapper-vertical-center-wrapper");
         this.populate(this.options.items);
     },
 
@@ -26271,7 +26652,7 @@ BI.FlexVerticalCenter = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -27323,14 +27704,14 @@ BI.HorizontalLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.HorizontalLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "white-space": "nowrap",
             "border-spacing": "0px",
             "border": "none",
             "border-collapse": "separate"
         });
-        this.$tr = $("<tr>");
+        this.$tr = BI.Element("<tr>");
         this.$tr.appendTo(this.$table);
         this.populate(this.options.items);
     },
@@ -27391,7 +27772,7 @@ BI.HorizontalLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function () {
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -27914,7 +28295,7 @@ BI.TdLayout = BI.inherit(BI.Layout, {
     },
     render: function () {
         BI.TdLayout.superclass.render.apply(this, arguments);
-        this.$table = $("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
+        this.$table = BI.Element("<table>").attr({"cellspacing": 0, "cellpadding": 0}).css({
             "position": "relative",
             "width": "100%",
             "height": "100%",
@@ -27998,7 +28379,7 @@ BI.TdLayout = BI.inherit(BI.Layout, {
 
     _mountChildren: function(){
         var self = this;
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         var hasChild = false;
         BI.each(this._children, function (i, widget) {
             if (widget.element !== self.element) {
@@ -28616,7 +28997,7 @@ Data.Constant = BI.Constant = BICst = {};
             var args = Array.prototype.slice.call(arguments, 0),
                 copy = _Shared;
             for (var i = 0; i < args.length; i++) {
-                copy = copy[args[i]];
+                copy = copy && copy[args[i]];
             }
             return copy;
         },
@@ -28727,6 +29108,8 @@ $(function () {
     if (BI.isIE9Below()) {
         BI.GridTableScrollbar.SIZE = 18;
     }
+
+    BI.Element.registerModule($);
 });/*!
  * jQuery Mousewheel 3.1.13
  *
@@ -30420,7 +30803,7 @@ BI.TreeView = BI.inherit(BI.Pane, {
                 track(treeNode.children);
                 var treeObj = self.nodes;
                 var nodes = treeObj.getSelectedNodes();
-                $.each(nodes, function (index, node) {
+                BI.each(nodes, function (index, node) {
                     node.halfCheck = false;
                 })
             }
@@ -30547,7 +30930,7 @@ BI.TreeView = BI.inherit(BI.Pane, {
             n.title = n.title || n.text || n.value;
             //处理标红
             if (BI.isKey(o.paras.keyword)) {
-                n.text = $("<div>").__textKeywordMarked__(n.text, o.paras.keyword, n.py).html();
+                n.text = BI.Element("<div>").__textKeywordMarked__(n.text, o.paras.keyword, n.py).html();
             } else {
                 n.text = (n.text + "").replaceAll(" ", "　");
             }
@@ -31146,8 +31529,8 @@ BI.Canvas = BI.inherit(BI.Widget, {
         this.element.append(canvas);
         canvas.width = o.width;
         canvas.height = o.height;
-        $(canvas).width("100%");
-        $(canvas).height("100%");
+        BI.Element(canvas).width("100%");
+        BI.Element(canvas).height("100%");
         this.canvas = canvas;
         this._queue = [];
     },
@@ -31882,49 +32265,49 @@ BI.Combo = BI.inherit(BI.Widget, {
         switch (o.direction) {
             case "bottom":
             case "bottom,right":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'right', 'left'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'right', 'left'], o.offsetStyle);
                 break;
             case "top":
             case "top,right":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'right', 'left'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'right', 'left'], o.offsetStyle);
                 break;
             case "left":
             case "left,bottom":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'bottom', 'top'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'bottom', 'top'], o.offsetStyle);
                 break;
             case "right":
             case "right,bottom":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'bottom', 'top'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'bottom', 'top'], o.offsetStyle);
                 break;
             case "top,left":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'left', 'right'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['top', 'bottom', 'left', 'right'], o.offsetStyle);
                 break;
             case "bottom,left":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'left', 'right'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight, ['bottom', 'top', 'left', 'right'], o.offsetStyle);
                 break;
             case "left,top":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'top', 'bottom'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['left', 'right', 'top', 'bottom'], o.offsetStyle);
                 break;
             case "right,top":
-                p = $.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'top', 'bottom'], o.offsetStyle);
+                p = BI.Element.getComboPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength, o.adjustYOffset, o.isNeedAdjustHeight, ['right', 'left', 'top', 'bottom'], o.offsetStyle);
                 break;
             case "top,custom":
             case "custom,top":
-                p = $.getTopAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
+                p = BI.Element.getTopAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
                 break;
             case "custom,bottom":
             case "bottom,custom":
-                p = $.getBottomAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
+                p = BI.Element.getBottomAdaptPosition(this.combo, this.popupView, o.adjustYOffset || o.adjustLength, o.isNeedAdjustHeight);
                 break;
             case "left,custom":
             case "custom,left":
-                p = $.getLeftAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
+                p = BI.Element.getLeftAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
                 delete p.top;
                 delete p.adaptHeight;
                 break;
             case "custom,right":
             case "right,custom":
-                p = $.getRightAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
+                p = BI.Element.getRightAdaptPosition(this.combo, this.popupView, o.adjustXOffset || o.adjustLength);
                 delete p.top;
                 delete p.adaptHeight;
                 break;
@@ -43002,7 +43385,7 @@ BI.FormulaCollections = ["abs","ABS","acos","ACOS","acosh","ACOSH","add2array","
  */
 BI.FormulaEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.FormulaEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.FormulaEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-formula-editor bi-card',
             watermark: '',
             value: '',
@@ -43234,7 +43617,7 @@ BI.shortcut("bi.formula_editor", BI.FormulaEditor);
  * 弹出提示消息框，用于模拟阻塞操作（通过回调函数实现）
  * @class BI.Msg
  */
-$.extend(BI, {
+_.extend(BI, {
     Msg: function () {
 
         var messageShow, $mask, $pop;
@@ -43250,7 +43633,7 @@ $.extend(BI, {
                 // BI.Msg.prompt(title, message, value, callback, min_width);
             },
             toast: function (message, level, context) {
-                context = context || $("body");
+                context = context || BI.Element("body");
                 var toast = BI.createWidget({
                     type: "bi.toast",
                     level: level,
@@ -43279,7 +43662,7 @@ $.extend(BI, {
                 })
             },
             _show: function (hasCancel, title, message, callback) {
-                $mask = $('<div class="bi-z-index-mask">').css({
+                $mask = BI.Element('<div class="bi-z-index-mask">').css({
                     position: 'absolute',
                     'zIndex': BI.zIndex_tip - 2,
                     top: 0,
@@ -43288,7 +43671,7 @@ $.extend(BI, {
                     bottom: 0,
                     opacity: 0.5
                 }).appendTo('body');
-                $pop = $('<div class="bi-message-depend">').css({
+                $pop = BI.Element('<div class="bi-message-depend">').css({
                     position: 'absolute',
                     'zIndex': BI.zIndex_tip - 1,
                     top: 0,
@@ -43775,7 +44158,7 @@ BI.FloatBox = BI.inherit(BI.Widget, {
         this.element.draggable && this.element.draggable({
             handle: ".bi-message-title",
             drag: function (e, ui) {
-                var W = $("body").width(), H = $("body").height();
+                var W = BI.Element("body").width(), H = BI.Element("body").height();
                 if (ui.position.left + o.width > W) {
                     ui.position.left = W - o.width;
                 }
@@ -44435,7 +44818,7 @@ BI.VirtualList = BI.inherit(BI.Widget, {
                 this.cache[i].destroyed = true;
             }
         }
-        var firstFragment = document.createDocumentFragment(), lastFragment = document.createDocumentFragment();
+        var firstFragment = BI.Element.createDocumentFragment(), lastFragment = BI.Element.createDocumentFragment();
         var currentFragment = firstFragment;
         for (var i = (start < 0 ? 0 : start); i <= end && i <= this.renderedIndex; i++) {
             var index = this.cache[i].index;
@@ -45035,150 +45418,147 @@ BI.ImageButton = BI.inherit(BI.BasicButton, {
     }
 });
 BI.ImageButton.EVENT_CHANGE = "ImageButton.EVENT_CHANGE";
-BI.shortcut("bi.image_button", BI.ImageButton);(function ($) {
+BI.shortcut("bi.image_button", BI.ImageButton);/**
+ * 文字类型的按钮
+ * @class BI.Button
+ * @extends BI.BasicButton
+ *
+ * @cfg {JSON} options 配置属性
+ * @cfg {'common'/'success'/'warning'/'ignore'} [options.level='common'] 按钮类型，用不同颜色强调不同的场景
+ */
+BI.Button = BI.inherit(BI.BasicButton, {
 
-    /**
-     * 文字类型的按钮
-     * @class BI.Button
-     * @extends BI.BasicButton
-     *
-     * @cfg {JSON} options 配置属性
-     * @cfg {'common'/'success'/'warning'/'ignore'} [options.level='common'] 按钮类型，用不同颜色强调不同的场景
-     */
-    BI.Button = BI.inherit(BI.BasicButton, {
+    _defaultConfig: function (props) {
+        var conf = BI.Button.superclass._defaultConfig.apply(this, arguments);
+        return BI.extend(conf, {
+            baseCls: (conf.baseCls || "") + ' bi-button',
+            minWidth: (props.block === true || props.clear === true) ? 0 : 90,
+            shadow: props.clear !== true,
+            isShadowShowingOnSelected: true,
+            readonly: true,
+            iconClass: "",
+            level: 'common',
+            block: false, //是否块状显示，即不显示边框，没有最小宽度的限制
+            clear: false, //是否去掉边框和背景
+            textAlign: "center",
+            whiteSpace: "nowrap",
+            forceCenter: false,
+            textWidth: null,
+            textHeight: null,
+            hgap: props.clear ? 0 : 10,
+            vgap: 0,
+            tgap: 0,
+            bgap: 0,
+            lgap: 0,
+            rgap: 0
+        })
+    },
 
-        _defaultConfig: function (props) {
-            var conf = BI.Button.superclass._defaultConfig.apply(this, arguments);
-            return BI.extend(conf, {
-                baseCls: (conf.baseCls || "") + ' bi-button',
-                minWidth: (props.block === true || props.clear === true) ? 0 : 90,
-                shadow: props.clear !== true,
-                isShadowShowingOnSelected: true,
-                readonly: true,
-                iconClass: "",
-                level: 'common',
-                block: false, //是否块状显示，即不显示边框，没有最小宽度的限制
-                clear: false, //是否去掉边框和背景
-                textAlign: "center",
-                whiteSpace: "nowrap",
-                forceCenter: false,
-                textWidth: null,
-                textHeight: null,
-                hgap: props.clear ? 0 : 10,
-                vgap: 0,
-                tgap: 0,
-                bgap: 0,
-                lgap: 0,
-                rgap: 0
-            })
-        },
-
-        _init: function () {
-            BI.Button.superclass._init.apply(this, arguments);
-            var o = this.options, self = this;
-            if (BI.isNumber(o.height) && !o.clear && !o.block) {
-                this.element.css({height: o.height + "px", lineHeight: o.height + "px"});
-            } else {
-                this.element.css({lineHeight: o.height + "px"});
-            }
-            if (BI.isKey(o.iconClass)) {
-                this.icon = BI.createWidget({
-                    type: "bi.icon",
-                    width: 18
-                });
-                this.text = BI.createWidget({
-                    type: "bi.label",
-                    text: o.text,
-                    value: o.value
-                });
-                BI.createWidget({
-                    type: "bi.horizontal_auto",
-                    cls: "button-" + o.level + " " + o.iconClass,
-                    element: this,
-                    hgap: o.hgap,
-                    vgap: o.vgap,
-                    tgap: o.tgap,
-                    bgap: o.bgap,
-                    lgap: o.lgap,
-                    rgap: o.rgap,
-                    items: [{
-                        type: "bi.horizontal",
-                        items: [this.icon, this.text]
-                    }]
-                })
-            } else {
-                this.text = BI.createWidget({
-                    type: "bi.label",
-                    cls: "button-" + o.level,
-                    textAlign: o.textAlign,
-                    whiteSpace: o.whiteSpace,
-                    forceCenter: o.forceCenter,
-                    textWidth: o.textWidth,
-                    textHeight: o.textHeight,
-                    hgap: o.hgap,
-                    vgap: o.vgap,
-                    tgap: o.tgap,
-                    bgap: o.bgap,
-                    lgap: o.lgap,
-                    rgap: o.rgap,
-                    element: this,
-                    text: o.text,
-                    value: o.value
-                });
-            }
-            if (o.block === true) {
-                this.element.addClass("block");
-            }
-            if (o.clear === true) {
-                this.element.addClass("clear");
-            }
-            if (o.minWidth > 0) {
-                this.element.css({"min-width": o.minWidth + "px"});
-            }
-        },
-
-        doClick: function () {
-            BI.Button.superclass.doClick.apply(this, arguments);
-            if (this.isValid()) {
-                this.fireEvent(BI.Button.EVENT_CHANGE, this);
-            }
-        },
-
-        setText: function (text) {
-            BI.Button.superclass.setText.apply(this, arguments);
-            this.text.setText(text);
-        },
-
-        setValue: function (text) {
-            BI.Button.superclass.setValue.apply(this, arguments);
-            if (!this.isReadOnly()) {
-                this.text.setValue(text);
-            }
-        },
-
-        doRedMark: function () {
-            this.text.doRedMark.apply(this.text, arguments);
-        },
-
-        unRedMark: function () {
-            this.text.unRedMark.apply(this.text, arguments);
-        },
-
-        doHighLight: function () {
-            this.text.doHighLight.apply(this.text, arguments);
-        },
-
-        unHighLight: function () {
-            this.text.unHighLight.apply(this.text, arguments);
-        },
-
-        destroy: function () {
-            BI.Button.superclass.destroy.apply(this, arguments);
+    _init: function () {
+        BI.Button.superclass._init.apply(this, arguments);
+        var o = this.options, self = this;
+        if (BI.isNumber(o.height) && !o.clear && !o.block) {
+            this.element.css({height: o.height + "px", lineHeight: o.height + "px"});
+        } else {
+            this.element.css({lineHeight: o.height + "px"});
         }
-    });
-    BI.shortcut('bi.button', BI.Button);
-    BI.Button.EVENT_CHANGE = "EVENT_CHANGE";
-})(jQuery);/**
+        if (BI.isKey(o.iconClass)) {
+            this.icon = BI.createWidget({
+                type: "bi.icon",
+                width: 18
+            });
+            this.text = BI.createWidget({
+                type: "bi.label",
+                text: o.text,
+                value: o.value
+            });
+            BI.createWidget({
+                type: "bi.horizontal_auto",
+                cls: "button-" + o.level + " " + o.iconClass,
+                element: this,
+                hgap: o.hgap,
+                vgap: o.vgap,
+                tgap: o.tgap,
+                bgap: o.bgap,
+                lgap: o.lgap,
+                rgap: o.rgap,
+                items: [{
+                    type: "bi.horizontal",
+                    items: [this.icon, this.text]
+                }]
+            })
+        } else {
+            this.text = BI.createWidget({
+                type: "bi.label",
+                cls: "button-" + o.level,
+                textAlign: o.textAlign,
+                whiteSpace: o.whiteSpace,
+                forceCenter: o.forceCenter,
+                textWidth: o.textWidth,
+                textHeight: o.textHeight,
+                hgap: o.hgap,
+                vgap: o.vgap,
+                tgap: o.tgap,
+                bgap: o.bgap,
+                lgap: o.lgap,
+                rgap: o.rgap,
+                element: this,
+                text: o.text,
+                value: o.value
+            });
+        }
+        if (o.block === true) {
+            this.element.addClass("block");
+        }
+        if (o.clear === true) {
+            this.element.addClass("clear");
+        }
+        if (o.minWidth > 0) {
+            this.element.css({"min-width": o.minWidth + "px"});
+        }
+    },
+
+    doClick: function () {
+        BI.Button.superclass.doClick.apply(this, arguments);
+        if (this.isValid()) {
+            this.fireEvent(BI.Button.EVENT_CHANGE, this);
+        }
+    },
+
+    setText: function (text) {
+        BI.Button.superclass.setText.apply(this, arguments);
+        this.text.setText(text);
+    },
+
+    setValue: function (text) {
+        BI.Button.superclass.setValue.apply(this, arguments);
+        if (!this.isReadOnly()) {
+            this.text.setValue(text);
+        }
+    },
+
+    doRedMark: function () {
+        this.text.doRedMark.apply(this.text, arguments);
+    },
+
+    unRedMark: function () {
+        this.text.unRedMark.apply(this.text, arguments);
+    },
+
+    doHighLight: function () {
+        this.text.doHighLight.apply(this.text, arguments);
+    },
+
+    unHighLight: function () {
+        this.text.unHighLight.apply(this.text, arguments);
+    },
+
+    destroy: function () {
+        BI.Button.superclass.destroy.apply(this, arguments);
+    }
+});
+BI.shortcut('bi.button', BI.Button);
+BI.Button.EVENT_CHANGE = "EVENT_CHANGE";/**
  * guy
  * 可以点击的一行文字
  * @class BI.TextButton
@@ -46458,7 +46838,7 @@ BI.shortcut("bi.text_node", BI.TextNode);/**
  */
 BI.CodeEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.CodeEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.CodeEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-code-editor bi-card',
             value: '',
             watermark: "",
@@ -46662,7 +47042,6 @@ BI.Editor = BI.inherit(BI.Single, {
             inputType: "text",
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: false,
             watermark: "",
             errorText: ""
@@ -46679,7 +47058,6 @@ BI.Editor = BI.inherit(BI.Single, {
             watermark: o.watermark,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank
         }));
         this.editor.element.css({
@@ -47058,7 +47436,7 @@ BI.shortcut("bi.multifile_editor", BI.MultifileEditor);/**
  */
 BI.TextAreaEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.TextAreaEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.TextAreaEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-textarea-editor bi-card',
             value: ''
         });
@@ -47194,7 +47572,9 @@ BI.TextAreaEditor = BI.inherit(BI.Single, {
     setStyle: function (style) {
         this.style = style;
         this.element.css(style);
-        this.content.element.css(style)
+        this.content.element.css(BI.extend({}, style, {
+            color: style.color || BI.DOM.getContrastColor(BI.DOM.isRGBColor(style.backgroundColor) ? BI.DOM.rgb2hex(style.backgroundColor) : style.backgroundColor)
+        }))
     },
 
     getStyle: function () {
@@ -47249,7 +47629,7 @@ BI.Iframe = BI.inherit(BI.Single, {
 
     _init: function () {
         var o = this.options;
-        this.options.element = $("<iframe frameborder='0' src='" + o.src + "'>");
+        this.options.element = BI.Element("<iframe frameborder='0' src='" + o.src + "'>");
         BI.Iframe.superclass._init.apply(this, arguments);
     },
 
@@ -47980,7 +48360,6 @@ BI.Input = BI.inherit(BI.Single, {
             element: "<input/>",
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,//按确定键能否退出编辑
-            mouseOut: false,
             allowBlank: false
         })
     },
@@ -60071,9 +60450,9 @@ BI.Table = BI.inherit(BI.Widget, {
         Ws = Ws || {};
         start = start || 0;
         rowSize || (rowSize = o.rowSize);
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(items, function (i, rows) {
-            var tr = $("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
+            var tr = BI.Element("<tr>").addClass((i & 1) === 0 ? "odd" : "even");
             BI.each(rows, function (j, row) {
                 if (!map[i]) {
                     map[i] = {};
@@ -60166,7 +60545,7 @@ BI.Table = BI.inherit(BI.Widget, {
                     width--;
                 }
                 var height = self._calculateHeight(rowSize);
-                var td = $("<td>").attr("height", height)
+                var td = BI.Element("<td>").attr("height", height)
                     .attr("width", width).css({"width": width, "height": height, "position": "relative"})
                     .addClass((c & 1) === 0 ? "odd-col" : "even-col")
                     .addClass(r === 0 ? "first-row" : "")
@@ -60204,10 +60583,10 @@ BI.Table = BI.inherit(BI.Widget, {
         var self = this, o = this.options;
         columnSize = columnSize || o.columnSize;
         store = store || {};
-        var frag = document.createDocumentFragment();
+        var frag = BI.Element.createDocumentFragment();
         BI.each(columnSize, function (i, size) {
             var width = self._calculateWidth(size);
-            var col = $("<col>").attr("width", width).css("width", width);
+            var col = BI.Element("<col>").attr("width", width).css("width", width);
             store[i] = col;
             frag.appendChild(col[0]);
         });
@@ -70918,7 +71297,6 @@ BI.ShelterEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: true,
             watermark: "",
             errorText: "",
@@ -70942,7 +71320,6 @@ BI.ShelterEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -71175,7 +71552,6 @@ BI.SignInitialEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: true,
             watermark: "",
             errorText: "",
@@ -71200,7 +71576,6 @@ BI.SignInitialEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -71446,7 +71821,6 @@ BI.SignEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: true,
             watermark: "",
             errorText: "",
@@ -71469,7 +71843,6 @@ BI.SignEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -71706,7 +72079,6 @@ BI.StateEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: true,
             watermark: "",
             errorText: "",
@@ -71729,7 +72101,6 @@ BI.StateEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -72004,7 +72375,6 @@ BI.SimpleStateEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -72235,7 +72605,6 @@ BI.TextEditor = BI.inherit(BI.Widget, {
             bgap: 0,
             validationChecker: BI.emptyFn,
             quitChecker: BI.emptyFn,
-            mouseOut: false,
             allowBlank: false,
             watermark: "",
             errorText: "",
@@ -72264,7 +72633,6 @@ BI.TextEditor = BI.inherit(BI.Widget, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: o.mouseOut,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -75321,6 +75689,37 @@ BI.extend(BI.DynamicSummaryTreeTable, {
 });
 
 BI.shortcut("bi.dynamic_summary_tree_table", BI.DynamicSummaryTreeTable);/**
+ * Created by GUY on 2016/5/7.
+ * @class BI.LayerTreeTableCell
+ * @extends BI.Single
+ */
+BI.LayerTreeTableCell = BI.inherit(BI.Widget, {
+    _defaultConfig: function () {
+        return BI.extend(BI.LayerTreeTableCell.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: "bi-layer-tree-table-cell",
+            layer: 0,
+            text: ""
+        })
+    },
+
+    _init: function () {
+        BI.LayerTreeTableCell.superclass._init.apply(this, arguments);
+        var o = this.options;
+        BI.createWidget({
+            type: "bi.label",
+            element: this.element,
+            textAlign: "left",
+            whiteSpace: "nowrap",
+            height: o.height,
+            text: o.text,
+            value: o.value,
+            lgap: 5 + 30 * o.layer,
+            rgap: 5
+        })
+    }
+});
+
+BI.shortcut("bi.layer_tree_table_cell", BI.LayerTreeTableCell);/**
  *
  * 层级树状结构的表格
  *
@@ -76712,7 +77111,6 @@ BI.EditorTrigger = BI.inherit(BI.Trigger, {
             value: o.value,
             validationChecker: o.validationChecker,
             quitChecker: o.quitChecker,
-            mouseOut: false,
             allowBlank: o.allowBlank,
             watermark: o.watermark,
             errorText: o.errorText
@@ -77465,7 +77863,7 @@ BI.AdaptiveArrangement = BI.inherit(BI.Widget, {
             self._initResizable(item.el);
         });
 
-        $(document).mousedown(function (e) {
+        BI.Element(document).mousedown(function (e) {
             BI.each(self.getAllRegions(), function (i, region) {
                 if (region.el.element.find(e.target).length === 0) {
                     region.el.element.removeClass("selected");
@@ -82500,7 +82898,10 @@ BI.FineTuningNumberEditor = BI.inherit(BI.Widget, {
     _defaultConfig: function () {
         return BI.extend(BI.FineTuningNumberEditor.superclass._defaultConfig.apply(this, arguments), {
             baseCls: "bi-fine-tuning-number-editor bi-border",
-            value: -1
+            validationChecker: function () {return true;},
+            valueFormatter: function (v) {return v;},
+            value: 0,
+            errorText: ""
         })
     },
 
@@ -82510,14 +82911,15 @@ BI.FineTuningNumberEditor = BI.inherit(BI.Widget, {
         this.editor = BI.createWidget({
             type: "bi.sign_editor",
             height: o.height,
-            value: this._alertInEditorValue(o.value),
-            errorText: BI.i18nText("BI-Please_Input_Natural_Number"),
-            validationChecker: function(v){
-                return BI.isNaturalNumber(v) || self._alertOutEditorValue(v) === -1;
-            }
+            value: o.valueFormatter(o.value),
+            validationChecker: o.validationChecker,
+            errorText: o.errorText
+        });
+        this.editor.on(BI.TextEditor.EVENT_CHANGE, function () {
+            o.value = this.getValue();
+            self.fireEvent(BI.FineTuningNumberEditor.EVENT_CHANGE);
         });
         this.editor.on(BI.TextEditor.EVENT_CONFIRM, function(){
-            self._finetuning(0);
             self.fireEvent(BI.FineTuningNumberEditor.EVENT_CONFIRM);
         });
         this.topBtn = BI.createWidget({
@@ -82527,6 +82929,7 @@ BI.FineTuningNumberEditor = BI.inherit(BI.Widget, {
         });
         this.topBtn.on(BI.IconButton.EVENT_CHANGE, function(){
             self._finetuning(1);
+            self.fireEvent(BI.FineTuningNumberEditor.EVENT_CHANGE);
             self.fireEvent(BI.FineTuningNumberEditor.EVENT_CONFIRM);
         });
         this.bottomBtn = BI.createWidget({
@@ -82536,9 +82939,9 @@ BI.FineTuningNumberEditor = BI.inherit(BI.Widget, {
         });
         this.bottomBtn.on(BI.IconButton.EVENT_CHANGE, function(){
             self._finetuning(-1);
+            self.fireEvent(BI.FineTuningNumberEditor.EVENT_CHANGE);
             self.fireEvent(BI.FineTuningNumberEditor.EVENT_CONFIRM);
         });
-        this._finetuning(0);
         BI.createWidget({
             type: "bi.htape",
             element: this,
@@ -82562,33 +82965,33 @@ BI.FineTuningNumberEditor = BI.inherit(BI.Widget, {
         });
     },
 
-    _alertOutEditorValue: function(v){
-        return v === BI.i18nText("BI-Basic_Auto") ? -1 : v;
-    },
-
-    _alertInEditorValue: function(v){
-        return BI.parseInt(v) === -1 ? BI.i18nText("BI-Basic_Auto") : v;
-    },
-
     //微调
     _finetuning: function(add){
-        var v = BI.parseInt(this._alertOutEditorValue(this.editor.getValue()));
-        this.editor.setValue(this._alertInEditorValue(v + add));
-        this.bottomBtn.setEnable((v + add) > -1);
+        var v = BI.parseFloat(this.getValue());
+        this.setValue(v.add(add));
+    },
+
+    setUpEnable: function (v) {
+        this.topBtn.setEnable(!!v);
+    },
+
+    setBottomEnable: function (v) {
+        this.bottomBtn.setEnable(!!v);
     },
 
     getValue: function () {
-        var v = this.editor.getValue();
-        return this._alertOutEditorValue(v);
+        return this.options.value;
     },
 
     setValue: function (v) {
-        this.editor.setValue(this._alertInEditorValue(v));
-        this._finetuning(0);
+        var o = this.options;
+        o.value = v;
+        this.editor.setValue(o.valueFormatter(v));
     }
 
 });
 BI.FineTuningNumberEditor.EVENT_CONFIRM = "EVENT_CONFIRM";
+BI.FineTuningNumberEditor.EVENT_CHANGE = "EVENT_CHANGE";
 BI.shortcut("bi.fine_tuning_number_editor", BI.FineTuningNumberEditor);/**
  * 交互行为布局
  *
@@ -83459,6 +83862,1064 @@ BI.MonthTrigger.EVENT_START = "EVENT_START";
 BI.MonthTrigger.EVENT_STOP = "EVENT_STOP";
 BI.MonthTrigger.EVENT_CHANGE = "EVENT_CHANGE";
 BI.shortcut("bi.month_trigger", BI.MonthTrigger);/**
+ * 普通控件
+ *
+ * @class BI.MultiDateCard
+ * @extends BI.Widget
+ * @abstract
+ */
+BI.MultiDateCard = BI.inherit(BI.Widget, {
+
+    constants: {
+        lgap: 80,
+        itemHeight: 35,
+        defaultEditorValue: "1"
+    },
+
+    _defaultConfig: function () {
+        return $.extend(BI.MultiDateCard.superclass._defaultConfig.apply(this, arguments), {});
+    },
+
+    dateConfig: function () {
+
+    },
+
+    defaultSelectedItem: function () {
+
+    },
+
+    _init: function () {
+        BI.MultiDateCard.superclass._init.apply(this, arguments);
+        var self = this, opts = this.options;
+
+        this.label = BI.createWidget({
+            type: 'bi.label',
+            height: this.constants.itemHeight,
+            textAlign: "left",
+            text: BI.i18nText("BI-Multi_Date_Relative_Current_Time"),
+            cls: 'bi-multidate-inner-label bi-tips'
+        });
+        this.radioGroup = BI.createWidget({
+            type: "bi.button_group",
+            chooseType: 0,
+            items: BI.createItems(this.dateConfig(), {
+                type: 'bi.multidate_segment',
+                height: this.constants.itemHeight
+            }),
+            layouts: [{
+                type: "bi.vertical"
+            }]
+        });
+
+        this.radioGroup.on(BI.Controller.EVENT_CHANGE, function (type) {
+            if (type === BI.Events.CONFIRM) {
+                self.fireEvent(BI.MultiDateCard.EVENT_CHANGE);
+            }
+        });
+        this.radioGroup.on(BI.ButtonGroup.EVENT_CHANGE, function () {
+            self.setValue(self.getValue());
+            self.fireEvent(BI.MultiDateCard.EVENT_CHANGE);
+        });
+        BI.createWidget({
+            element: this,
+            type: 'bi.center_adapt',
+            lgap: this.constants.lgap,
+            items: [{
+                type: 'bi.vertical',
+                items: [this.label, this.radioGroup]
+            }]
+        });
+    },
+
+    getValue: function () {
+        var button = this.radioGroup.getSelectedButtons()[0];
+        var type = button.getValue(), value = button.getInputValue();
+        return {
+            type: type,
+            value: value
+        }
+    },
+
+    _isTypeAvaliable: function (type) {
+        var res = false;
+        BI.find(this.dateConfig(), function (i, item) {
+            if (item.value === type) {
+                res = true;
+                return true;
+            }
+        });
+        return res;
+    },
+
+    setValue: function (v) {
+        var self = this;
+        if (BI.isNotNull(v) && this._isTypeAvaliable(v.type)) {
+            this.radioGroup.setValue(v.type);
+            BI.each(this.radioGroup.getAllButtons(), function (i, button) {
+                if (button.isEditorExist() === true && button.isSelected()) {
+                    button.setInputValue(v.value);
+                } else {
+                    button.setInputValue(self.constants.defaultEditorValue);
+                }
+            });
+        } else {
+            this.radioGroup.setValue(this.defaultSelectedItem());
+            BI.each(this.radioGroup.getAllButtons(), function (i, button) {
+                button.setInputValue(self.constants.defaultEditorValue);
+            });
+        }
+    },
+
+    getCalculationValue: function () {
+        var valueObject = this.getValue();
+        var type = valueObject.type, value = valueObject.value;
+        switch (type) {
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_PREV:
+                return new Date().getOffsetDate(-1 * value);
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_AFTER:
+                return new Date().getOffsetDate(value);
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_TODAY:
+                return new Date();
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_PREV:
+                return new Date().getBeforeMultiMonth(value);
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_AFTER:
+                return new Date().getAfterMultiMonth(value);
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_BEGIN:
+                return new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_END:
+                return new Date(new Date().getFullYear(), new Date().getMonth(), (new Date().getLastDateOfMonth()).getDate());
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_PREV:
+                return new Date().getBeforeMulQuarter(value);
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_AFTER:
+                return new Date().getAfterMulQuarter(value);
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_BEGIN:
+                return new Date().getQuarterStartDate();
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_END:
+                return new Date().getQuarterEndDate();
+            case BICst.DATE_TYPE.MULTI_DATE_WEEK_PREV:
+                return new Date().getOffsetDate(-7 * value);
+            case BICst.DATE_TYPE.MULTI_DATE_WEEK_AFTER:
+                return new Date().getOffsetDate(7 * value);
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_PREV:
+                return new Date((new Date().getFullYear() - 1 * value), new Date().getMonth(), new Date().getDate());
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_AFTER:
+                return new Date((new Date().getFullYear() + 1 * value), new Date().getMonth(), new Date().getDate());
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_BEGIN:
+                return new Date(new Date().getFullYear(), 0, 1);
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_END:
+                return new Date(new Date().getFullYear(), 11, 31);
+        }
+    }
+});
+BI.MultiDateCard.EVENT_CHANGE = "EVENT_CHANGE";
+/**
+ * 日期控件
+ * @class BI.MultiDateCombo
+ * @extends BI.Widget
+ */
+BI.MultiDateCombo = BI.inherit(BI.Single, {
+    constants: {
+        popupHeight: 259,
+        popupWidth: 270,
+        comboAdjustHeight: 1,
+        border: 1,
+        DATE_MIN_VALUE: "1900-01-01",
+        DATE_MAX_VALUE: "2099-12-31"
+    },
+    _defaultConfig: function () {
+        return BI.extend(BI.MultiDateCombo.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: 'bi-multidate-combo bi-border',
+            height: 24
+        });
+    },
+    _init: function () {
+        BI.MultiDateCombo.superclass._init.apply(this, arguments);
+        var self = this, opts = this.options;
+        this.storeTriggerValue = "";
+        var date = new Date();
+        this.storeValue = null;
+        this.trigger = BI.createWidget({
+            type: 'bi.date_trigger',
+            min: this.constants.DATE_MIN_VALUE,
+            max: this.constants.DATE_MAX_VALUE
+        });
+        this.trigger.on(BI.DateTrigger.EVENT_KEY_DOWN, function () {
+            if (self.combo.isViewVisible()) {
+                self.combo.hideView();
+            }
+        });
+        this.trigger.on(BI.DateTrigger.EVENT_STOP, function () {
+            if (!self.combo.isViewVisible()) {
+                self.combo.showView();
+            }
+        });
+        this.trigger.on(BI.DateTrigger.EVENT_TRIGGER_CLICK, function () {
+            self.combo.toggle();
+        });
+        this.trigger.on(BI.DateTrigger.EVENT_FOCUS, function () {
+            self.storeTriggerValue = self.trigger.getKey();
+            if (!self.combo.isViewVisible()) {
+                self.combo.showView();
+            }
+            self.fireEvent(BI.MultiDateCombo.EVENT_FOCUS);
+        });
+        this.trigger.on(BI.DateTrigger.EVENT_ERROR, function () {
+            self.storeValue = {
+                year: date.getFullYear(),
+                month: date.getMonth()
+            };
+            self.popup.setValue();
+            self.fireEvent(BI.MultiDateCombo.EVENT_ERROR);
+        });
+        this.trigger.on(BI.DateTrigger.EVENT_VALID, function () {
+            self.fireEvent(BI.MultiDateCombo.EVENT_VALID);
+        });
+        this.trigger.on(BI.DateTrigger.EVENT_CHANGE, function () {
+            self.fireEvent(BI.MultiDateCombo.EVENT_CHANGE);
+        });
+        this.trigger.on(BI.DateTrigger.EVENT_CONFIRM, function () {
+            if (self.combo.isViewVisible()) {
+                return;
+            }
+            var dateStore = self.storeTriggerValue;
+            var dateObj = self.trigger.getKey();
+            if (BI.isNotEmptyString(dateObj) && !BI.isEqual(dateObj, dateStore)) {
+                self.storeValue = self.trigger.getValue();
+                self.setValue(self.trigger.getValue());
+            } else if (BI.isEmptyString(dateObj)) {
+                self.storeValue = null;
+                self.trigger.setValue();
+            }
+            self.fireEvent(BI.MultiDateCombo.EVENT_CONFIRM);
+        });
+        this.popup = BI.createWidget({
+            type: "bi.multidate_popup",
+            min: this.constants.DATE_MIN_VALUE,
+            max: this.constants.DATE_MAX_VALUE
+        });
+        this.popup.on(BI.MultiDatePopup.BUTTON_CLEAR_EVENT_CHANGE, function () {
+            self.setValue();
+            self.combo.hideView();
+            self.fireEvent(BI.MultiDateCombo.EVENT_CONFIRM);
+        });
+        this.popup.on(BI.MultiDatePopup.BUTTON_lABEL_EVENT_CHANGE, function () {
+            var date = new Date();
+            self.setValue({
+                year: date.getFullYear(),
+                month: date.getMonth(),
+                day: date.getDate()
+            });
+            self.combo.hideView();
+            self.fireEvent(BI.MultiDateCombo.EVENT_CONFIRM);
+        });
+        this.popup.on(BI.MultiDatePopup.BUTTON_OK_EVENT_CHANGE, function () {
+            self.setValue(self.popup.getValue());
+            self.combo.hideView();
+            self.fireEvent(BI.MultiDateCombo.EVENT_CONFIRM);
+        });
+        this.popup.on(BI.MultiDatePopup.CALENDAR_EVENT_CHANGE, function () {
+            self.setValue(self.popup.getValue());
+            self.combo.hideView();
+            //self.fireEvent(BI.MultiDateCombo.EVENT_CHANGE);
+            self.fireEvent(BI.MultiDateCombo.EVENT_CONFIRM);
+        });
+        this.combo = BI.createWidget({
+            type: 'bi.combo',
+            toggle: false,
+            isNeedAdjustHeight: false,
+            isNeedAdjustWidth: false,
+            el: this.trigger,
+            adjustLength: this.constants.comboAdjustHeight,
+            popup: {
+                el: this.popup,
+                maxHeight: this.constants.popupHeight,
+                width: this.constants.popupWidth,
+                stopPropagation: false
+            }
+        });
+        this.combo.on(BI.Combo.EVENT_BEFORE_POPUPVIEW, function () {
+            self.popup.setValue(self.storeValue);
+            self.fireEvent(BI.MultiDateCombo.EVENT_BEFORE_POPUPVIEW);
+        });
+
+        var triggerBtn = BI.createWidget({
+            type: "bi.trigger_icon_button",
+            cls: "bi-trigger-date-button chart-date-normal-font",
+            width: 30,
+            height: 23
+        });
+        triggerBtn.on(BI.TriggerIconButton.EVENT_CHANGE, function () {
+            if (self.combo.isViewVisible()) {
+                self.combo.hideView();
+            } else {
+                self.combo.showView();
+            }
+        });
+        this.changeIcon = BI.createWidget({
+            type: "bi.icon_button",
+            cls: "bi-trigger-date-change widget-date-h-change-font",
+            width: 30,
+            height: 23
+        });
+
+
+        var leftPart = BI.createWidget({
+            type: "bi.absolute",
+            items: [{
+                el: this.combo,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0
+            }, {
+                el: triggerBtn,
+                top: 0,
+                left: 0
+            }]
+        });
+
+        BI.createWidget({
+            type: "bi.htape",
+            element: this,
+            items: [leftPart, {
+                el: this.changeIcon,
+                width: 30
+            }],
+            ref: function (_ref) {
+                self.comboWrapper = _ref;
+            }
+        })
+    },
+
+    _checkDynamicValue: function (v) {
+        var type = null;
+        if (BI.isNotNull(v)) {
+            type = v.type
+        }
+        switch (type) {
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_BEGIN:
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_END:
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_BEGIN:
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_END:
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_BEGIN:
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_END:
+            case BICst.DATE_TYPE.MULTI_DATE_WEEK_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_WEEK_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_TODAY:
+                this.changeIcon.setVisible(true);
+                this.comboWrapper.attr("items")[1].width = 30;
+                this.comboWrapper.resize();
+                break;
+            default:
+                this.comboWrapper.attr("items")[1].width = 0;
+                this.comboWrapper.resize();
+                this.changeIcon.setVisible(false);
+                break;
+        }
+    },
+
+    setValue: function (v) {
+        this.storeValue = v;
+        this.popup.setValue(v);
+        this.trigger.setValue(v);
+        this._checkDynamicValue(v)
+    },
+    getValue: function () {
+        return this.storeValue;
+    },
+    getKey: function () {
+        return this.trigger.getKey();
+    },
+    hidePopupView: function () {
+        this.combo.hideView();
+    }
+});
+BI.shortcut('bi.multidate_combo', BI.MultiDateCombo);
+
+BI.MultiDateCombo.EVENT_CONFIRM = "EVENT_CONFIRM";
+BI.MultiDateCombo.EVENT_FOCUS = "EVENT_FOCUS";
+BI.MultiDateCombo.EVENT_CHANGE = "EVENT_CHANGE";
+BI.MultiDateCombo.EVENT_VALID = "EVENT_VALID";
+BI.MultiDateCombo.EVENT_ERROR = "EVENT_ERROR";
+BI.MultiDateCombo.EVENT_BEFORE_POPUPVIEW = "BI.MultiDateCombo.EVENT_BEFORE_POPUPVIEW";
+
+BI.extend(BI.MultiDateCombo, {
+    MULTI_DATE_YMD_CARD: 1,
+    MULTI_DATE_YEAR_CARD: 2,
+    MULTI_DATE_QUARTER_CARD: 3,
+    MULTI_DATE_MONTH_CARD: 4,
+    MULTI_DATE_WEEK_CARD: 5,
+    MULTI_DATE_DAY_CARD: 6
+});
+/**
+ * 普通控件
+ *
+ * @class BI.DayCard
+ * @extends BI.MultiDateCard
+ */
+BI.DayCard = BI.inherit(BI.MultiDateCard, {
+
+    _defaultConfig: function () {
+        return $.extend(BI.DayCard.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: 'bi-multidate-daycard'
+        });
+    },
+
+    _init: function () {
+        BI.DayCard.superclass._init.apply(this, arguments);
+    },
+
+    dateConfig: function () {
+        return [{
+            isEditorExist: true,
+            selected: true,
+            text: BI.i18nText("BI-Multi_Date_Day_Prev"),
+            value: BICst.DATE_TYPE.MULTI_DATE_DAY_PREV
+        },
+            {
+                isEditorExist: true,
+                text: BI.i18nText("BI-Multi_Date_Day_Next"),
+                value: BICst.DATE_TYPE.MULTI_DATE_DAY_AFTER
+            },
+            {
+                isEditorExist: false,
+                value: BICst.DATE_TYPE.MULTI_DATE_DAY_TODAY,
+                text: BI.i18nText("BI-Multi_Date_Today")
+            }];
+    },
+
+    defaultSelectedItem: function () {
+        return BICst.DATE_TYPE.MULTI_DATE_DAY_PREV
+    }
+});
+BI.DayCard.EVENT_CHANGE = "EVENT_CHANGE";
+BI.shortcut('bi.daycard', BI.DayCard);
+/**
+ * 普通控件
+ *
+ * @class BI.MonthCard
+ * @extends BI.MultiDateCard
+ */
+BI.MonthCard = BI.inherit(BI.MultiDateCard, {
+    _defaultConfig: function () {
+        return $.extend(BI.MonthCard.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: 'bi-multidate-monthcard'
+        });
+    },
+
+    _init: function () {
+        BI.MonthCard.superclass._init.apply(this, arguments);
+    },
+
+    dateConfig: function () {
+        return [{
+            selected: true,
+            isEditorExist: true,
+            value: BICst.DATE_TYPE.MULTI_DATE_MONTH_PREV,
+            text: BI.i18nText("BI-Multi_Date_Month_Prev")
+        },
+            {
+                isEditorExist: true,
+                value: BICst.DATE_TYPE.MULTI_DATE_MONTH_AFTER,
+                text: BI.i18nText("BI-Multi_Date_Month_Next")
+            },
+            {
+                value: BICst.DATE_TYPE.MULTI_DATE_MONTH_BEGIN,
+                isEditorExist: false,
+                text: BI.i18nText("BI-Multi_Date_Month_Begin")
+            },
+            {
+                value: BICst.DATE_TYPE.MULTI_DATE_MONTH_END,
+                isEditorExist: false,
+                text: BI.i18nText("BI-Multi_Date_Month_End")
+            }];
+    },
+
+    defaultSelectedItem: function () {
+        return BICst.DATE_TYPE.MULTI_DATE_MONTH_PREV;
+    }
+});
+BI.MonthCard.EVENT_CHANGE = "EVENT_CHANGE";
+BI.shortcut('bi.monthcard', BI.MonthCard);
+/**
+ * 日期控件
+ * @class BI.MultiDatePopup
+ * @extends BI.Widget
+ */
+BI.MultiDatePopup = BI.inherit(BI.Widget, {
+    constants: {
+        tabHeight: 30,
+        tabWidth: 42,
+        titleHeight: 27,
+        itemHeight: 30,
+        triggerHeight: 24,
+        buttonWidth: 90,
+        buttonHeight: 25,
+        cardHeight: 229,
+        cardWidth: 270,
+        popupHeight: 259,
+        popupWidth: 270,
+        comboAdjustHeight: 1,
+        ymdWidth: 58,
+        lgap: 2,
+        border: 1
+    },
+    _defaultConfig: function () {
+        return BI.extend(BI.MultiDatePopup.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: 'bi-multidate-popup',
+            width: 268,
+            height: 260
+        });
+    },
+    _init: function () {
+        BI.MultiDatePopup.superclass._init.apply(this, arguments);
+        var self = this, opts = this.options;
+        this.storeValue = "";
+        this.textButton = BI.createWidget({
+            type: 'bi.text_button',
+            forceCenter: true,
+            cls: 'bi-multidate-popup-label bi-border-left bi-border-right bi-border-top',
+            shadow: true,
+            text: BI.i18nText("BI-Multi_Date_Today")
+        });
+        this.textButton.on(BI.TextButton.EVENT_CHANGE, function () {
+            self.fireEvent(BI.MultiDatePopup.BUTTON_lABEL_EVENT_CHANGE);
+        });
+        this.clearButton = BI.createWidget({
+            type: "bi.text_button",
+            forceCenter: true,
+            cls: 'bi-multidate-popup-button bi-border-top',
+            shadow: true,
+            text: BI.i18nText("BI-Basic_Clear")
+        });
+        this.clearButton.on(BI.TextButton.EVENT_CHANGE, function () {
+            self.fireEvent(BI.MultiDatePopup.BUTTON_CLEAR_EVENT_CHANGE);
+        });
+        this.okButton = BI.createWidget({
+            type: "bi.text_button",
+            forceCenter: true,
+            cls: 'bi-multidate-popup-button bi-border-top',
+            shadow: true,
+            text: BI.i18nText("BI-Basic_OK")
+        });
+        this.okButton.on(BI.TextButton.EVENT_CHANGE, function () {
+            self.fireEvent(BI.MultiDatePopup.BUTTON_OK_EVENT_CHANGE);
+        });
+        this.dateTab = BI.createWidget({
+            type: 'bi.tab',
+            tab: {
+                cls: "bi-multidate-popup-tab bi-border-bottom",
+                height: this.constants.tabHeight,
+                items: BI.createItems([{
+                    text: BI.i18nText("BI-Multi_Date_YMD"),
+                    value: BI.MultiDateCombo.MULTI_DATE_YMD_CARD,
+                    width: this.constants.ymdWidth
+                }, {
+                    text: BI.i18nText("BI-Multi_Date_Year"),
+                    value: BI.MultiDateCombo.MULTI_DATE_YEAR_CARD
+                }, {
+                    text: BI.i18nText("BI-Multi_Date_Quarter"),
+                    value: BI.MultiDateCombo.MULTI_DATE_QUARTER_CARD
+                }, {
+                    text: BI.i18nText("BI-Multi_Date_Month"),
+                    value: BI.MultiDateCombo.MULTI_DATE_MONTH_CARD
+                }, {
+                    text: BI.i18nText("BI-Multi_Date_Week"),
+                    value: BI.MultiDateCombo.MULTI_DATE_WEEK_CARD
+                }, {
+                    text: BI.i18nText("BI-Multi_Date_Day"),
+                    value: BI.MultiDateCombo.MULTI_DATE_DAY_CARD
+                }], {
+                    width: this.constants.tabWidth,
+                    textAlign: "center",
+                    height: this.constants.itemHeight,
+                    cls: 'bi-multidate-popup-item bi-list-item-active'
+                }),
+                layouts: [{
+                    type: 'bi.left'
+                }]
+            },
+            cardCreator: function (v) {
+                switch (v) {
+                    case BI.MultiDateCombo.MULTI_DATE_YMD_CARD:
+                        self.ymd = BI.createWidget({
+                            type: "bi.date_calendar_popup",
+                            min: self.options.min,
+                            max: self.options.max
+                        });
+                        self.ymd.on(BI.DateCalendarPopup.EVENT_CHANGE, function () {
+                            self.fireEvent(BI.MultiDatePopup.CALENDAR_EVENT_CHANGE);
+                        });
+                        return self.ymd;
+                    case BI.MultiDateCombo.MULTI_DATE_YEAR_CARD:
+                        self.year = BI.createWidget({
+                            type: "bi.yearcard"
+                        });
+                        self.year.on(BI.MultiDateCard.EVENT_CHANGE, function (v) {
+                            self._setInnerValue(self.year, v);
+                        });
+                        return self.year;
+                    case BI.MultiDateCombo.MULTI_DATE_QUARTER_CARD:
+                        self.quarter = BI.createWidget({
+                            type: 'bi.quartercard'
+                        });
+                        self.quarter.on(BI.MultiDateCard.EVENT_CHANGE, function (v) {
+                            self._setInnerValue(self.quarter, v);
+                        });
+                        return self.quarter;
+                    case BI.MultiDateCombo.MULTI_DATE_MONTH_CARD:
+                        self.month = BI.createWidget({
+                            type: 'bi.monthcard'
+                        });
+                        self.month.on(BI.MultiDateCard.EVENT_CHANGE, function (v) {
+                            self._setInnerValue(self.month, v);
+                        });
+                        return self.month;
+                    case BI.MultiDateCombo.MULTI_DATE_WEEK_CARD:
+                        self.week = BI.createWidget({
+                            type: 'bi.weekcard'
+                        });
+                        self.week.on(BI.MultiDateCard.EVENT_CHANGE, function (v) {
+                            self._setInnerValue(self.week, v);
+                        });
+                        return self.week;
+                    case BI.MultiDateCombo.MULTI_DATE_DAY_CARD:
+                        self.day = BI.createWidget({
+                            type: 'bi.daycard'
+                        });
+                        self.day.on(BI.MultiDateCard.EVENT_CHANGE, function (v) {
+                            self._setInnerValue(self.day, v);
+                        });
+                        return self.day;
+                }
+            }
+        });
+        this.dateTab.setSelect(BI.MultiDateCombo.MULTI_DATE_YMD_CARD);
+        this.cur = BI.MultiDateCombo.MULTI_DATE_YMD_CARD;
+        this.dateTab.on(BI.Tab.EVENT_CHANGE, function () {
+            var v = self.dateTab.getSelect();
+            switch (v) {
+                case BI.MultiDateCombo.MULTI_DATE_YMD_CARD:
+                    var date = this.getTab(self.cur).getCalculationValue();
+                    self.ymd.setValue({
+                        year: date.getFullYear(),
+                        month: date.getMonth(),
+                        day: date.getDate()
+                    });
+                    self._setInnerValue(self.ymd);
+                    break;
+                case BI.MultiDateCombo.MULTI_DATE_YEAR_CARD:
+                    self.year.setValue(self.storeValue);
+                    self._setInnerValue(self.year);
+                    break;
+                case BI.MultiDateCombo.MULTI_DATE_QUARTER_CARD:
+                    self.quarter.setValue(self.storeValue);
+                    self._setInnerValue(self.quarter);
+                    break;
+                case BI.MultiDateCombo.MULTI_DATE_MONTH_CARD:
+                    self.month.setValue(self.storeValue);
+                    self._setInnerValue(self.month);
+                    break;
+                case BI.MultiDateCombo.MULTI_DATE_WEEK_CARD:
+                    self.week.setValue(self.storeValue);
+                    self._setInnerValue(self.week);
+                    break;
+                case BI.MultiDateCombo.MULTI_DATE_DAY_CARD:
+                    self.day.setValue(self.storeValue);
+                    self._setInnerValue(self.day);
+                    break;
+            }
+            self.cur = v;
+        });
+        this.dateButton = BI.createWidget({
+            type: "bi.grid",
+            items: [[this.clearButton, this.textButton, this.okButton]]
+        });
+        BI.createWidget({
+            element: this,
+            type: "bi.vtape",
+            items: [{
+                el: this.dateTab
+            }, {
+                el: this.dateButton,
+                height: 30
+            }]
+        });
+    },
+    _setInnerValue: function (obj) {
+        if (this.dateTab.getSelect() === BI.MultiDateCombo.MULTI_DATE_YMD_CARD) {
+            this.textButton.setValue(BI.i18nText("BI-Multi_Date_Today"));
+            this.textButton.setEnable(true);
+        } else {
+            var date = obj.getCalculationValue();
+            date = date.print("%Y-%x-%e");
+            this.textButton.setValue(date);
+            this.textButton.setEnable(false);
+        }
+    },
+    setValue: function (v) {
+        this.storeValue = v;
+        var self = this, date;
+        var type, value;
+        if (BI.isNotNull(v)) {
+            type = v.type || BICst.DATE_TYPE.MULTI_DATE_CALENDAR;
+            value = v.value;
+            if (BI.isNull(value)) {
+                value = v;
+            }
+        }
+        switch (type) {
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_BEGIN:
+            case BICst.DATE_TYPE.MULTI_DATE_YEAR_END:
+                this.dateTab.setSelect(BICst.MULTI_DATE_YEAR_CARD);
+                this.year.setValue({type: type, value: value});
+                this.cur = BICst.MULTI_DATE_YEAR_CARD;
+                self._setInnerValue(this.year);
+                break;
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_BEGIN:
+            case BICst.DATE_TYPE.MULTI_DATE_QUARTER_END:
+                this.dateTab.setSelect(BICst.MULTI_DATE_QUARTER_CARD);
+                this.cur = BICst.MULTI_DATE_QUARTER_CARD;
+                this.quarter.setValue({type: type, value: value});
+                self._setInnerValue(this.quarter);
+                break;
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_BEGIN:
+            case BICst.DATE_TYPE.MULTI_DATE_MONTH_END:
+                this.dateTab.setSelect(BICst.MULTI_DATE_MONTH_CARD);
+                this.cur = BICst.MULTI_DATE_MONTH_CARD;
+                this.month.setValue({type: type, value: value});
+                self._setInnerValue(this.month);
+                break;
+            case BICst.DATE_TYPE.MULTI_DATE_WEEK_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_WEEK_AFTER:
+                this.dateTab.setSelect(BICst.MULTI_DATE_WEEK_CARD);
+                this.cur = BICst.MULTI_DATE_WEEK_CARD;
+                this.week.setValue({type: type, value: value});
+                self._setInnerValue(this.week);
+                break;
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_PREV:
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_AFTER:
+            case BICst.DATE_TYPE.MULTI_DATE_DAY_TODAY:
+                this.dateTab.setSelect(BICst.MULTI_DATE_DAY_CARD);
+                this.cur = BICst.MULTI_DATE_DAY_CARD;
+                this.day.setValue({type: type, value: value});
+                self._setInnerValue(this.day);
+                break;
+            default:
+                if (BI.isNull(value) || BI.isEmptyObject(value)) {
+                    var date = new Date();
+                    this.dateTab.setSelect(BI.MultiDateCombo.MULTI_DATE_YMD_CARD);
+                    this.ymd.setValue({
+                        year: date.getFullYear(),
+                        month: date.getMonth(),
+                        day: date.getDate()
+                    });
+                    this.textButton.setValue(BI.i18nText("BI-Multi_Date_Today"));
+                } else {
+                    this.dateTab.setSelect(BI.MultiDateCombo.MULTI_DATE_YMD_CARD);
+                    this.ymd.setValue(value);
+                    this.textButton.setValue(BI.i18nText("BI-Multi_Date_Today"));
+                }
+                this.textButton.setEnable(true);
+                break;
+        }
+    },
+    getValue: function () {
+        var tab = this.dateTab.getSelect();
+        switch (tab) {
+            case BI.MultiDateCombo.MULTI_DATE_YMD_CARD:
+                return this.ymd.getValue();
+            case BI.MultiDateCombo.MULTI_DATE_YEAR_CARD:
+                return this.year.getValue();
+            case BI.MultiDateCombo.MULTI_DATE_QUARTER_CARD:
+                return this.quarter.getValue();
+            case BI.MultiDateCombo.MULTI_DATE_MONTH_CARD:
+                return this.month.getValue();
+            case BI.MultiDateCombo.MULTI_DATE_WEEK_CARD:
+                return this.week.getValue();
+            case BI.MultiDateCombo.MULTI_DATE_DAY_CARD:
+                return this.day.getValue();
+        }
+    }
+});
+BI.MultiDatePopup.BUTTON_OK_EVENT_CHANGE = "BUTTON_OK_EVENT_CHANGE";
+BI.MultiDatePopup.BUTTON_lABEL_EVENT_CHANGE = "BUTTON_lABEL_EVENT_CHANGE";
+BI.MultiDatePopup.BUTTON_CLEAR_EVENT_CHANGE = "BUTTON_CLEAR_EVENT_CHANGE";
+BI.MultiDatePopup.CALENDAR_EVENT_CHANGE = "CALENDAR_EVENT_CHANGE";
+BI.shortcut('bi.multidate_popup', BI.MultiDatePopup);
+/**
+ * 普通控件
+ *
+ * @class BI.QuarterCard
+ * @extends BI.MultiDateCard
+ */
+BI.QuarterCard = BI.inherit(BI.MultiDateCard, {
+
+    _defaultConfig: function () {
+        return $.extend(BI.QuarterCard.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: 'bi-multidate-quartercard'
+        });
+    },
+
+    _init: function () {
+        BI.QuarterCard.superclass._init.apply(this, arguments);
+    },
+
+    dateConfig: function () {
+        return [{
+            selected: true,
+            value: BICst.DATE_TYPE.MULTI_DATE_QUARTER_PREV,
+            isEditorExist: true,
+            text: BI.i18nText("BI-Multi_Date_Quarter_Prev")
+        },
+            {
+                value: BICst.DATE_TYPE.MULTI_DATE_QUARTER_AFTER,
+                isEditorExist: true,
+                text: BI.i18nText("BI-Multi_Date_Quarter_Next")
+            },
+            {
+                value: BICst.DATE_TYPE.MULTI_DATE_QUARTER_BEGIN,
+                isEditorExist: false,
+                text: BI.i18nText("BI-Multi_Date_Quarter_Begin")
+            },
+            {
+                value: BICst.DATE_TYPE.MULTI_DATE_QUARTER_END,
+                isEditorExist: false,
+                text: BI.i18nText("BI-Multi_Date_Quarter_End")
+            }]
+    },
+
+    defaultSelectedItem: function () {
+        return BICst.DATE_TYPE.MULTI_DATE_QUARTER_PREV;
+    }
+});
+BI.QuarterCard.EVENT_CHANGE = "EVENT_CHANGE";
+BI.shortcut('bi.quartercard', BI.QuarterCard);
+/**
+ * 普通控件
+ *
+ * @class BI.MultiDateSegment
+ * @extends BI.Single
+ */
+BI.MultiDateSegment = BI.inherit(BI.Single, {
+    constants: {
+        itemHeight: 24,
+        maxGap: 15,
+        minGap: 10,
+        textWidth: 30,
+        defaultEditorValue: "1"
+    },
+
+    _defaultConfig: function () {
+        return $.extend(BI.MultiDateSegment.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: 'bi-multidate-segment',
+            text: "",
+            width: 130,
+            height: 30,
+            isEditorExist: true,
+            selected: false,
+            defaultEditorValue: "1"
+        });
+    },
+
+    _init: function () {
+        BI.MultiDateSegment.superclass._init.apply(this, arguments);
+        var self = this, opts = this.options;
+        this.radio = BI.createWidget({
+            type: "bi.radio",
+            selected: opts.selected
+        });
+        this.radio.on(BI.Controller.EVENT_CHANGE, function (v) {
+            self.fireEvent(BI.Controller.EVENT_CHANGE, arguments);
+        });
+        this.textEditor = BI.createWidget({
+            type: 'bi.text_editor',
+            value: this.constants.defaultEditorValue,
+            title: function () {
+                return self.textEditor.getValue();
+            },
+            cls: 'bi-multidate-editor',
+            width: this.constants.textWidth,
+            height: this.constants.itemHeight
+        });
+        this.textEditor.on(BI.Controller.EVENT_CHANGE, function (v) {
+            self.fireEvent(BI.Controller.EVENT_CHANGE, arguments);
+        });
+        this.text = BI.createWidget({
+            type: "bi.label",
+            textAlign: "left",
+            cls: 'bi-multidate-normal-label',
+            text: opts.text,
+            height: this.constants.itemHeight
+        });
+        this._createSegment();
+    },
+    _createSegment: function () {
+        if (this.options.isEditorExist === true) {
+            return BI.createWidget({
+                element: this,
+                type: 'bi.left',
+                items: [{
+                    el: {
+                        type: "bi.center_adapt",
+                        items: [this.radio],
+                        height: this.constants.itemHeight
+                    },
+                    lgap: 0
+                },
+                    {
+                        el: {
+                            type: "bi.center_adapt",
+                            items: [this.textEditor],
+                            widgetName: 'textEditor'
+                        },
+                        lgap: this.constants.maxGap
+                    },
+                    {
+                        el: this.text,
+                        lgap: this.constants.minGap
+                    }]
+            });
+        }
+        return BI.createWidget({
+            element: this,
+            type: 'bi.left',
+            items: [{
+                el: {
+                    type: "bi.center_adapt",
+                    items: [this.radio],
+                    height: this.constants.itemHeight
+                },
+                lgap: 0
+            },
+                {
+                    el: this.text,
+                    lgap: this.constants.maxGap
+                }]
+        })
+    },
+    setSelected: function (v) {
+        if (BI.isNotNull(this.radio)) {
+            this.radio.setSelected(v);
+            this.textEditor.setEnable(v);
+        }
+    },
+    isSelected: function () {
+        return this.radio.isSelected();
+    },
+    getValue: function () {
+        return this.options.value;
+    },
+    getInputValue: function () {
+        return this.textEditor.getValue() | 0;
+    },
+    setInputValue: function (v) {
+        this.textEditor.setValue(v);
+    },
+    isEditorExist: function () {
+        return this.options.isEditorExist;
+    }
+});
+BI.MultiDateSegment.EVENT_CHANGE = "EVENT_CHANGE";
+BI.shortcut('bi.multidate_segment', BI.MultiDateSegment);/**
+ * 普通控件
+ *
+ * @class BI.WeekCard
+ * @extends BI.MultiDateCard
+ */
+BI.WeekCard = BI.inherit(BI.MultiDateCard, {
+    _defaultConfig: function () {
+        return $.extend(BI.WeekCard.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: 'bi-multidate-weekcard'
+        });
+    },
+
+    _init: function () {
+        BI.WeekCard.superclass._init.apply(this, arguments);
+    },
+
+    dateConfig: function () {
+        return [{
+            selected: true,
+            isEditorExist: true,
+            text: BI.i18nText("BI-Multi_Date_Week_Prev"),
+            value: BICst.DATE_TYPE.MULTI_DATE_WEEK_PREV
+        },
+            {
+                isEditorExist: true,
+                text: BI.i18nText("BI-Multi_Date_Week_Next"),
+                value: BICst.DATE_TYPE.MULTI_DATE_WEEK_AFTER
+            }];
+    },
+
+    defaultSelectedItem: function () {
+        return BICst.DATE_TYPE.MULTI_DATE_WEEK_PREV;
+    }
+});
+BI.WeekCard.EVENT_CHANGE = "EVENT_CHANGE";
+BI.shortcut('bi.weekcard', BI.WeekCard);
+/**
+ * 普通控件
+ *
+ * @class BI.YearCard
+ * @extends BI.MultiDateCard
+ */
+BI.YearCard = BI.inherit(BI.MultiDateCard, {
+    _defaultConfig: function () {
+        return $.extend(BI.YearCard.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: 'bi-multidate-yearcard'
+        });
+    },
+
+    _init: function () {
+        BI.YearCard.superclass._init.apply(this, arguments);
+    },
+
+    dateConfig: function () {
+        return [{
+            selected: true,
+            isEditorExist: true,
+            text: BI.i18nText("BI-Multi_Date_Year_Prev"),
+            value: BICst.DATE_TYPE.MULTI_DATE_YEAR_PREV
+        },
+            {
+                isEditorExist: true,
+                text: BI.i18nText("BI-Multi_Date_Year_Next"),
+                value: BICst.DATE_TYPE.MULTI_DATE_YEAR_AFTER
+            },
+            {
+                isEditorExist: false,
+                value: BICst.DATE_TYPE.MULTI_DATE_YEAR_BEGIN,
+                text: BI.i18nText("BI-Multi_Date_Year_Begin")
+            },
+            {
+                isEditorExist: false,
+                value: BICst.DATE_TYPE.MULTI_DATE_YEAR_END,
+                text: BI.i18nText("BI-Multi_Date_Year_End")
+            }]
+    },
+
+    defaultSelectedItem: function () {
+        return BICst.DATE_TYPE.MULTI_DATE_YEAR_PREV;
+    }
+});
+BI.YearCard.EVENT_CHANGE = "EVENT_CHANGE";
+BI.shortcut('bi.yearcard', BI.YearCard);
+/**
  * @class BI.MultiLayerSelectTreeCombo
  * @extends BI.Widget
  */
@@ -85352,7 +86813,7 @@ BI.MultiSelectCombo = BI.inherit(BI.Single, {
     },
 
     getValue: function () {
-        return this.storeValue;
+        return BI.deepClone(this.storeValue);
     },
 
     populate: function () {
@@ -86756,7 +88217,7 @@ BI.MultiSelectList = BI.inherit(BI.Widget, {
     },
 
     getValue: function () {
-        return this.storeValue;
+        return BI.deepClone(this.storeValue);
     },
 
     populate: function () {
@@ -92054,6 +93515,194 @@ BI.SwitchTree.SelectType = {
 };
 BI.shortcut('bi.switch_tree', BI.SwitchTree);
 /**
+ * Created by Baron on 2015/10/19.
+ */
+BI.TimeInterval = BI.inherit(BI.Single, {
+    constants: {
+        height: 25,
+        width: 25,
+        lgap: 15,
+        offset: -15,
+        timeErrorCls: "time-error",
+        DATE_MIN_VALUE: "1900-01-01",
+        DATE_MAX_VALUE: "2099-12-31"
+    },
+    _defaultConfig: function () {
+        var conf = BI.TimeInterval.superclass._defaultConfig.apply(this, arguments);
+        return BI.extend(conf, {
+            extraCls: "bi-time-interval"
+        })
+    },
+    _init: function () {
+        var self = this;
+        BI.TimeInterval.superclass._init.apply(this, arguments);
+
+        this.left = this._createCombo();
+        this.right = this._createCombo();
+        this.label = BI.createWidget({
+            type: 'bi.label',
+            height: this.constants.height,
+            width: this.constants.width,
+            text: "-"
+        });
+        BI.createWidget({
+            element: self,
+            type: "bi.center",
+            hgap: 15,
+            height: this.constants.height,
+            items: [{
+                type: "bi.absolute",
+                items: [{
+                    el: self.left,
+                    left: this.constants.offset,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }]
+            }, {
+                type: "bi.absolute",
+                items: [{
+                    el: self.right,
+                    left: 0,
+                    right: this.constants.offset,
+                    top: 0,
+                    bottom: 0
+                }]
+            }]
+        });
+        BI.createWidget({
+            type: "bi.horizontal_auto",
+            element: this,
+            items: [
+                self.label
+            ]
+        });
+    },
+
+    _createCombo: function () {
+        var self = this;
+        var combo = BI.createWidget({
+            type: 'bi.multidate_combo'
+        });
+        combo.on(BI.MultiDateCombo.EVENT_ERROR, function () {
+            self._clearTitle();
+            self.element.removeClass(self.constants.timeErrorCls);
+            self.fireEvent(BI.TimeInterval.EVENT_ERROR);
+        });
+
+        combo.on(BI.MultiDateCombo.EVENT_VALID, function(){
+            BI.Bubbles.hide("error");
+            var smallDate = self.left.getKey(), bigDate = self.right.getKey();
+            if (self._check(smallDate, bigDate) && self._compare(smallDate, bigDate)) {
+                self._setTitle(BI.i18nText("BI-Time_Interval_Error_Text"));
+                self.element.addClass(self.constants.timeErrorCls);
+                BI.Bubbles.show("error", BI.i18nText("BI-Time_Interval_Error_Text"), self, {
+                    offsetStyle: "center"
+                });
+                self.fireEvent(BI.TimeInterval.EVENT_ERROR);
+            } else {
+                self._clearTitle();
+                self.element.removeClass(self.constants.timeErrorCls);
+            }
+        });
+
+        combo.on(BI.MultiDateCombo.EVENT_FOCUS, function(){
+            BI.Bubbles.hide("error");
+            var smallDate = self.left.getKey(), bigDate = self.right.getKey();
+            if (self._check(smallDate, bigDate) && self._compare(smallDate, bigDate)) {
+                self._setTitle(BI.i18nText("BI-Time_Interval_Error_Text"));
+                self.element.addClass(self.constants.timeErrorCls);
+                BI.Bubbles.show("error", BI.i18nText("BI-Time_Interval_Error_Text"), self, {
+                    offsetStyle: "center"
+                });
+                self.fireEvent(BI.TimeInterval.EVENT_ERROR);
+            } else {
+                self._clearTitle();
+                self.element.removeClass(self.constants.timeErrorCls);
+            }
+        });
+
+        combo.on(BI.MultiDateCombo.EVENT_BEFORE_POPUPVIEW, function () {
+            self.left.hidePopupView();
+            self.right.hidePopupView();
+        });
+        //combo.on(BI.MultiDateCombo.EVENT_CHANGE, function () {
+        //    BI.Bubbles.hide("error");
+        //    var smallDate = self.left.getKey(), bigDate = self.right.getKey();
+        //    if (self._check(smallDate, bigDate) && self._compare(smallDate, bigDate)) {
+        //        self._setTitle(BI.i18nText("BI-Time_Interval_Error_Text"));
+        //        self.element.addClass(self.constants.timeErrorCls);
+        //        BI.Bubbles.show("error", BI.i18nText("BI-Time_Interval_Error_Text"), self, {
+        //            offsetStyle: "center"
+        //        });
+        //        self.fireEvent(BI.TimeInterval.EVENT_ERROR);
+        //    } else {
+        //        self._clearTitle();
+        //        self.element.removeClass(self.constants.timeErrorCls);
+        //    }
+        //});
+
+        combo.on(BI.MultiDateCombo.EVENT_CONFIRM, function(){
+            BI.Bubbles.hide("error");
+            var smallDate = self.left.getKey(), bigDate = self.right.getKey();
+            if (self._check(smallDate, bigDate) && self._compare(smallDate, bigDate)) {
+                self._setTitle(BI.i18nText("BI-Time_Interval_Error_Text"));
+                self.element.addClass(self.constants.timeErrorCls);
+                self.fireEvent(BI.TimeInterval.EVENT_ERROR);
+            }else{
+                self._clearTitle();
+                self.element.removeClass(self.constants.timeErrorCls);
+                self.fireEvent(BI.TimeInterval.EVENT_CHANGE);
+            }
+        });
+        return combo;
+    },
+    _dateCheck: function (date) {
+        return Date.parseDateTime(date, "%Y-%x-%d").print("%Y-%x-%d") == date || Date.parseDateTime(date, "%Y-%X-%d").print("%Y-%X-%d") == date || Date.parseDateTime(date, "%Y-%x-%e").print("%Y-%x-%e") == date || Date.parseDateTime(date, "%Y-%X-%e").print("%Y-%X-%e") == date;
+    },
+    _checkVoid: function (obj) {
+        return !Date.checkVoid(obj.year, obj.month, obj.day, this.constants.DATE_MIN_VALUE, this.constants.DATE_MAX_VALUE)[0];
+    },
+    _check: function (smallDate, bigDate) {
+        var smallObj = smallDate.match(/\d+/g), bigObj = bigDate.match(/\d+/g);
+        return this._dateCheck(smallDate) && Date.checkLegal(smallDate) && this._checkVoid({
+                year: smallObj[0],
+                month: smallObj[1],
+                day: smallObj[2]
+            }) && this._dateCheck(bigDate) && Date.checkLegal(bigDate) && this._checkVoid({
+                year: bigObj[0],
+                month: bigObj[1],
+                day: bigObj[2]
+            });
+    },
+    _compare: function (smallDate, bigDate) {
+        smallDate = Date.parseDateTime(smallDate, "%Y-%X-%d").print("%Y-%X-%d");
+        bigDate = Date.parseDateTime(bigDate, "%Y-%X-%d").print("%Y-%X-%d");
+        return BI.isNotNull(smallDate) && BI.isNotNull(bigDate) && smallDate > bigDate;
+    },
+    _setTitle: function (v) {
+        this.left.setTitle(v);
+        this.right.setTitle(v);
+        this.label.setTitle(v);
+    },
+    _clearTitle: function () {
+        this.left.setTitle("");
+        this.right.setTitle("");
+        this.label.setTitle("");
+    },
+    setValue: function (date) {
+        date = date || {};
+        this.left.setValue(date.start);
+        this.right.setValue(date.end);
+    },
+    getValue: function () {
+        return {start: this.left.getValue(), end: this.right.getValue()};
+    }
+});
+BI.TimeInterval.EVENT_VALID = "EVENT_VALID";
+BI.TimeInterval.EVENT_ERROR = "EVENT_ERROR";
+BI.TimeInterval.EVENT_CHANGE = "EVENT_CHANGE";
+BI.shortcut("bi.time_interval", BI.TimeInterval);/**
  * 年份下拉框
  *
  * Created by GUY on 2015/8/28.
@@ -93660,19 +95309,4 @@ BI.ValueChooserPane = BI.inherit(BI.AbstractValueChooser, {
     }
 });
 BI.ValueChooserPane.EVENT_CHANGE = "ValueChooserPane.EVENT_CHANGE";
-BI.shortcut('bi.value_chooser_pane', BI.ValueChooserPane);BI.servletURL = "https://fanruan.coding.me/fineui/dist/";
-BI.resourceURL = "https://fanruan.coding.me/fineui/dist/resource/";
-BI.i18n = {
-    "BI-Basic_OK": "确定",
-    "BI-Basic_Sure": "确定",
-    "BI-Basic_Clears": "清空",
-    "BI-Basic_Cancel": "取消",
-    "BI-Basic_Time": "时间",
-    "BI-Basic_Simple_Sunday": "日",
-    "BI-Basic_Simple_Monday": "一",
-    "BI-Basic_Simple_Tuesday": "二",
-    "BI-Basic_Simple_Wednesday": "三",
-    "BI-Basic_Simple_Thursday": "四",
-    "BI-Basic_Simple_Friday": "五",
-    "BI-Basic_Simple_Saturday": "六",
-};
+BI.shortcut('bi.value_chooser_pane', BI.ValueChooserPane);

@@ -16,7 +16,13 @@ BI.LayerController = BI.inherit(BI.Controller, {
         this.layerManager = {};
         this.layouts = {};
         this.zindex = BI.zIndex_layer;
-        BI.Resizers.add("layerController" + BI.uniqueId(), BI.bind(this._resize, this));
+    },
+
+    _addEventListener: function () {
+        if (!this.addedEvent) {
+            BI.Resizers.add("layerController" + BI.uniqueId(), BI.bind(this._resize, this));
+            this.addedEvent = true;
+        }
     },
 
     _resize: function () {
@@ -62,7 +68,7 @@ BI.LayerController = BI.inherit(BI.Controller, {
             w = from.element;
         }
         if (BI.isNotEmptyString(w)) {
-            w = $(w);
+            w = BI.Element(w);
         }
         if (this.has(name)) {
             return this.get(name);
@@ -140,6 +146,7 @@ BI.LayerController = BI.inherit(BI.Controller, {
         if (this.has(name)) {
             throw new Error("name is already exist");
         }
+        this._addEventListener();
         layout.setVisible(false);
         this.layerManager[name] = layer;
         this.layouts[name] = layout;

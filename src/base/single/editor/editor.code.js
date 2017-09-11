@@ -6,7 +6,7 @@
  */
 BI.CodeEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.CodeEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.CodeEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-code-editor bi-card',
             value: '',
             watermark: "",

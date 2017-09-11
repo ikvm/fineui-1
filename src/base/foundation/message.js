@@ -3,7 +3,7 @@
  * 弹出提示消息框，用于模拟阻塞操作（通过回调函数实现）
  * @class BI.Msg
  */
-$.extend(BI, {
+_.extend(BI, {
     Msg: function () {
 
         var messageShow, $mask, $pop;
@@ -19,7 +19,7 @@ $.extend(BI, {
                 // BI.Msg.prompt(title, message, value, callback, min_width);
             },
             toast: function (message, level, context) {
-                context = context || $("body");
+                context = context || BI.Element("body");
                 var toast = BI.createWidget({
                     type: "bi.toast",
                     level: level,
@@ -48,7 +48,7 @@ $.extend(BI, {
                 })
             },
             _show: function (hasCancel, title, message, callback) {
-                $mask = $('<div class="bi-z-index-mask">').css({
+                $mask = BI.Element('<div class="bi-z-index-mask">').css({
                     position: 'absolute',
                     'zIndex': BI.zIndex_tip - 2,
                     top: 0,
@@ -57,7 +57,7 @@ $.extend(BI, {
                     bottom: 0,
                     opacity: 0.5
                 }).appendTo('body');
-                $pop = $('<div class="bi-message-depend">').css({
+                $pop = BI.Element('<div class="bi-message-depend">').css({
                     position: 'absolute',
                     'zIndex': BI.zIndex_tip - 1,
                     top: 0,

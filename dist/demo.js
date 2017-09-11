@@ -18,6 +18,43 @@ BI.i18n = {
     "BI-Basic_Simple_Thursday": "四",
     "BI-Basic_Simple_Friday": "五",
     "BI-Basic_Simple_Saturday": "六",
+    "BI-Multi_Date_Year": "年",
+    "BI-Multi_Date_Month": "月",
+    "BI-Multi_Date_Quarter": "季度",
+    "BI-Basic_Unrestricted": "无限制",
+    "BI-Quarter_1": "第1季度",
+    "BI-Quarter_2": "第2季度",
+    "BI-Quarter_3": "第3季度",
+    "BI-Quarter_4": "第4季度",
+    "BI-Basic_Value": "值",
+    "BI-Load_More": "加载更多",
+    "BI-Select_All": "全选",
+    "BI-No_More_Data": "无更多数据",
+    "BI-No_Selected_Value": "没有可选项",
+    "BI-Basic_Clear": "清除",
+    "BI-Multi_Date_Relative_Current_Time": "相对当前时间",
+    "BI-Multi_Date_Year_Prev": "年前",
+    "BI-Multi_Date_Year_Next": "年后",
+    "BI-Multi_Date_Year_Begin": "年初",
+    "BI-Multi_Date_Year_End": "年末",
+    "BI-Multi_Date_Quarter_Prev": "个季度前",
+    "BI-Multi_Date_Quarter_Next": "个季度后",
+    "BI-Multi_Date_Quarter_Begin": "季度初",
+    "BI-Multi_Date_Quarter_End": "季度末",
+    "BI-Multi_Date_Month_Prev": "个月前",
+    "BI-Multi_Date_Month_Next": "个月后",
+    "BI-Multi_Date_Month_Begin": "月初",
+    "BI-Multi_Date_Month_End": "月末",
+    "BI-Multi_Date_Week_Prev": "周前",
+    "BI-Multi_Date_Week_Next": "周后",
+    "BI-Multi_Date_Day_Prev": "天前",
+    "BI-Multi_Date_Day_Next": "天后",
+    "BI-Multi_Date_Today": "今天",
+    "BI-Date_Trigger_Error_Text": "日期格式示例\\:2015-3-11",
+    "BI-Year_Trigger_Invalid_Text": "请输入有效时间",
+    "BI-Multi_Date_YMD": "年/月/日",
+    "BI-Multi_Date_Week": "周",
+    "BI-Multi_Date_Day": "天"
 };$(function () {
     var ref;
     BI.createWidget({
@@ -3278,7 +3315,7 @@ Demo.COMPONENT_CONFIG = [{
     value: "demo.platform_level_tree"
 }];Demo.CORE_CONFIG = [{
     id: 1,
-    text: "核心控件",
+    text: "核心控件"
 }, {
     id: 101,
     pId: 1,
@@ -3331,10 +3368,6 @@ Demo.COMPONENT_CONFIG = [{
     pId: 101,
     text: "bi.left, bi.right",
     value: "demo.flow"
-}, {
-    pId: 101,
-    text: "bi.inline",
-    value: "demo.inline"
 }, {
     pId: 101,
     text: "bi.htape",
@@ -3470,7 +3503,7 @@ Demo.COMPONENT_CONFIG = [{
 }, {
     pId: 4,
     id: 420,
-    text: '各种小控件',
+    text: '各种小控件'
 }, {
     pId: 420,
     text: "各种通用按钮",
@@ -3717,8 +3750,19 @@ Demo.COMPONENT_CONFIG = [{
     pId: 419,
     text: "bi.file_manager",
     value: "demo.file_manager"
-}
-];Demo.Func = BI.inherit(BI.Widget, {
+}, {
+    pId: 4,
+    id: 421,
+    text: "滚动调节"
+}, {
+    pId: 421,
+    text: "bi.slider",
+    value: "demo.slider"
+}, {
+    pId: 4,
+    text: '时间间隔',
+    value: 'demo.time_interval'
+}];Demo.Func = BI.inherit(BI.Widget, {
     props: {
         baseCls: "demo-func"
     },
@@ -5002,52 +5046,6 @@ Demo.HtapeLayout = BI.inherit(BI.Widget, {
     }
 });
 BI.shortcut("demo.htape", Demo.HtapeLayout);/**
- * Created by User on 2017/3/22.
- */
-Demo.InlineLayout = BI.inherit(BI.Widget, {
-    props: {
-        baseCls: "demo-inline"
-    },
-    render: function () {
-        return {
-            type: "bi.inline",
-            items: [{
-                type: "bi.label",
-                height: 30,
-                text: "Left-1",
-                cls: "layout-bg1",
-                hgap: 200
-            }, {
-                type: "bi.label",
-                height: 30,
-                text: "Left-2",
-                cls: "layout-bg2",
-                hgap: 200
-            }, {
-                type: "bi.label",
-                height: 30,
-                text: "Left-3",
-                cls: "layout-bg3",
-                hgap: 200
-            }, {
-                type: "bi.label",
-                height: 30,
-                text: "Left-4",
-                cls: "layout-bg4",
-                hgap: 200
-            }, {
-                type: "bi.label",
-                height: 30,
-                text: "Left-5",
-                cls: "layout-bg5",
-                hgap: 200
-            }],
-            hgap: 20,
-            vgap: 20
-        }
-    }
-});
-BI.shortcut("demo.inline", Demo.InlineLayout);/**
  * Created by User on 2017/3/22.
  */
 Demo.LeftRightVerticalAdaptLayout = BI.inherit(BI.Widget, {
@@ -6993,7 +6991,7 @@ Demo.StaticCombo = BI.inherit(BI.Widget, {
     },
 
 
-    beforeMounted: function () {
+    beforeMount: function () {
         this.refs.setValue(2);
     },
 
@@ -7096,7 +7094,7 @@ Demo.TextValueDownListCombo = BI.inherit(BI.Widget, {
     },
 
 
-    beforeMounted:function(){
+    beforeMount:function(){
         this.refs.setValue(2);
     },
 
@@ -7479,7 +7477,7 @@ Demo.AdaptEditor = BI.inherit(BI.Widget, {
 
 
     //这东西好奇怪,不支持设置宽度,那么渲染出来宽度几乎没有,无奈之下只能假装给他个默认值了
-    beforeMounted: function () {
+    beforeMount: function () {
         this.refs.setValue("Winter is coming !")
     },
 
@@ -7637,21 +7635,26 @@ Demo.FileManager = BI.inherit(BI.Widget, {
             lastModify: 1454316355142
         }];
         var filemanager = BI.createWidget({
-            type: "bi.file_manager",
-            items: items
+            type: "bi.fine_tuning_number_editor",
+            validationChecker: function (v) {
+                return BI.parseFloat(v) <= 100 && BI.parseFloat(v) >= 0
+            },
+            height: 24,
+            width: 150,
+            errorText: "hahah"
+        });
+        filemanager.on(BI.FineTuningNumberEditor.EVENT_CHANGE, function () {
+            if(BI.parseFloat(this.getValue()) < 1){
+                filemanager.setBottomEnable(false);
+            }else{
+                filemanager.setBottomEnable(true);
+            }
         });
         return {
-            type: "bi.vtape",
+            type: "bi.vertical",
             items: [{
                 el: filemanager,
-                height: "fill"
-            }, {
-                type: "bi.button",
-                text: "getValue",
-                handler: function () {
-                    BI.Msg.alert("", JSON.stringify(filemanager.getValue()));
-                },
-                height: 25
+                height: 24
             }]
         }
     }
@@ -8380,6 +8383,47 @@ Demo.SingleTreeCombo = BI.inherit(BI.Widget, {
 })
 
 BI.shortcut("demo.single_tree_combo", Demo.SingleTreeCombo);/**
+ * Created by Urthur on 2017/9/4.
+ */
+Demo.Slider = BI.inherit(BI.Widget, {
+    _defaultConfig: function () {
+        return BI.extend(Demo.Slider.superclass._defaultConfig.apply(this, arguments), {
+            baseCls: "demo-slider",
+            min: 10,
+            max: 50
+        })
+    },
+    _init: function () {
+        Demo.Slider.superclass._init.apply(this, arguments);
+        var self = this;
+        BI.createWidget({
+            type: "bi.vertical_adapt",
+            element: this,
+            width: 100,
+            items: [{
+                type: "bi.htape",
+                items: [{
+                    el: {
+                        type: "bi.slider",
+                        min: 16,
+                        max: 50,
+                        ref: function (_ref) {
+                            self.slider = _ref;
+                        }
+                    }
+                }],
+                height: 30,
+                width: 100
+            }]
+        });
+        this.slider.setValue("30");
+
+        this.slider.on(BI.SliderNormal.EVENT_CHANGE, function () {
+            console.log(this.getValue());
+        })
+    }
+});
+BI.shortcut("demo.slider", Demo.Slider);/**
  * Created by Dailer on 2017/7/12.
  */
 Demo.ExcelTable = BI.inherit(BI.Widget, {
@@ -9208,7 +9252,7 @@ Demo.TimeInterval = BI.inherit(BI.Widget, {
             vgap: 20
         }
     }
-})
+});
 
 BI.shortcut("demo.time_interval", Demo.TimeInterval);/**
  * Created by Dailer on 2017/7/26.

@@ -8,7 +8,7 @@ if (!window.BI) {
     window.BI = {};
 }
 ;
-!(function ($, undefined) {
+!(function (undefined) {
     var traverse = function (func, context) {
         return function (value, key, obj) {
             return func.call(context, key, value, obj);
@@ -1154,4 +1154,4 @@ if (!window.BI) {
             });
         }
     });
-})(jQuery);
+})();

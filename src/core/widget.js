@@ -30,14 +30,14 @@ BI.Widget = BI.inherit(BI.OB, {
 
     render: null,
 
-    beforeMounted: null,
+    beforeMount: null,
 
     mounted: null,
 
     update: function () {
     },
 
-    beforeDestroyed: null,
+    beforeDestroy: null,
 
     destroyed: null,
 
@@ -74,10 +74,10 @@ BI.Widget = BI.inherit(BI.OB, {
             // if (o.root !== true) {
             //     throw new Error("root is a required property");
             // }
-            this.element = $(o.element);
+            this.element = new BI.Element(o.element);
             this._isRoot = true;
         } else {
-            this.element = $(document.createElement(o.tagName));
+            this.element = new BI.Element(BI.Element.createElement(o.tagName));
         }
         if (o.baseCls || o.extraCls || o.cls) {
             this.element.addClass((o.baseCls || "") + " " + (o.extraCls || "") + " " + (o.cls || ""));
@@ -165,7 +165,7 @@ BI.Widget = BI.inherit(BI.OB, {
         if (!isMounted) {
             return;
         }
-        this.beforeMounted && this.beforeMounted();
+        this.beforeMount && this.beforeMount();
         this._isMounted = true;
         this._mountChildren && this._mountChildren();
         BI.each(this._children, function (i, widget) {
@@ -405,7 +405,7 @@ BI.Widget = BI.inherit(BI.OB, {
     },
 
     __d: function () {
-        this.beforeDestroyed && this.beforeDestroyed();
+        this.beforeDestroy && this.beforeDestroy();
         BI.each(this._children, function (i, widget) {
             widget._unMount && widget._unMount();
         });

@@ -5,7 +5,7 @@
  */
 BI.FormulaEditor = BI.inherit(BI.Single, {
     _defaultConfig: function () {
-        return $.extend(BI.FormulaEditor.superclass._defaultConfig.apply(), {
+        return BI.extend(BI.FormulaEditor.superclass._defaultConfig.apply(), {
             baseCls: 'bi-formula-editor bi-card',
             watermark: '',
             value: '',

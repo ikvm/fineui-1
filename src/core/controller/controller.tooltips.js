@@ -83,10 +83,10 @@ BI.TooltipsController = BI.inherit(BI.Controller, {
         tooltip.element.height(tooltip.element[0].scrollHeight);
         this.showingTips[name] = true;
         var x = e.pageX || e.clientX, y = (e.pageY || e.clientY) + 15;
-        if (x + tooltip.element.outerWidth() > $("body").outerWidth()) {
+        if (x + tooltip.element.outerWidth() > BI.Element("body").outerWidth()) {
             x -= tooltip.element.outerWidth();
         }
-        if (y + tooltip.element.outerHeight() > $("body").outerHeight()) {
+        if (y + tooltip.element.outerHeight() > BI.Element("body").outerHeight()) {
             y -= tooltip.element.outerHeight() + 15;
             top = offset.top - tooltip.element.outerHeight() - 5;
             !opt.belowMouse && (y = Math.min(y, top));

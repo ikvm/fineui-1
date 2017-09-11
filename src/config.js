@@ -91,4 +91,6 @@ $(function () {
     if (BI.isIE9Below()) {
         BI.GridTableScrollbar.SIZE = 18;
     }
+
+    BI.Element.registerModule($);
 });
