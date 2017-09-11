@@ -23,8 +23,8 @@ class Layout extends Component {
                         ...({marginRight: (rgap != null ? rgap : 0) + (hgap != null ? hgap : 0)}),
                         ...({marginTop: (tgap != null ? tgap : 0) + (vgap != null ? vgap : 0)}),
                         ...({marginBottom: (bgap != null ? bgap : 0) + (vgap != null ? vgap : 0)}),
-                        ...( disabled === true && {pointerEvents: 'none'}),
                         ...( invisible === true && {display: 'none'}),
+                        ...( disabled === true && {pointerEvents: 'none'}),
                         width,
                         height,
                         ...style
