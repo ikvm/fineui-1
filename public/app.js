@@ -22378,7 +22378,6 @@
 							_react2.default.createElement(
 								_text2.default,
 								{
-									width: "100%",
 									keyword: keyword,
 									py: py,
 									highLight: highLight,
@@ -23011,7 +23010,7 @@
 	                    style: _extends({
 	                        overflowX: !scrollable && scrollx != null && (scrollx === true ? 'auto' : 'hidden'),
 	                        overflowY: !scrollable && scrolly != null && (scrolly === true ? 'auto' : 'hidden')
-	                    }, scrollable != null && { overflow: scrollable ? 'auto' : 'hidden' }, scrollx && { overflowY: 'hidden' }, scrolly && { overflowX: 'hidden' }, { marginLeft: (lgap != null ? lgap : 0) + (hgap != null ? hgap : 0) }, { marginRight: (rgap != null ? rgap : 0) + (hgap != null ? hgap : 0) }, { marginTop: (tgap != null ? tgap : 0) + (vgap != null ? vgap : 0) }, { marginBottom: (bgap != null ? bgap : 0) + (vgap != null ? vgap : 0) }, disabled === true && { pointerEvents: 'none' }, invisible === true && { display: 'none' }, {
+	                    }, scrollable != null && { overflow: scrollable ? 'auto' : 'hidden' }, scrollx && { overflowY: 'hidden' }, scrolly && { overflowX: 'hidden' }, { marginLeft: (lgap != null ? lgap : 0) + (hgap != null ? hgap : 0) }, { marginRight: (rgap != null ? rgap : 0) + (hgap != null ? hgap : 0) }, { marginTop: (tgap != null ? tgap : 0) + (vgap != null ? vgap : 0) }, { marginBottom: (bgap != null ? bgap : 0) + (vgap != null ? vgap : 0) }, invisible === true && { display: 'none' }, disabled === true && { pointerEvents: 'none' }, {
 	                        width: width,
 	                        height: height
 	                    }, style)
@@ -23168,7 +23167,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".clearfix {\n  *zoom: 1;\n}\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  display: table;\n  line-height: 0;\n}\n.clearfix:after {\n  clear: both;\n}\n.flex-horizontal-layout > *,\n.flex-vertical-layout > *,\n.flex-center-layout > *,\n.flex-vertical-center-layout > *,\n.flex-horizontal-center-layout > *,\n.flex-horizontal-adapt-layout > *,\n.flex-vertical-adapt-layout > * {\n  position: relative;\n  -webkit-box-flex: 0;\n  -ms-flex-negative: 0;\n      flex-shrink: 0;\n}\n.bi-absolute-layout > *:not(script) {\n  display: box;\n  /* OLD - Android 4.4- */\n  /* OLD - iOS 6-, Safari 3.1-6 */\n  /* OLD - Firefox 19- (buggy but mostly works) */\n  display: -ms-flexbox;\n  /* TWEENER - IE 10 */\n  /* NEW - Chrome */\n  display: flex;\n  /* NEW, Spec - Opera 12.1, Firefox 20+ */\n}\n.bi-absolute-layout > *:not(script) > * {\n  position: relative;\n  -moz-flex-grow: 1;\n  -ms-flex-positive: 1;\n      flex-grow: 1;\n}\n", ""]);
+	exports.push([module.id, ".clearfix {\n  *zoom: 1;\n}\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  display: table;\n  line-height: 0;\n}\n.clearfix:after {\n  clear: both;\n}\n.flex-horizontal-layout > *,\n.flex-vertical-layout > *,\n.flex-center-layout > *,\n.flex-vertical-center-layout > *,\n.flex-horizontal-center-layout > *,\n.flex-horizontal-adapt-layout > *,\n.flex-vertical-adapt-layout > * {\n  position: relative;\n  -webkit-box-flex: 0;\n  -ms-flex-negative: 0;\n      flex-shrink: 0;\n}\n.bi-absolute-layout {\n  position: relative;\n}\n", ""]);
 	
 	// exports
 
@@ -23237,6 +23236,9 @@
 	                _Layout2.default,
 	                _extends({ className: (0, _classnames2.default)('bi-card-layout', className) }, props),
 	                _react2.default.Children.map(children, function (child) {
+	                    if (child.key !== defaultShowKey) {
+	                        return null;
+	                    }
 	                    return _react2.default.createElement(
 	                        _Layout2.default,
 	                        { className: 'bi-card-layout-card', key: child.key, style: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, display: (0, _isNil2.default)(defaultShowKey) || defaultShowKey === child.key ? 'flex' : 'none' } },
