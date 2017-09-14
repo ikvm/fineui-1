@@ -2,9 +2,8 @@
  * Created by Urthur on 2017/9/4.
  */
 import React, { Component, PropTypes } from 'react'
-import Calendar from '../src/components/calendar'
+import { CalendarMonth } from '../src/components/calendar'
 import Label from '../src/base/single/label'
-import ButtonView from '../src/base/single/buttonView'
 import { Layout, CenterLayout, VerticalLayout, HorizontalLayout } from '../src/core/layout'
 import './example.less'
 
@@ -24,71 +23,19 @@ class CalendarDemo extends Component{
         day: TODAY.day
     };
 
-    componentWillMount() {
-        this.storeValue = TODAY;
-    }
-
-    //切换到下个月
-    _nextMonth() {
-        if (this.state.month === 11) {
-            this.setState({
-                year: ++this.state.year,
-                month: 0,
-                day: (this.state.year === TODAY.year && TODAY.month === 0) ? TODAY.day : 1
-
-            })
-        } else {
-            this.setState({
-                month: ++this.state.month,
-                day: (this.state.year === TODAY.year && this.state.month === TODAY.month) ? TODAY.day : 1
-            })
-        }
-    }
-
-    //切换到上一个月
-    _prevMonth() {
-        if (this.state.month === 0) {
-            this.setState({
-                year: --this.state.year,
-                month: 11,
-                day: (this.state.year === TODAY.year && TODAY.month === 11) ? TODAY.day : 1
-            });
-
-        } else {
-            this.setState({
-                month: --this.state.month,
-                day: (this.state.year === TODAY.year && this.state.month === TODAY.month) ? TODAY.day : 1
-            })
-        }
-    }
-
     setValue = (v) => {
-        this.storeValue = v;
         this.setState(v);
     };
 
     render() {
-        let {year, month, day} = this.state;
-
         return <VerticalLayout>
-            <HorizontalLayout>
-                <Label>{this.storeValue.year}年</Label>
-                <Label>{this.storeValue.month + 1}月</Label>
-                <Label>{this.storeValue.day}日</Label>
-            </HorizontalLayout>
-            <VerticalLayout className="demo-calendar" height={210} width={250}>
-                <CenterLayout className="demo-calendar-head" height={25}>
-                    <ButtonView handler={this._prevMonth.bind(this)}>{"<"}</ButtonView>
-                    <Label lgap={70}>{year}年</Label>
-                    <Label rgap={70}>{month + 1}月</Label>
-                    <ButtonView handler={this._nextMonth.bind(this)}>{">"}</ButtonView>
-                </CenterLayout>
-                <CenterLayout>
-                    <Calendar year={year} month={month} day={day} handler={this.setValue} />
-                </CenterLayout>
-            </VerticalLayout>
+                <HorizontalLayout>
+                    <Label>{this.state.year ? this.state.year + "-" : ""}</Label>
+                    <Label>{this.state.month ? (this.state.month + 1) + "-" : ""}</Label>
+                    <Label>{this.state.day}</Label>
+                </HorizontalLayout>
+                <CalendarMonth handler={this.setValue}/>
         </VerticalLayout>
-
     }
 }
 export default CalendarDemo

@@ -87,7 +87,7 @@ class  Calendar extends Component {
                  header.push({
                      row: 0,
                      column: i,
-                     el: <Label hgap={10} vgap={5}>{value}</Label>
+                     el: <Label hgap={10} vgap={5} width={15}>{value}</Label>
                  });
             }
         );
@@ -111,7 +111,7 @@ class  Calendar extends Component {
                     row: i + 1,
                     column: j,
                     el: <ButtonView className= { cn ([`${CLASS_NAME}-item`],{[`${CLASS_NAME}-item-active`] : selected})} disabled={disabled} handler={handler.bind(this, date)}>
-                            <Label hgap={10} vgap={5}>
+                            <Label hgap={10} vgap={5} width={15}>
                                 {td.text}
                             </Label>
                     </ButtonView>
@@ -121,7 +121,7 @@ class  Calendar extends Component {
 
         let DateData = header.concat(body);
 
-        return <VerticalLayout className={cn(CLASS_NAME)}>
+        return <VerticalLayout className={cn(CLASS_NAME)} height={185} width={245}>
                 <GridLayout  rows={7} columns={7} items={DateData} />
             </VerticalLayout>
     }
