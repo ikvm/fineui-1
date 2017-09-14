@@ -62,8 +62,8 @@ export default class Button extends React.Component {
 
         let icon = null
         if (iconCls) {
-            icon = <CenterLayout width={ iconWidth } height={ iconHeight }>
-                     <Icon/>
+            icon = <CenterLayout>
+                     <Icon width={ iconWidth } height={ iconHeight }/>
                    </CenterLayout>
         }
         return <ButtonView className={ classes } { ...props }>

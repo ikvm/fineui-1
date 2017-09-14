@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import ReactDOM from 'react-dom'
 import cn from "classnames";
 import emptyFunction from 'fbjs/lib/emptyFunction'
 import Single from "../Single";
@@ -44,11 +45,13 @@ export default class ButtonView extends React.Component {
 					break;
 				case "mousedown":
 					bindEvent.onMouseDown = this.handleMouseDown;
-
 					break;
 				case "mouseup":
 					bindEvent.onMouseUp = this.handleMouseUp;
 					break;
+                case 'lclick' :
+                    bindEvent.onMouseDown = this.handleLClick;
+                    break;
 				default:
 					bindEvent.onClick = this.handleClick;
 			}
@@ -90,6 +93,24 @@ export default class ButtonView extends React.Component {
 		console.log("mouseup");
 	};
 
+	handleLClick=e=>{
+	    console.log('down',e.currentTarget)
+        const node=ReactDOM.findDOMNode(this.node)
+        function emp(e){
+            console.log('leave')
+        }
+        //todo  做事件绑定
+        node.addEventListener('mouseleave',emp)
+        node.removeEventListener('mouseleave',emp)
+    }
+
+    handleMouseLeave=e=>{
+        const node=e.currentTarget
+        node.removeEventListener('mouseleave',e=>{
+            console.log('移除了')
+        })
+    }
+
 	render() {
 		const {
 			handler,
@@ -104,6 +125,7 @@ export default class ButtonView extends React.Component {
 				className={cn(CLASS_NAME, className)}
 				{...this._bindEvent(trigger)}
 				{...props}
+                ref={_ref=>this.node=_ref}
 			>
 				{this.props.children}
 			</Single>

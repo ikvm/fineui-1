@@ -13,11 +13,6 @@ class CardLayout extends Component {
         const {className, defaultShowKey, children, ...props} = this.props;
         return <Layout className={ cn('bi-card-layout', className) } {...props}>
                  { React.Children.map(children, (child) => {
-
-                      //这个 if 先放着,因为card 放太多了有点卡,过段时间去掉.
-                        if(child.key!==defaultShowKey){
-                            return null
-                        }
                        return <Layout className='bi-card-layout-card' key={ child.key } style={ { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, display: (isNil(defaultShowKey) || defaultShowKey === child.key) ? 'flex' : 'none' } }>
                                 { child }
                               </Layout>
