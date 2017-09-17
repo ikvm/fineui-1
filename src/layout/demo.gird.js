@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Layout } from '../../lib/core/layout'
 import GridLayout from '../../lib/core/layout/grid/GridLayout.js'
 import Row from '../../lib/core/layout/grid/Row'
-import Col from '../../liblib/core/layout/grid/Col'
-import Label from '../../src/base/single/label'
+import Col from '../../lib/core/layout/grid/Col'
+import Label from '../../lib/base/single/label'
 import '../../lib/core/layout/grid/GridLayout.less'
 
 export default class GridDemo extends Component {

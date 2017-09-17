@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Button from '../lib/base/single/button'
 import IconButton from '../lib/base/single/iconbutton'
-import TextButton from '../slibrc/base/single/textbutton'
+import TextButton from '../lib/base/single/textbutton'
 import { HorizontalCenterLayout, LeftLayout } from '../lib/core/layout'
 
 class ButtonDemo extends Component {

@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from "react";
-import Button from "../lib/base/single/button";
 import TreeDemo from "./demo.tree";
 import ComboDemo from "./demo.combo";
 import ButtonDemo from "./demo.button";
@@ -42,8 +41,7 @@ import {
 	Layout,
 	CardLayout,
 	VerticalLayout,
-	HorizontalAdaptLayout,
-	VerticalAdaptLayout,
+	HorizontalAdaptLayout
 } from "../lib/core/layout";
 
 class App extends Component {
