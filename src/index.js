@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import App from "../demos/App";
-import TestApp from "../demos/testapp";
+import App from "./App";
+import TestApp from "./testapp";
 
 ReactDOM.render(<App />, document.getElementById("app"));
