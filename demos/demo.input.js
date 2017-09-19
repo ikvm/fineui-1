@@ -6,6 +6,7 @@ import Radio from '../src/base/single/input/radio/Radio'
 import RadioGroup from '../src/base/single/input/radiogroup/RadioGroup'
 import Checkbox from '../src/base/single/input/checkbox'
 import Label from '../src/base/single/label'
+import Spinner from  '../src/base/spinner'
 
 export default class InputDemo extends Component {
   constructor(props, context) {
@@ -15,6 +16,14 @@ export default class InputDemo extends Component {
   handler = () => {
     Toast.show('阻止冒泡失败了啊')
   }
+
+  formater=(v)=>{
+      return `$ ${v}`
+    }
+
+    parser=(v)=>{
+      return v.substr(2)
+    }
 
   render() {
     return <HorizontalCenterLayout width={ 800 }>
@@ -33,7 +42,7 @@ export default class InputDemo extends Component {
                <Checkbox checked={ true }>默认选中的</Checkbox>
                <Checkbox disabled={ true }>disabled</Checkbox>
              </HorizontalAdaptLayout>
-             <VerticalLayout>
+             <VerticalLayout vgap={20}>
                <Checkbox>
                  <Label>'Checkbox'标签内放啥都行,显示在右边</Label>
                </Checkbox>
@@ -44,6 +53,7 @@ export default class InputDemo extends Component {
                  <Button>放个 button</Button>
                </Checkbox>
              </VerticalLayout>
+            <Spinner height={25} formater={this.formater} parser={this.parser}/>
            </HorizontalCenterLayout>
   }
 }

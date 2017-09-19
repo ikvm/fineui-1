@@ -1,18 +1,24 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import cn from 'classnames'
 import trim from 'lodash/trim'
+import emptyFunction from 'fbjs/lib/emptyFunction'
 
-const CLASS_NAME = 'bi-input'
+const CLASS_NAME = 'fct-input'
 
 export default class Input extends Component {
     constructor(props, context) {
-        super(props, context)
+        super(props, context);
+        this.state = {
+            value: ''
+        }
     }
+
     static defaultProps = {
-        validationChecker: () => true,
-        quitChecker: () => { }, //按确定键能否退出编辑
+        validationChecker: ()=>{return true},
+        quitChecker: emptyFunction, //按确定键能否退出编辑
         allowBlank: false,
-        placeholder: ''
+        placeholder: '',
+        onChange: emptyFunction//内容改变后的回调
     }
 
     _checkValidationOnValueChange = () => {
@@ -24,10 +30,13 @@ export default class Input extends Component {
     }
 
 
-    handleChange = () => {
+    handleChange = (e) => {
         this._checkValidationOnValueChange()
+        this.setState({
+            value: e.target.value
+        })
         if (this.props.onChange) {
-            this.props.onChange()
+            this.props.onChange(e.target.value)
         }
     }
 
@@ -56,8 +65,10 @@ export default class Input extends Component {
         return this.input.value
     }
 
+
     render() {
-        const { className, validationChecker, quitChecker, allowBlank, ...props } = this.props
-        return <input ref={(input) => this.input = input} { ...this._bindEvent() } className={cn(CLASS_NAME, className)} {...props}></input>
+        const {className, validationChecker, quitChecker, allowBlank, defaultValue, onChange, ...props} = this.props
+        return <input ref={(input) => this.input = input} {...this._bindEvent()} className={cn(CLASS_NAME, className)}
+                      value={this.state.value} {...props}/>
     }
 }

@@ -4,7 +4,7 @@ import Text from '../text'
 import cn from 'classnames'
 
 
-const CLASS_NAME = 'bi-text-button'
+const CLASS_NAME = 'fct-text-button'
 
 export default class IconButton extends Component {
     constructor(props, context) {
@@ -12,7 +12,7 @@ export default class IconButton extends Component {
     }
 
     static defaultProps = {
-        type: ''
+
     }
 
 

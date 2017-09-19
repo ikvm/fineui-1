@@ -4,7 +4,7 @@ import Icon from "../icon";
 import cn from "classnames";
 import { HorizontalAdaptLayout, CenterLayout } from "../../../core/layout";
 
-const CLASS_NAME = "bi-icon-button";
+const CLASS_NAME = "fct-icon-button";
 
 export default class IconButton extends Component {
 	constructor(props, context) {
@@ -12,15 +12,17 @@ export default class IconButton extends Component {
 	}
 
 	static defaultProps = {
-		iconCls: ""
+		iconCls: "",
+        iconWidth: null,
+        iconHeight: null
 	};
 
 	render() {
-		const { className, iconCls, ...props } = this.props;
+		const { className, iconCls,iconWidth,            iconHeight, ...props } = this.props;
 
 		return (
 			<ButtonView className={cn(CLASS_NAME, className, iconCls)} {...props}>
-				<Icon />
+				<Icon width={iconWidth} height={iconHeight} />
 			</ButtonView>
 		);
 	}

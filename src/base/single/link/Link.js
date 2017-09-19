@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Label from "../label";
 
-const CLASS_NAME = "bi-link";
+const CLASS_NAME = "fct-link";
 
 export default class Link extends Component {
 	constructor(props, context) {

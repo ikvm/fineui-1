@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Layout } from "../../../core/layout";
 import cn from "classnames";
 
-const CLASS_NAME = "bi-icon";
+const CLASS_NAME = "x-icon b-font";
 
 class Icon extends Component {
 	constructor(props) {
@@ -10,8 +10,8 @@ class Icon extends Component {
 	}
 
 	static defaultProps = {
-		width: 25,
-		height: 25
+		width: 16,
+		height: 16
 	};
 
 	render() {

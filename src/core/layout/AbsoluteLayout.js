@@ -12,7 +12,7 @@ class AbsoluteLayout extends Component {
 
     render() {
         const {children, className, ...props} = this.props;
-        return <Layout className={cn('bi-absolute-layout', className)} {...props}>
+        return <Layout className={cn('fct-absolute-layout', className)} {...props}>
             {children}
         </Layout>
     }

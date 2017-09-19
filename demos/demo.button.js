@@ -17,7 +17,7 @@ class ButtonDemo extends Component {
 
     render() {
         return <LeftLayout hgap={ 20 } vgap={ 30 }>
-                 <Button hgap={ 10 } handler={ this.buttonHandler }>默认</Button>
+                 <Button hgap={ 10 } trigger='lclick' handler={ this.buttonHandler }>默认</Button>
                  <Button hgap={ 10 } trigger='dblclick' level="common">common</Button>
                  <Button hgap={ 10 } level="success">success</Button>
                  <Button hgap={ 10 } level="warning">warning</Button>

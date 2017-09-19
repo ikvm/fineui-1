@@ -3,11 +3,12 @@ import { HorizontalLayout, CenterLayout, Layout } from '../../core/layout'
 import Button from '../single/button'
 import Label from '../single/label'
 import cn from 'classnames'
+import emptyFunction from 'fbjs/lib/emptyFunction'
 import range from 'lodash/range'
 import isNil from 'lodash/isNil'
 
 
-const CLASS_NAME = 'bi-pager'
+const CLASS_NAME = 'fct-pager'
 
 export default class Pager extends Component {
     constructor(props, context) {
@@ -36,10 +37,8 @@ export default class Pager extends Component {
         lastPage: function() { //在万不得已时才会调用这个函数获取最后一页的页码,  主要作用于setValue方法
             return 1;
         },
-        hasPrev: () => {
-        }, //pages不可用时有效
-        hasNext: () => {
-        } //pages不可用时有效
+        hasPrev: emptyFunction, //pages不可用时有效
+        hasNext: emptyFunction //pages不可用时有效
     }
 
     itemHandler = (value) => {

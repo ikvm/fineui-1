@@ -5,7 +5,7 @@ import Input from '../input'
 import Label from '../label'
 
 
-const CLASS_NAME = 'bi-editor'
+const CLASS_NAME = 'fct-editor'
 
 
 export default class Editor extends Component {

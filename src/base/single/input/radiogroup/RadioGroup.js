@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { HorizontalAdaptLayout, HorizontalLayout } from '../../../../core/layout'
 import Radio from '../radio/Radio'
 import isEqual from 'lodash/isEqual'
+import emptyFunction from 'fbjs/lib/emptyFunction'
 
 
-const CLASS_NAME = 'bi-radio-group'
+const CLASS_NAME = 'fct-radio-group'
 
 export default class RadioGroup extends Component {
     constructor(props, context) {
@@ -18,9 +19,7 @@ export default class RadioGroup extends Component {
 
     static defaultProps = {
         checkedValue: '',
-        handler: () => {
-            console.log('changed')
-        }
+        handler: emptyFunction
     }
 
     getChildContext() {

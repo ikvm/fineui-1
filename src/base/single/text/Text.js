@@ -83,11 +83,11 @@ class Text extends Component {
         const styleObj={
             textAlign:textAlign,
             whiteSpace:whiteSpace,
-            lineHeight:isNumber(lineHeight)?(lineHeight+'px'):'normal',
+            ...(isNumber(lineHeight)&&{lineHeight:lineHeight+'px'}),
             display: 'block' //flex里面做文本超出截取真是mmp,浪费了我一上午时间.,
         }
         return <Single className={cn(className,CLASS_NAME)} style={styleObj} {...props}>
-            {this.props.children}
+            {this.props.children !== undefined ? this.props.children : text}
         </Single>
     }
 }

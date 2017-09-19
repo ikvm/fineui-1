@@ -58,6 +58,18 @@
 	
 	var _label2 = _interopRequireDefault(_label);
 	
+	var _text = __webpack_require__(241);
+	
+	var _text2 = _interopRequireDefault(_text);
+	
+	var _Single = __webpack_require__(243);
+	
+	var _Single2 = _interopRequireDefault(_Single);
+	
+	var _icon = __webpack_require__(374);
+	
+	var _icon2 = _interopRequireDefault(_icon);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	if (!window.FCT) {
@@ -66,6 +78,9 @@
 	window.React = _react2.default;
 	window.ReactDOM = _reactDom2.default;
 	window.FCT.Label = _label2.default;
+	window.FCT.Text = _text2.default;
+	window.FCT.Single = _Single2.default;
+	window.FCT.Icon = _icon2.default;
 
 /***/ }),
 /* 1 */,
@@ -22324,6 +22339,7 @@
 									py: py,
 									highLight: highLight,
 									textAlign: textAlign,
+									lineHeight: textHeight,
 									whiteSpace: whiteSpace
 								},
 								this.props.children !== undefined ? this.props.children : text
@@ -22362,7 +22378,6 @@
 							_react2.default.createElement(
 								_text2.default,
 								{
-									width: "100%",
 									keyword: keyword,
 									py: py,
 									highLight: highLight,
@@ -22934,10 +22949,10 @@
 /* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -22959,52 +22974,53 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var Layout = function (_Component) {
-		_inherits(Layout, _Component);
+	    _inherits(Layout, _Component);
 	
-		function Layout(props, context) {
-			_classCallCheck(this, Layout);
+	    function Layout(props, context) {
+	        _classCallCheck(this, Layout);
 	
-			return _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this, props, context));
-		}
+	        return _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this, props, context));
+	    }
 	
-		_createClass(Layout, [{
-			key: "render",
-			value: function render() {
-				var _props = this.props,
-				    children = _props.children,
-				    scrollable = _props.scrollable,
-				    scrollx = _props.scrollx,
-				    scrolly = _props.scrolly,
-				    width = _props.width,
-				    height = _props.height,
-				    lgap = _props.lgap,
-				    rgap = _props.rgap,
-				    tgap = _props.tgap,
-				    bgap = _props.bgap,
-				    hgap = _props.hgap,
-				    vgap = _props.vgap,
-				    style = _props.style,
-				    props = _objectWithoutProperties(_props, ["children", "scrollable", "scrollx", "scrolly", "width", "height", "lgap", "rgap", "tgap", "bgap", "hgap", "vgap", "style"]);
+	    _createClass(Layout, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props,
+	                children = _props.children,
+	                disabled = _props.disabled,
+	                invalid = _props.invalid,
+	                invisible = _props.invisible,
+	                scrollable = _props.scrollable,
+	                scrollx = _props.scrollx,
+	                scrolly = _props.scrolly,
+	                width = _props.width,
+	                height = _props.height,
+	                lgap = _props.lgap,
+	                rgap = _props.rgap,
+	                tgap = _props.tgap,
+	                bgap = _props.bgap,
+	                hgap = _props.hgap,
+	                vgap = _props.vgap,
+	                style = _props.style,
+	                props = _objectWithoutProperties(_props, ['children', 'disabled', 'invalid', 'invisible', 'scrollable', 'scrollx', 'scrolly', 'width', 'height', 'lgap', 'rgap', 'tgap', 'bgap', 'hgap', 'vgap', 'style']);
 	
-				return _react2.default.createElement(
-					"div",
-					_extends({}, props, {
-						style: _extends({
-							overflowX: !scrollable && scrollx != null && (scrollx === true ? "auto" : "hidden"),
-							overflowY: !scrollable && scrolly != null && (scrolly === true ? "auto" : "hidden")
-						}, scrollable != null && {
-							overflow: scrollable ? "auto" : "hidden"
-						}, scrollx && { overflowY: "hidden" }, scrolly && { overflowX: "hidden" }, lgap != null && { marginLeft: lgap }, rgap != null && { marginRight: rgap }, tgap != null && { marginTop: tgap }, bgap != null && { marginBottom: bgap }, hgap != null && { marginLeft: hgap, marginRight: hgap }, vgap != null && { marginTop: vgap, marginBottom: vgap }, {
-							width: width,
-							height: height
-						}, style)
-					}),
-					children
-				);
-			}
-		}]);
+	            return _react2.default.createElement(
+	                'div',
+	                _extends({}, props, {
+	                    style: _extends({
+	                        overflowX: !scrollable && scrollx != null && (scrollx === true ? 'auto' : 'hidden'),
+	                        overflowY: !scrollable && scrolly != null && (scrolly === true ? 'auto' : 'hidden')
+	                    }, scrollable != null && { overflow: scrollable ? 'auto' : 'hidden' }, scrollx && { overflowY: 'hidden' }, scrolly && { overflowX: 'hidden' }, { marginLeft: (lgap != null ? lgap : 0) + (hgap != null ? hgap : 0) }, { marginRight: (rgap != null ? rgap : 0) + (hgap != null ? hgap : 0) }, { marginTop: (tgap != null ? tgap : 0) + (vgap != null ? vgap : 0) }, { marginBottom: (bgap != null ? bgap : 0) + (vgap != null ? vgap : 0) }, invisible === true && { display: 'none' }, disabled === true && { pointerEvents: 'none' }, {
+	                        width: width,
+	                        height: height
+	                    }, style)
+	                }),
+	                children
+	            );
+	        }
+	    }]);
 	
-		return Layout;
+	    return Layout;
 	}(_react.Component);
 	
 	exports.default = Layout;
@@ -23151,7 +23167,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".clearfix {\n  *zoom: 1;\n}\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  display: table;\n  line-height: 0;\n}\n.clearfix:after {\n  clear: both;\n}\n.flex-horizontal-layout > *,\n.flex-vertical-layout > *,\n.flex-center-layout > *,\n.flex-vertical-center-layout > *,\n.flex-horizontal-center-layout > *,\n.flex-horizontal-adapt-layout > *,\n.flex-vertical-adapt-layout > * {\n  position: relative;\n  -webkit-box-flex: 0;\n  -ms-flex-negative: 0;\n      flex-shrink: 0;\n}\n.bi-absolute-layout > * {\n  display: box;\n  /* OLD - Android 4.4- */\n  /* OLD - iOS 6-, Safari 3.1-6 */\n  /* OLD - Firefox 19- (buggy but mostly works) */\n  display: -ms-flexbox;\n  /* TWEENER - IE 10 */\n  /* NEW - Chrome */\n  display: flex;\n  /* NEW, Spec - Opera 12.1, Firefox 20+ */\n}\n.bi-absolute-layout > * > * {\n  position: relative;\n  -moz-flex-grow: 1;\n  -ms-flex-positive: 1;\n      flex-grow: 1;\n}\n", ""]);
+	exports.push([module.id, ".clearfix {\n  *zoom: 1;\n}\n.clearfix:before,\n.clearfix:after {\n  content: \" \";\n  display: table;\n  line-height: 0;\n}\n.clearfix:after {\n  clear: both;\n}\n.flex-horizontal-layout > *,\n.flex-vertical-layout > *,\n.flex-center-layout > *,\n.flex-vertical-center-layout > *,\n.flex-horizontal-center-layout > *,\n.flex-horizontal-adapt-layout > *,\n.flex-vertical-adapt-layout > * {\n  position: relative;\n  -webkit-box-flex: 0;\n  -ms-flex-negative: 0;\n      flex-shrink: 0;\n}\n.bi-absolute-layout {\n  position: relative;\n}\n", ""]);
 	
 	// exports
 
@@ -23220,6 +23236,9 @@
 	                _Layout2.default,
 	                _extends({ className: (0, _classnames2.default)('bi-card-layout', className) }, props),
 	                _react2.default.Children.map(children, function (child) {
+	                    if (child.key !== defaultShowKey) {
+	                        return null;
+	                    }
 	                    return _react2.default.createElement(
 	                        _Layout2.default,
 	                        { className: 'bi-card-layout-card', key: child.key, style: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, display: (0, _isNil2.default)(defaultShowKey) || defaultShowKey === child.key ? 'flex' : 'none' } },
@@ -25039,16 +25058,16 @@
 	                handler = _props.handler,
 	                props = _objectWithoutProperties(_props, ['className', 'textAlign', 'whiteSpace', 'lineHeight', 'text', 'py', 'keyword', 'highLight', 'handler']);
 	
-	            var styleObj = {
+	            var styleObj = _extends({
 	                textAlign: textAlign,
-	                whiteSpace: whiteSpace,
-	                lineHeight: (0, _isNumber2.default)(lineHeight) ? lineHeight + 'px' : 'normal',
+	                whiteSpace: whiteSpace
+	            }, (0, _isNumber2.default)(lineHeight) && { lineHeight: lineHeight + 'px' }, {
 	                display: 'block' //flex里面做文本超出截取真是mmp,浪费了我一上午时间.,
-	            };
+	            });
 	            return _react2.default.createElement(
 	                _Single2.default,
 	                _extends({ className: (0, _classnames2.default)(className, CLASS_NAME), style: styleObj }, props),
-	                this.props.children
+	                this.props.children !== undefined ? this.props.children : text
 	            );
 	        }
 	    }]);
@@ -25198,7 +25217,7 @@
 				return _react2.default.createElement(
 					_layout.CenterLayout,
 					_extends({ className: (0, _classnames2.default)(className, CLASS_NAME) }, props),
-					this.props.children
+					this.props.children !== undefined ? this.props.children : value
 				);
 			}
 		}]);
@@ -29420,6 +29439,137 @@
 	
 	// module
 	exports.push([module.id, ".fct-label {\n  color: red;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ }),
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _Icon = __webpack_require__(375);
+	
+	var _Icon2 = _interopRequireDefault(_Icon);
+	
+	__webpack_require__(376);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _Icon2.default;
+
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _class, _temp;
+	
+	var _react = __webpack_require__(6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _layout = __webpack_require__(192);
+	
+	var _classnames = __webpack_require__(191);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var CLASS_NAME = "x-icon b-font";
+	
+	var Icon = (_temp = _class = function (_Component) {
+		_inherits(Icon, _Component);
+	
+		function Icon(props) {
+			_classCallCheck(this, Icon);
+	
+			return _possibleConstructorReturn(this, (Icon.__proto__ || Object.getPrototypeOf(Icon)).call(this, props));
+		}
+	
+		_createClass(Icon, [{
+			key: "render",
+			value: function render() {
+				var _props = this.props,
+				    iconCls = _props.iconCls,
+				    width = _props.width,
+				    height = _props.height,
+				    props = _objectWithoutProperties(_props, ["iconCls", "width", "height"]);
+	
+				var styleObj = {
+					display: "block",
+					width: width + "px",
+					height: height + "px"
+				};
+	
+				return _react2.default.createElement("i", { className: (0, _classnames2.default)(CLASS_NAME), style: styleObj });
+			}
+		}]);
+	
+		return Icon;
+	}(_react.Component), _class.defaultProps = {
+		width: 16,
+		height: 16
+	}, _temp);
+	exports.default = Icon;
+
+/***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(377);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(196)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!../../../../node_modules/_css-loader@0.23.1@css-loader/index.js!../../../../node_modules/_autoprefixer-loader@3.2.0@autoprefixer-loader/index.js?browsers=last 2 version!../../../../node_modules/_less-loader@2.2.3@less-loader/index.js!./Icon.less", function() {
+				var newContent = require("!!../../../../node_modules/_css-loader@0.23.1@css-loader/index.js!../../../../node_modules/_autoprefixer-loader@3.2.0@autoprefixer-loader/index.js?browsers=last 2 version!../../../../node_modules/_less-loader@2.2.3@less-loader/index.js!./Icon.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ }),
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(195)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".fct-icon {\n  display: block;\n}\n", ""]);
 	
 	// exports
 

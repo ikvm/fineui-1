@@ -161,7 +161,7 @@ const styles = {
 };
 
 Portal.PortalReference = container => {
-	let div = document.createElement("div");
+    let  div = document.createElement("div");
 	document.body.appendChild(div);
 	const PortalReference = ReactDOM.render(<Portal />, div);
 	return PortalReference;

@@ -4,7 +4,7 @@ import { HorizontalLayout, VerticalCenterLayout } from '../../../../core/layout'
 import ButtonView from '../../buttonView'
 
 
-const CLASS_NAME = 'bi-checkbox'
+const CLASS_NAME = 'fct-checkbox'
 
 export default class Checkbox extends Component {
     constructor(props, context) {
